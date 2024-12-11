@@ -46,3 +46,4 @@ files
 build
 test.js
 sample.txt
+constants.js
