@@ -1,0 +1,73 @@
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: spin 0.5s infinite ease-in-out;
+}
+
+.loader-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 5px;
+  /* animation: spin 1s infinite ease-in-out; */
+}
+
+.color1 {
+  background-color: #ff5e5b;
+}
+
+.color2 {
+  background-color: #ffc726;
+}
+
+.color3 {
+  background-color: #00cdac;
+}
+
+.orange {
+  background-color: orange;
+}
+.white {
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: spin2 0.01s infinite ease-in-out;
+}
+.blue {
+  background-color: blue;
+  width: 50px;
+  height: 5px;
+  border-radius: 50%;
+  margin: 0;
+  z-index: 2;
+}
+
+.green {
+  background-color: green;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin2 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
