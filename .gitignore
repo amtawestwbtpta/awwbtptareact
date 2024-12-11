@@ -43,5 +43,6 @@ upload.bat
 databases
 db
 files
+build
 test.js
 sample.txt
