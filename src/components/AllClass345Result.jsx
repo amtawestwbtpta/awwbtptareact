@@ -60,7 +60,7 @@ const AllClass345Result = () => {
           parseInt(el.lang_1_p1) +
           parseInt(el.lang_1_p2) +
           parseInt(el.lang_1_p3);
-        let lang1_summ_totalmarks_per = parseInt(
+        let lang1_summ_totalmarks_per = parseFloat(
           round2dec((lang1_summ_totalmarks * 100) / 80)
         );
         let lang1_summ_totalmarks_percent = percentTotal(
@@ -70,7 +70,7 @@ const AllClass345Result = () => {
           parseInt(el.lang_2_p1) +
           parseInt(el.lang_2_p2) +
           parseInt(el.lang_2_p3);
-        let lang2_summ_totalmarks_per = parseInt(
+        let lang2_summ_totalmarks_per = parseFloat(
           round2dec((lang2_summ_totalmarks * 100) / 80)
         );
         let lang2_summ_totalmarks_percent = percentTotal(
@@ -78,7 +78,7 @@ const AllClass345Result = () => {
         );
         let math_summ_totalmarks =
           parseInt(el.math_p1) + parseInt(el.math_p2) + parseInt(el.math_p3);
-        let math_summ_totalmarks_per = parseInt(
+        let math_summ_totalmarks_per = parseFloat(
           round2dec((math_summ_totalmarks * 100) / 80)
         );
         let math_summ_totalmarks_percent = percentTotal(
@@ -86,7 +86,7 @@ const AllClass345Result = () => {
         );
         let envs_summ_totalmarks =
           parseInt(el.envs_p1) + parseInt(el.envs_p2) + parseInt(el.envs_p3);
-        let envs_summ_totalmarks_per = parseInt(
+        let envs_summ_totalmarks_per = parseFloat(
           round2dec((envs_summ_totalmarks * 100) / 80)
         );
         let envs_summ_totalmarks_percent = percentTotal(
@@ -97,7 +97,7 @@ const AllClass345Result = () => {
           parseInt(el.phys_p2) +
           parseInt(el.phys_p3_th) +
           parseInt(el.phys_p3_pr);
-        let phys_summ_totalmarks_per = parseInt(
+        let phys_summ_totalmarks_per = parseFloat(
           round2dec((phys_summ_totalmarks * 100) / 80)
         );
         let phys_summ_totalmarks_percent = percentTotal(
@@ -108,7 +108,7 @@ const AllClass345Result = () => {
           parseInt(el.work_p2) +
           parseInt(el.work_p3_th) +
           parseInt(el.work_p3_pr);
-        let work_summ_totalmarks_per = parseInt(
+        let work_summ_totalmarks_per = parseFloat(
           round2dec((work_summ_totalmarks * 100) / 80)
         );
         let work_summ_totalmarks_percent = percentTotal(
@@ -121,7 +121,7 @@ const AllClass345Result = () => {
           parseInt(el.envs_p1) +
           parseInt(el.phys_p1) +
           parseInt(el.work_p1);
-        let grtotalper1 = parseInt(round2dec((grtotal1 / 50) * 100));
+        let grtotalper1 = parseFloat(round2dec((grtotal1 / 50) * 100));
         let grtotal_per_pertotal1 = percentTotal(grtotalper1);
         let grtotal2 =
           parseInt(el.lang_1_p2) +
@@ -130,7 +130,7 @@ const AllClass345Result = () => {
           parseInt(el.envs_p2) +
           parseInt(el.phys_p2) +
           parseInt(el.work_p2);
-        let grtotalper2 = parseInt(round2dec((grtotal2 / 50) * 100));
+        let grtotalper2 = parseFloat(round2dec((grtotal2 / 50) * 100));
         let grtotal_per_pertotal2 = percentTotal(grtotalper2);
         let grtotal =
           lang1_summ_totalmarks +
@@ -139,11 +139,14 @@ const AllClass345Result = () => {
           envs_summ_totalmarks +
           phys_summ_totalmarks +
           work_summ_totalmarks;
-        let grtotalper = parseInt(round2dec((grtotal / 480) * 100));
+        let grtotalper = parseFloat(round2dec((grtotal / 480) * 100));
         let grtotal_per_pertotal = percentTotal(grtotalper);
         return (
           <div key={ind}>
-            <div className="mainContend text-black" style={{ height: "700px",marginBottom:20 }}>
+            <div
+              className="mainContend text-black"
+              style={{ height: "700px", marginBottom: 110 }}
+            >
               <table className="new">
                 <tr>
                   <td>
@@ -580,7 +583,12 @@ const AllClass345Result = () => {
                             style={{ padding: "0px  !important" }}
                           >
                             <table width="100%" className="borderBlue">
-                              <tr>
+                              <tr
+                                style={{
+                                  textAlign: "center",
+                                  border: "1px solid #ddd",
+                                }}
+                              >
                                 <td
                                   width="40%"
                                   style={{
@@ -655,7 +663,12 @@ const AllClass345Result = () => {
                                   <b>Grade</b>
                                 </td>
                               </tr>
-                              <tr>
+                              <tr
+                                style={{
+                                  textAlign: "center",
+                                  border: "1px solid #ddd",
+                                }}
+                              >
                                 <td>FIRST LANGUAGE</td>
                                 <td
                                   style={{
@@ -890,24 +903,19 @@ const AllClass345Result = () => {
                                     : ``}
                                 </td>
                               </tr>
-                              <tr style={{ border: "1px solid #ddd" }}>
+                              <tr style={{}}>
                                 <td style={{ border: "1px solid #ddd" }}>
                                   HEALTH & PHYSICAL EDUCATION
                                 </td>
 
                                 <td style={{ padding: "0px" }}>
-                                  <table
-                                    width="100%"
-                                    style={{ border: "1px solid #ddd" }}
-                                  >
-                                    <tr style={{ border: "1px solid #ddd" }}>
+                                  <table width="100%">
+                                    <tr
+                                      style={{ borderBottom: "1px solid #ddd" }}
+                                    >
                                       <td
                                         style={{
-                                          borderTop: "none !important",
-                                          borderRight: "none !important",
-                                          borderLeft: "none !important",
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
                                         }}
                                         colSpan={3}
                                       >
@@ -917,21 +925,21 @@ const AllClass345Result = () => {
                                     <tr>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
+                                          borderLeft: 0,
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
+                                          borderRight: "1px solid #ddd",
+                                          // borderBottom: "1px solid #ddd",
                                         }}
                                       >
-                                        Pr(5)
+                                        Pr(10)
                                       </td>
                                     </tr>
                                     <tr>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
-                                          borderBottom: "none !important",
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
+                                          borderTop: "1px solid #ddd",
+                                          borderRight: "1px solid #ddd",
                                         }}
                                       >
                                         {el.phys_p1 !== 0 ? el.phys_p1 : ``}
@@ -943,45 +951,44 @@ const AllClass345Result = () => {
                                 <td
                                   style={{
                                     padding: "0px",
-                                    border: "1px solid #ddd",
+                                    // border: "1px solid #ddd",
                                   }}
                                 >
-                                  <table
-                                    width="100%"
-                                    style={{ border: "1px solid #ddd" }}
-                                  >
-                                    <tr style={{ border: "1px solid #ddd" }}>
+                                  <table width="100%">
+                                    <tr
+                                      style={{
+                                        borderLeft: "1px solid #ddd",
+                                        borderRight: "1px solid #ddd",
+                                      }}
+                                    >
                                       <td
                                         style={{
-                                          borderTop: "none !important",
-                                          borderRight: "none !important",
-                                          borderLeft: "none !important",
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
                                         }}
                                         colSpan={3}
                                       >
                                         /
                                       </td>
                                     </tr>
-                                    <tr style={{ border: "1px solid #ddd" }}>
+                                    <tr>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
+                                          borderLeft: 0,
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
+                                          borderTop: "1px solid #ddd",
+                                          borderRight: "1px solid #ddd",
                                         }}
                                       >
-                                        Pr(10)
+                                        Pr(20)
                                       </td>
                                     </tr>
                                     <tr>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
-                                          borderBottom: "none !important",
-                                          textAlign: "center",
                                           border: "1px solid #ddd",
+                                          borderLeft: 0,
+                                          borderBottom: "1px solid #ddd",
+                                          textAlign: "center",
                                         }}
                                       >
                                         {el.phys_p2 !== 0 ? el.phys_p2 : ``}
@@ -993,54 +1000,42 @@ const AllClass345Result = () => {
                                 <td
                                   style={{
                                     padding: "0px",
-                                    border: "1px solid #ddd",
+                                    // border: "1px solid #ddd",
                                   }}
                                 >
-                                  <table
-                                    width="100%"
-                                    style={{ border: "1px solid #ddd" }}
-                                  >
+                                  <table width="100%">
                                     <tr>
                                       <td
                                         style={{
-                                          borderTop: "none !important",
-                                          borderRight: "none !important",
-                                          borderLeft: "none !important",
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
                                         }}
                                         colSpan={3}
                                       >
                                         /
                                       </td>
                                     </tr>
-                                    <tr>
+                                    <tr style={{ borderTop: "1px solid #ddd" }}>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
+                                          borderRight: "1px solid #ddd",
                                         }}
                                       >
-                                        Th(15)
+                                        Th(20)
                                       </td>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
                                         }}
                                       >
-                                        Pr(10)
+                                        Pr(30)
                                       </td>
                                     </tr>
-                                    <tr>
+                                    <tr style={{ borderTop: "1px solid #ddd" }}>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
-                                          borderBottom: "none !important",
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
+                                          borderRight: "1px solid #ddd",
                                         }}
                                       >
                                         {el.phys_p3_th !== 0
@@ -1049,10 +1044,7 @@ const AllClass345Result = () => {
                                       </td>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
-                                          borderBottom: "none !important",
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
                                         }}
                                       >
                                         {el.phys_p3_pr !== 0
@@ -1092,7 +1084,7 @@ const AllClass345Result = () => {
                                       <td
                                         style={{
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
+                                          borderTop: "1px solid #ddd",
                                         }}
                                         height="100%"
                                       >
@@ -1124,21 +1116,17 @@ const AllClass345Result = () => {
                                     : ``}
                                 </td>
                               </tr>
-                              <tr style={{ border: "1px solid #ddd" }}>
+                              <tr style={{}}>
                                 <td style={{ border: "1px solid #ddd" }}>
                                   ART & WORK EDUCATION
                                 </td>
 
                                 <td style={{ padding: "0px" }}>
                                   <table width="100%">
-                                    <tr>
+                                    <tr style={{ borderTop: "1px solid #ddd" }}>
                                       <td
                                         style={{
-                                          borderTop: "none !important",
-                                          borderRight: "none !important",
-                                          borderLeft: "none !important",
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
                                         }}
                                         colSpan={3}
                                       >
@@ -1148,21 +1136,22 @@ const AllClass345Result = () => {
                                     <tr>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
+                                          borderLeft: 0,
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
+                                          borderTop: "1px solid #ddd",
+                                          borderBottom: "1px solid #ddd",
                                         }}
                                       >
-                                        Pr(5)
+                                        Pr(10)
                                       </td>
                                     </tr>
                                     <tr>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
-                                          borderBottom: "none !important",
+                                          borderLeft: 0,
+                                          borderBottom: "1px solid #ddd",
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
+                                          // border: "1px solid #ddd",
                                         }}
                                       >
                                         {el.work_p1 !== 0 ? el.work_p1 : ``}
@@ -1174,18 +1163,17 @@ const AllClass345Result = () => {
                                 <td
                                   style={{
                                     padding: "0px",
-                                    border: "1px solid #ddd",
+                                    // border: "1px solid #ddd",
                                   }}
                                 >
                                   <table width="100%">
                                     <tr>
                                       <td
                                         style={{
-                                          borderTop: "none !important",
-                                          borderRight: "none !important",
-                                          borderLeft: "none !important",
                                           textAlign: "center",
                                           border: "1px solid #ddd",
+                                          borderTop: 0,
+                                          borderRight: 0,
                                         }}
                                         colSpan={3}
                                       >
@@ -1195,19 +1183,20 @@ const AllClass345Result = () => {
                                     <tr>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
+                                          borderLeft: "1px solid #ddd",
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
+                                          // border: "1px solid #ddd",
                                         }}
                                       >
-                                        Pr(10)
+                                        Pr(20)
                                       </td>
                                     </tr>
                                     <tr>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
-                                          borderBottom: "none !important",
+                                          borderLeft: 0,
+                                          borderRight: 0,
+                                          borderBottom: 0,
                                           textAlign: "center",
                                           border: "1px solid #ddd",
                                         }}
@@ -1221,14 +1210,14 @@ const AllClass345Result = () => {
                                 <td style={{ padding: "0px" }}>
                                   <table
                                     width="100%"
-                                    style={{ border: "1px solid #ddd" }}
+                                    style={{border: "1px solid #ddd", borderRight: 0,}}
                                   >
                                     <tr>
                                       <td
                                         style={{
-                                          borderTop: "none !important",
-                                          borderRight: "none !important",
-                                          borderLeft: "none !important",
+                                          borderTop: 0,
+                                          borderRight: 0,
+                                          borderLeft: 0,
                                           textAlign: "center",
                                           border: "1px solid #ddd",
                                         }}
@@ -1240,32 +1229,28 @@ const AllClass345Result = () => {
                                     <tr>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
+                                          borderLeft: 0,
                                           textAlign: "center",
                                           border: "1px solid #ddd",
                                         }}
                                       >
-                                        Th(15)
+                                        Th(20)
                                       </td>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
-                                          textAlign: "center",
-                                          border: "1px solid #ddd",
                                         }}
                                       >
-                                        Pr(10)
+                                        Pr(30)
                                       </td>
                                     </tr>
                                     <tr>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
-                                          borderBottom: "none !important",
+                                          borderLeft: 0,
+                                          borderBottom: 0,
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
+                                          borderRight: "1px solid #ddd",
                                         }}
                                       >
                                         {el.work_p3_th !== 0
@@ -1274,10 +1259,9 @@ const AllClass345Result = () => {
                                       </td>
                                       <td
                                         style={{
-                                          borderLeft: "none !important",
-                                          borderBottom: "none !important",
+                                          borderTop: "1px solid #ddd",
+                                          borderBottom: 0,
                                           textAlign: "center",
-                                          border: "1px solid #ddd",
                                         }}
                                       >
                                         {el.work_p3_pr !== 0
@@ -1356,7 +1340,7 @@ const AllClass345Result = () => {
                     </td>
                   </tr>
                 </table>
-                <table>
+                <table style={{marginTop:5}}>
                   {/* <tr style={{ background: "#e0e0e0" }}>
                     <td style={{ border: "none" }}>PART-1 RESULT{"==>"}</td>
                     <td style={{ border: "none" }}>
@@ -1407,7 +1391,7 @@ const AllClass345Result = () => {
                   )}
                 </table>
               </div>
-              <div style={{ marginTop: 20 }}>
+              <div style={{ marginTop: 50 }}>
                 <table className="result_info_tbl">
                   <tr>
                     <td
@@ -1602,7 +1586,7 @@ const AllClass345Result = () => {
                     </td>
                   </tr>
                 </table>
-                <table style={{ marginTop: "30px",marginBottom:"30px" }}>
+                <table style={{ marginTop: "30px", marginBottom: "30px" }}>
                   <tr>
                     {/* <td
                       style={{
@@ -1617,7 +1601,6 @@ const AllClass345Result = () => {
                     </td> */}
                     <td
                       style={{
-                        border: "1px solid #ddd",
                         border: "none",
                         textAlign: "center",
                       }}
@@ -1651,7 +1634,6 @@ const AllClass345Result = () => {
                     <td
                       style={{
                         border: "1px solid #ddd",
-                        border: "none",
                         textAlign: "center",
                       }}
                     >
@@ -1684,7 +1666,6 @@ const AllClass345Result = () => {
                     <td
                       style={{
                         border: "1px solid #ddd",
-                        border: "none",
                         textAlign: "center",
                       }}
                     >
