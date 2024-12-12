@@ -85,6 +85,7 @@ import DownloadWBTPTAPayslip from "./components/DownloadWBTPTAPayslip";
 import Retirement from "./components/Retirement";
 import IncomeTax from "./components/IncomeTax";
 import ITSection from "./components/ITSection";
+import IncomeTaxNewReigme from "./components/IncomeTaxNewReigme";
 
 const Routing = () => {
   return (
@@ -206,6 +207,11 @@ const Routing = () => {
         exact
         path="/IncomeTax"
         element={<IncomeTax />}
+      />
+      <Route
+        exact
+        path="/IncomeTaxNew"
+        element={<IncomeTaxNewReigme />}
       />
       <Route
         exact

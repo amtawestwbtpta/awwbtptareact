@@ -1633,7 +1633,7 @@ const AllClass345Result = () => {
                     </td> */}
                     <td
                       style={{
-                        border: "1px solid #ddd",
+                        // border: "1px solid #ddd",
                         textAlign: "center",
                       }}
                     >
@@ -1665,7 +1665,7 @@ const AllClass345Result = () => {
                     </td> */}
                     <td
                       style={{
-                        border: "1px solid #ddd",
+                        // border: "1px solid #ddd",
                         textAlign: "center",
                       }}
                     >

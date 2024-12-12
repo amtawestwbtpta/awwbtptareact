@@ -9,16 +9,30 @@ import {
 } from "../modules/calculatefunctions";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import axios from "axios";
-import IncomeTaxDownload from "./Helpers/IncomeTaxDownload";
 import { firestore } from "../context/FirbaseContext";
 import { useGlobalContext } from "../context/Store";
 import Loader from "./Loader";
 import { collection, getDocs, query } from "firebase/firestore";
-export default function IncomeTax() {
+import IncomeTaxNew from "./Helpers/IncomeTaxNew";
+export default function IncomeTaxNewReigme() {
   const [searchParams] = useSearchParams();
   const data = JSON.parse(searchParams.get("data"));
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
+  const { deductionState, setDeductionState } = useGlobalContext();
+  const { id, tname, school, pan, phone, disability, desig } = data;
+  const date = new Date();
+  const month = date.getMonth() + 1;
+  let thisYear, nextYear, prevYear;
+  if (month < 4) {
+    thisYear = date.getFullYear() - 1;
+    nextYear = date.getFullYear();
+    prevYear = date.getFullYear() - 2;
+  } else {
+    thisYear = date.getFullYear();
+    nextYear = date.getFullYear() + 1;
+    prevYear = date.getFullYear() - 1;
+  }
   const [march, setMarch] = useState([]);
   const [april, setApril] = useState([]);
   const [may, setMay] = useState([]);
@@ -31,21 +45,6 @@ export default function IncomeTax() {
   const [december, setDecember] = useState([]);
   const [january, setJanuary] = useState([]);
   const [february, setFebruary] = useState([]);
-
-  const { deductionState, setDeductionState } = useGlobalContext();
-  const { id, tname, school, pan, phone, disability, desig } = data;
-  const date = new Date();
-  const month = date.getMonth() + 1;
-  let thisYear, nextYear, prevYear;
-  if (month < 4) {
-    thisYear = date.getFullYear();
-    nextYear = date.getFullYear() + 1;
-    prevYear = date.getFullYear() - 1;
-  } else {
-    thisYear = date.getFullYear() + 1;
-    nextYear = date.getFullYear() + 2;
-    prevYear = date.getFullYear();
-  }
   const finYear = `${thisYear}-${nextYear}`;
   const marchSalary = march.filter((el) => el.id === id)[0];
   const marchArrear = marchSalary?.arrear;
@@ -328,25 +327,7 @@ export default function IncomeTax() {
     februaryPTax;
   const BankInterest = randBetween(500, 2000);
   const teacherDeduction = deductionState?.filter((el) => el.id === id)[0];
-  const hbLoanPrincipal = teacherDeduction?.hbLoanPrincipal;
-  const hbLoanInterest = teacherDeduction?.hbLoanInterest;
-  const lic = teacherDeduction?.lic;
-  const ulip = teacherDeduction?.ulip;
-  const ppf = teacherDeduction?.ppf;
-  const nsc = teacherDeduction?.nsc;
-  const nscInterest = teacherDeduction?.nscInterest;
-  const tutionFee = teacherDeduction?.tutionFee;
-  const sukanya = teacherDeduction?.sukanya;
-  const stampDuty = teacherDeduction?.stampDuty;
-  const mediclaim = teacherDeduction?.mediclaim;
-  const terminalDisease = teacherDeduction?.terminalDisease;
-  const handicapTreatment = teacherDeduction?.handicapTreatment;
-  const educationLoan = teacherDeduction?.educationLoan;
-  const charity = teacherDeduction?.charity;
-  const disabilityDeduction = teacherDeduction?.disability;
-  const rgSaving = teacherDeduction?.rgSaving;
   const otherIncome = teacherDeduction?.otherIncome;
-  const fd = teacherDeduction?.fd;
   const tds = teacherDeduction?.tds;
   const AllGross =
     GrossPAY +
@@ -363,36 +344,41 @@ export default function IncomeTax() {
     januaryArrear +
     februaryArrear +
     otherIncome;
-  const GrossTotalIncome =
-    AllGross - grossPTax - 50000 + BankInterest - hbLoanInterest;
-  const deductionVIA =
-    grossGPF +
-    sukanya +
-    nsc +
-    ulip +
-    hbLoanPrincipal +
-    nsc +
-    ppf +
-    lic +
-    tutionFee +
-    fd +
-    grossGSLI +
-    nscInterest;
-  const limitVIA = deductionVIA >= 150000 ? 150000 : deductionVIA;
-  const OtherVIA =
-    BankInterest +
-    mediclaim +
-    disabilityDeduction +
-    terminalDisease +
-    educationLoan +
-    charity +
-    handicapTreatment;
-  const TotalIncome = GrossTotalIncome - limitVIA - OtherVIA;
-  const TotalRoundOffIncome = roundSo(TotalIncome, 10);
-  const CalculatedIT = CalculateIncomeTax(TotalRoundOffIncome);
-  const isUnderRebate = CalculatedIT >= 12500 ? false : true;
-  const eduCess = CalculatedIT * 0.04;
-  const AddedEduCess = CalculatedIT + CalculatedIT * 0.04;
+  const GrossTotalIncome = AllGross - 75000 + BankInterest; //H36
+  const TotalRoundOffIncome = roundSo(GrossTotalIncome, 10);
+  const ThirtyIT = GrossTotalIncome > 1500000 ? GrossTotalIncome - 1500000 : 0;
+  const ThirtyITTax = ThirtyIT * 0.3;
+  const TwentyIT =
+    GrossTotalIncome > 1200000 ? GrossTotalIncome - 1200000 - ThirtyIT : 0;
+  const TwentyITTax = TwentyIT * 0.2;
+  const FifteenIT =
+    GrossTotalIncome > 1000000
+      ? GrossTotalIncome - 1000000 - ThirtyIT - TwentyIT
+      : 0;
+  const FifteenITTax = FifteenIT * 0.15;
+  const TenIT =
+    GrossTotalIncome > 700000
+      ? GrossTotalIncome - 700000 - ThirtyIT - TwentyIT - FifteenIT
+      : 0;
+  const TenITTax = TenIT * 0.1;
+  const FiveIT =
+    GrossTotalIncome > 300000
+      ? GrossTotalIncome - 300000 - ThirtyIT - TwentyIT - FifteenIT - TenIT
+      : 0;
+  const FiveITTax = FiveIT * 0.05;
+  const CalculatedIT = Math.floor(
+    ThirtyITTax + TwentyITTax + FifteenITTax + TenITTax + FiveITTax
+  ); //H46
+  const cal1 = GrossTotalIncome > 700000 ? GrossTotalIncome : 0; //G67
+  const cal2 = GrossTotalIncome > 700000 ? cal1 - 700000 : 0; //G68
+  const cal3 = GrossTotalIncome < 700001 ? Math.min(CalculatedIT, 25000) : 0; //G66
+  const cal4 = GrossTotalIncome > 700000 ? CalculatedIT - cal2 : 0; //H67
+  const cal5 = cal4 > 0 ? true : false; //H68
+  const cal6 = cal5 ? cal4 : 0; //H66
+  const GrossRelief = cal3 + cal6; //J66
+  const IncomeTaxAfterRelief = Math.floor(CalculatedIT - GrossRelief);
+  const eduCess = Math.floor(IncomeTaxAfterRelief * 0.04);
+  const AddedEduCess = IncomeTaxAfterRelief + eduCess;
 
   const getSalary = async () => {
     setLoader(true);
@@ -485,10 +471,10 @@ export default function IncomeTax() {
           type="button"
           className="btn btn-success text-white font-weight-bold m-2 p-2 rounded"
           onClick={() => {
-            navigate(`/incometaxNew?data=${JSON.stringify(data)}`);
+            navigate(`/incometax?data=${JSON.stringify(data)}`);
           }}
         >
-          Go To New Regime
+          Go To Old Regime
         </button>
       </div>
 
@@ -504,41 +490,16 @@ export default function IncomeTax() {
       <div className="mx-auto noprint mb-5">
         <PDFDownloadLink
           document={
-            <IncomeTaxDownload
+            <IncomeTaxNew
               data={{
-                id,
                 tname,
                 school,
                 pan,
                 phone,
-                disability,
                 desig,
                 thisYear,
-                nextYear,
                 prevYear,
                 finYear,
-                BankInterest,
-                teacherDeduction,
-                hbLoanPrincipal,
-                hbLoanInterest,
-                lic,
-                ulip,
-                ppf,
-                nsc,
-                nscInterest,
-                tutionFee,
-                sukanya,
-                stampDuty,
-                mediclaim,
-                terminalDisease,
-                handicapTreatment,
-                educationLoan,
-                charity,
-                disabilityDeduction,
-                rgSaving,
-                otherIncome,
-                fd,
-                tds,
                 marchSalary,
                 marchBasic,
                 marchAddl,
@@ -672,15 +633,24 @@ export default function IncomeTax() {
                 grossPTax,
                 AllGross,
                 GrossTotalIncome,
-                deductionVIA,
-                limitVIA,
-                OtherVIA,
-                TotalIncome,
                 TotalRoundOffIncome,
                 CalculatedIT,
-                isUnderRebate,
                 eduCess,
                 AddedEduCess,
+                BankInterest,
+                tds,
+                GrossRelief,
+                IncomeTaxAfterRelief,
+                ThirtyIT,
+                ThirtyITTax,
+                TwentyIT,
+                TwentyITTax,
+                FifteenIT,
+                FifteenITTax,
+                TenIT,
+                TenITTax,
+                FiveIT,
+                FiveITTax,
               }}
             />
           }
@@ -699,186 +669,8 @@ export default function IncomeTax() {
             loading ? "Please Wait..." : "Download IT Statement"
           }
         </PDFDownloadLink>
-        {/* <IncomeTaxDownload
-          data={{
-            id,
-            tname,
-            school,
-            pan,
-            phone,
-            disability,
-            desig,
-            thisYear,
-            nextYear,
-            prevYear,
-            finYear,
-            BankInterest,
-            teacherDeduction,
-            hbLoanPrincipal,
-            hbLoanInterest,
-            lic,
-            ulip,
-            ppf,
-            nsc,
-            nscInterest,
-            tutionFee,
-            sukanya,
-            stampDuty,
-            mediclaim,
-            terminalDisease,
-            handicapTreatment,
-            educationLoan,
-            charity,
-            disabilityDeduction,
-            rgSaving,
-            otherIncome,
-            fd,
-            tds,
-            marchSalary,
-            marchBasic,
-            marchAddl,
-            marchDA,
-            marchHRA,
-            marchMA,
-            marchGross,
-            marchGPF,
-            marchGSLI,
-            bonus,
-            marchPTax,
-            aprilSalary,
-            aprilBasic,
-            aprilAddl,
-            aprilDA,
-            aprilHRA,
-            aprilMA,
-            aprilGross,
-            aprilGPF,
-            aprilGSLI,
-            aprilPTax,
-            maySalary,
-            mayBasic,
-            mayAddl,
-            mayDA,
-            mayHRA,
-            mayMA,
-            mayGross,
-            mayGPF,
-            mayGSLI,
-            mayPTax,
-            juneSalary,
-            juneBasic,
-            juneAddl,
-            juneDA,
-            juneHRA,
-            juneMA,
-            juneGross,
-            juneGPF,
-            juneGSLI,
-            junePTax,
-            julySalary,
-            julyBasic,
-            julyAddl,
-            julyDA,
-            aprilIR,
-            julyHRA,
-            julyMA,
-            julyGross,
-            julyGPF,
-            julyGSLI,
-            julyPTax,
-            augustSalary,
-            augustBasic,
-            augustAddl,
-            augustDA,
-            augustHRA,
-            augustMA,
-            augustGross,
-            augustGPF,
-            augustGSLI,
-            augustPTax,
-            septemberSalary,
-            septemberBasic,
-            septemberAddl,
-            septemberDA,
-            septemberHRA,
-            septemberMA,
-            septemberGross,
-            septemberGPF,
-            septemberGSLI,
-            septemberPTax,
-            octoberSalary,
-            octoberBasic,
-            octoberAddl,
-            octoberDA,
-            octoberHRA,
-            octoberMA,
-            octoberGross,
-            octoberGPF,
-            octoberGSLI,
-            octoberPTax,
-            novemberSalary,
-            novemberBasic,
-            novemberAddl,
-            novemberDA,
-            novemberHRA,
-            novemberMA,
-            novemberGross,
-            novemberGPF,
-            novemberGSLI,
-            novemberPTax,
-            decemberSalary,
-            decemberBasic,
-            decemberAddl,
-            decemberDA,
-            decemberHRA,
-            decemberMA,
-            decemberGross,
-            decemberGPF,
-            decemberGSLI,
-            decemberPTax,
-            januarySalary,
-            januaryBasic,
-            januaryAddl,
-            januaryDA,
-            januaryHRA,
-            januaryMA,
-            januaryGross,
-            januaryGPF,
-            januaryGSLI,
-            januaryPTax,
-            februarySalary,
-            februaryBasic,
-            februaryAddl,
-            februaryDA,
-            februaryHRA,
-            februaryMA,
-            februaryGross,
-            februaryGPF,
-            februaryGSLI,
-            februaryPTax,
-            grossBasic,
-            grossAddl,
-            grossDA,
-            grossHRA,
-            grossMA,
-            GrossPAY,
-            grossGPF,
-            grossGSLI,
-            grossPTax,
-            AllGross,
-            GrossTotalIncome,
-            deductionVIA,
-            limitVIA,
-            OtherVIA,
-            TotalIncome,
-            TotalRoundOffIncome,
-            CalculatedIT,
-            isUnderRebate,
-            eduCess,
-            AddedEduCess,
-          }}
-        /> */}
       </div>
+
       <table
         className="nobreak"
         style={{ border: "2px solid", width: "100%", padding: 5 }}
@@ -1015,7 +807,12 @@ export default function IncomeTax() {
                       >
                         PAN
                       </th>
-                      <th style={{ borderLeftWidth: 2, borderRightWidth: 2 }}>
+                      <th
+                        style={{
+                          borderLeftWidth: 2,
+                          borderRightWidth: 2,
+                        }}
+                      >
                         {pan?.slice(0, 1)}
                       </th>
                       <th style={{ borderRightWidth: 2 }}>
@@ -1059,34 +856,76 @@ export default function IncomeTax() {
             <th rowSpan={5} style={{ borderRightWidth: 0, width: "20%" }}></th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
-            <th style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}>
+            <th
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
+            >
               1. GROSS SLARY INCOME (Salary +Arrear Salary +Bonus)
             </th>
             <th style={{ borderRightWidth: 2 }}>
               Rs. {IndianFormat(AllGross)}
             </th>
           </tr>
-          <tr style={{ borderBottomWidth: 2 }}>
-            <th style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}>
+          <tr style={{ borderBottomWidth: 2 }} suppressHydrationWarning={true}>
+            <th
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
+            >
               2. Less: Exemption of HRA under Sec 10(13A) the least of the
               following
             </th>
             <th style={{ borderRightWidth: 2 }}></th>
+            {/* <div
+                    style={{
+                      width: 120,
+                      height: 2,
+                      backgroundColor: "black",
+                      transform: "rotate(-60deg)",
+                      marginLeft: -235,
+                      marginTop: 50,
+                      position: "absolute",
+                    }}
+                  ></div> */}
           </tr>
+
           <tr style={{ borderBottomWidth: 2 }}>
-            <th style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}>
+            <th
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
+            >
               a) Actual HRA Received
             </th>
             <th style={{ borderRightWidth: 2 }}></th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
-            <th style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}>
+            <th
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
+            >
               b) Rent Paid in excess of 10% of Salary (Basic + DA)
             </th>
             <th style={{ borderRightWidth: 2 }}></th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
-            <th style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}>
+            <th
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
+            >
               c) 40% of Salary (Basic + DA)
             </th>
             <th style={{ borderRightWidth: 2 }}></th>
@@ -1097,36 +936,50 @@ export default function IncomeTax() {
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
-              3. Less: P. Tax under section 16(ii/i)
+              3. Less: P. Tax under section 16(iii)
             </th>
-            <th>
-              {grossPTax !== 0 ? `Rs. ${IndianFormat(grossPTax)}` : "NIL"}
-            </th>
+            <th>NIL</th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
-              4. Less: Standard Deduction for Salaried & Pensioner (Rs.50,000)
+              4. Less: Standard Deduction for Salaried & Pensioner (Rs.75,000)
             </th>
-            <th>Rs. {IndianFormat(50000)}</th>
+            <th>Rs. {IndianFormat(75000)}</th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               5. Income chargeable under the head Salaries (1-2-3-4)
             </th>
-            <th>Rs. {IndianFormat(AllGross - grossPTax - 50000)}</th>
+            <th>Rs. {IndianFormat(AllGross - 75000)}</th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               6. Income under any head other than salaries (From Schedule OS)
             </th>
@@ -1135,20 +988,24 @@ export default function IncomeTax() {
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               7. Interest on House Building Loan
             </th>
-            <th>
-              {hbLoanInterest !== 0
-                ? `Rs. ${IndianFormat(hbLoanInterest)}`
-                : "NIL"}
-            </th>
+            <th>NOT APPLICABLE</th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               8. Gross Total Income [(5+6)-7)
             </th>
@@ -1157,47 +1014,67 @@ export default function IncomeTax() {
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               9. Deduction under Chapter VIA (From Schedule-VIA)
               <br />
               Aggregate amount of deductions admissible U /S 80C, 80CCC and
               80CCD(I) (Limited to Rs.1,50,000/-)
             </th>
-            <th>Rs. {IndianFormat(limitVIA)}</th>
+            <th>NOT APPLICABLE</th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               10. Amount deduction under section 80CCD(B)
             </th>
-            <th>NIL</th>
+            <th>NOT APPLICABLE</th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               11. Amount deduction under any other provision(s) Chapter VI-A
               (From Schedule- Other VIA)
             </th>
-            <th>{IndianFormat(OtherVIA)}</th>
+            <th>Rs. {IndianFormat(BankInterest)}</th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               12. Total Income (8-9-10-11)
             </th>
-            <th>Rs. {IndianFormat(TotalIncome)}</th>
+            <th>Rs. {IndianFormat(GrossTotalIncome)}</th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               13. Rounding Off of Total Income U/S288A (SI No 12) (If the last
               figure of Total Income is five of more, the amount shall be
@@ -1208,7 +1085,11 @@ export default function IncomeTax() {
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               14. Income Tax on Total Income
             </th>
@@ -1217,65 +1098,94 @@ export default function IncomeTax() {
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
-              15. Less: Rebate U/S 87A (Total Taxable Income not exceeding Rs.
-              5,00,000/- shall got a Tax Rebate of Rs. 12,500/
+              15. Less: Rebate U/S 87A
             </th>
             <th>
-              {!isUnderRebate ? `Rs. ${IndianFormat(CalculatedIT)}` : "NIL"}
+              {GrossRelief > 0 ? `Rs. ${IndianFormat(GrossRelief)}` : "NIL"}
             </th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               16. Total Tax Payable (14-15)
             </th>
             <th>
-              {!isUnderRebate ? `Rs. ${IndianFormat(CalculatedIT)}` : "NIL"}
+              {IncomeTaxAfterRelief > 0
+                ? `Rs. ${IndianFormat(IncomeTaxAfterRelief)}`
+                : "NIL"}
             </th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               17. Add: Health & Education Cess (4% of 16)
             </th>
-            <th>{!isUnderRebate ? `Rs. ${IndianFormat(eduCess)}` : "N/A"}</th>
+            <th>
+              {IncomeTaxAfterRelief > 0
+                ? `Rs. ${IndianFormat(eduCess)}`
+                : "NIL"}
+            </th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               18. Income Tax Relief U/S 89(When salary, etc. is paid in arrear
               of advance)
             </th>
-            <th>{!isUnderRebate ? `NIL` : "N/A"}</th>
+            <th>NIL</th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               19. Net Tax Payable [(16+17)-18]
             </th>
             <th>
-              {!isUnderRebate ? `Rs. ${IndianFormat(AddedEduCess)}` : "NIL"}
+              {AddedEduCess > 0 ? `Rs. ${IndianFormat(AddedEduCess)}` : "NIL"}
             </th>
           </tr>
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               20. Total amount of Tax Deducted at Source (TDS) upto Jan 2023
             </th>
             <th>
-              {!isUnderRebate
+              {AddedEduCess > 0
                 ? tds !== 0
                   ? `Rs. ${IndianFormat(tds)}`
                   : "NIL"
@@ -1285,12 +1195,16 @@ export default function IncomeTax() {
           <tr style={{ borderBottomWidth: 2 }}>
             <th
               colSpan={2}
-              style={{ borderRightWidth: 2, textAlign: "left", padding: 2 }}
+              style={{
+                borderRightWidth: 2,
+                textAlign: "left",
+                padding: 2,
+              }}
             >
               21. TDS Payable in Feb 2023/ Excess Tax deduction
             </th>
             <th>
-              {!isUnderRebate
+              {AddedEduCess > 0
                 ? `Rs. ${IndianFormat(AddedEduCess - tds)}`
                 : "N/A"}
             </th>
@@ -1402,19 +1316,31 @@ export default function IncomeTax() {
             <tr>
               <th
                 suppressHydrationWarning
-                style={{ borderRight: "1px solid", padding: 5, width: "20%" }}
+                style={{
+                  borderRight: "1px solid",
+                  padding: 5,
+                  width: "20%",
+                }}
               >
                 <h5 className="fw-bold">Name of the Teacher</h5>
               </th>
               <th
                 suppressHydrationWarning
-                style={{ borderRight: "1px solid", padding: 5, width: "50%" }}
+                style={{
+                  borderRight: "1px solid",
+                  padding: 5,
+                  width: "50%",
+                }}
               >
                 <h5 className="fw-bold text-start">{tname}</h5>
               </th>
               <th
                 suppressHydrationWarning
-                style={{ borderRight: "1px solid", padding: 5, width: "10%" }}
+                style={{
+                  borderRight: "1px solid",
+                  padding: 5,
+                  width: "10%",
+                }}
               >
                 <h5 className="fw-bold">PAN</h5>
               </th>
@@ -1643,6 +1569,7 @@ export default function IncomeTax() {
             etc. to be enclose)
           </h5>
         </div>
+
         <table style={{ border: "1px solid", width: "100%", padding: 5 }}>
           <thead>
             <tr style={{ border: "2px solid" }}>
@@ -1665,7 +1592,7 @@ export default function IncomeTax() {
                 a) Contribution of GPF
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {grossGPF != 0 ? `Rs. ${IndianFormat(grossGPF)}` : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1677,7 +1604,7 @@ export default function IncomeTax() {
                 b) Deposit in Sukanya Samriddhi Account
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {sukanya != 0 ? `Rs. ${IndianFormat(sukanya)}` : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1689,7 +1616,7 @@ export default function IncomeTax() {
                 c) NSC / Others
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {nsc != 0 ? `Rs. ${IndianFormat(nsc)}` : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1701,7 +1628,7 @@ export default function IncomeTax() {
                 d) ULIP /ELSS
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {ulip != 0 ? `Rs. ${IndianFormat(ulip)}` : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1713,9 +1640,7 @@ export default function IncomeTax() {
                 e) Repayment of Housing Loan (Principal)
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {hbLoanPrincipal != 0
-                  ? `Rs. ${IndianFormat(hbLoanPrincipal)}`
-                  : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1727,7 +1652,7 @@ export default function IncomeTax() {
                 f) Interest on NSC (upto 5th Year)
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {nscInterest != 0 ? `Rs. ${IndianFormat(nscInterest)}` : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1739,7 +1664,7 @@ export default function IncomeTax() {
                 g)PPF
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {ppf != 0 ? `Rs. ${IndianFormat(ppf)}` : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1751,7 +1676,7 @@ export default function IncomeTax() {
                 h) LIC Premium
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {lic != 0 ? `Rs. ${IndianFormat(lic)}` : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1763,7 +1688,7 @@ export default function IncomeTax() {
                 i) UC Premium
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                NIL
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1775,7 +1700,7 @@ export default function IncomeTax() {
                 j) Tution Fees
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {tutionFee != 0 ? `Rs. ${IndianFormat(tutionFee)}` : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1787,7 +1712,7 @@ export default function IncomeTax() {
                 k) F.D.in Sch. Bank not less than 5 years
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {fd != 0 ? `Rs. ${IndianFormat(fd)}` : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1799,7 +1724,7 @@ export default function IncomeTax() {
                 l) GSLI
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {grossGSLI != 0 ? `Rs. ${IndianFormat(grossGSLI)}` : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1812,9 +1737,7 @@ export default function IncomeTax() {
                 </h5>
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                <h5 className="fw-bold">
-                  {limitVIA != 0 ? `Rs. ${IndianFormat(limitVIA)}` : "NIL"}
-                </h5>
+                <h5 className="fw-bold">NOT APPLICABLE</h5>
               </th>
             </tr>
           </thead>
@@ -1849,7 +1772,7 @@ export default function IncomeTax() {
                 A) U/S 80CCD (18) : New Pension Scheme (Limit upto Rs.50,000/-)
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                NIL
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1861,7 +1784,7 @@ export default function IncomeTax() {
                 B) U/S 80D: Premium on Med. Insurance (Mediclaim) Policy
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {mediclaim != 0 ? `Rs. ${IndianFormat(mediclaim)}` : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1873,9 +1796,7 @@ export default function IncomeTax() {
                 C) U/S 80DD: Maintenance & treatment of a dependent disabled
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {handicapTreatment != 0
-                  ? `Rs. ${IndianFormat(handicapTreatment)}`
-                  : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1888,9 +1809,7 @@ export default function IncomeTax() {
                 terminal Disease
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {terminalDisease != 0
-                  ? `Rs. ${IndianFormat(terminalDisease)}`
-                  : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1902,9 +1821,7 @@ export default function IncomeTax() {
                 E) U/S 80E : Repayment of Interest of paid on Education Loan
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {educationLoan != 0
-                  ? `Rs. ${IndianFormat(educationLoan)}`
-                  : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1916,9 +1833,7 @@ export default function IncomeTax() {
                 F) U/S 80U : Tax-payee with disability
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {disabilityDeduction != 0
-                  ? `Rs. ${IndianFormat(disabilityDeduction)}`
-                  : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1931,9 +1846,7 @@ export default function IncomeTax() {
                 savings accounts
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {BankInterest != 0
-                  ? `Rs. ${IndianFormat(BankInterest)}`
-                  : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1946,7 +1859,7 @@ export default function IncomeTax() {
                 Charitable institutions
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {charity != 0 ? `Rs. ${IndianFormat(charity)}` : "NIL"}
+                NOT APPLICABLE
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -1973,9 +1886,7 @@ export default function IncomeTax() {
                 </h5>
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                <h5 className="fw-bold">
-                  {OtherVIA != 0 ? `Rs. ${IndianFormat(OtherVIA)}` : "NIL"}
-                </h5>
+                <h5 className="fw-bold">NOT APPLICABLE</h5>
               </th>
             </tr>
           </thead>
@@ -1997,7 +1908,7 @@ export default function IncomeTax() {
                 style={{ borderRight: "1px solid", padding: 2 }}
               >
                 <h5 className="fw-bold">
-                  Income Tax Structure: F.Y. 2023 - 2024
+                  Income Tax Structure: F.Y. {finYear}
                 </h5>
               </th>
             </tr>
@@ -2007,8 +1918,7 @@ export default function IncomeTax() {
                 className="text-end"
                 style={{ borderRight: "1px solid", padding: 2 }}
               >
-                a) Income upto Rs. 2,50,000/- (Rs. 3,00,000/- for Senior
-                Citizen: @Nil
+                a) Income upto Rs. 3,00,000/-
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
                 NIL
@@ -2020,12 +1930,10 @@ export default function IncomeTax() {
                 className="text-end"
                 style={{ borderRight: "1px solid", padding: 2 }}
               >
-                b) Income from Rs.2,50,001/- to Rs.5,00,000/-: @5%
+                b) Income from Rs.3,00,001/- to Rs.7,00,000/-: @5%
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {TotalRoundOffIncome > 250000 && TotalRoundOffIncome > 500000
-                  ? `Rs. ${IndianFormat(Math.round(12500))}`
-                  : `Rs. ${IndianFormat(CalculatedIT)}`}
+                {FiveITTax > 0 ? `Rs. ${IndianFormat(FiveIT * 0.05)}` : "NIL"}
               </th>
             </tr>
             <tr style={{ border: "2px solid" }}>
@@ -2034,13 +1942,23 @@ export default function IncomeTax() {
                 className="text-end"
                 style={{ borderRight: "1px solid", padding: 2 }}
               >
-                c) Income from 5,00,001/- to Rs. 10,00,000/-: @20%
+                c) Income from 7,00,001/- to Rs. 10,00,000/-: @10%
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {TotalRoundOffIncome > 500000 && TotalRoundOffIncome < 1000000
-                  ? `Rs. ${IndianFormat(
-                      Math.round(((TotalRoundOffIncome - 500000) * 20) / 100)
-                    )}`
+                {TenITTax > 0 ? `Rs. ${IndianFormat(TenIT * 0.1)}` : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-end"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                d) Income from 10,00,001/- to Rs. 12,00,000/-: @15%
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {FifteenITTax > 0
+                  ? `Rs. ${IndianFormat(FifteenIT * 0.15)}`
                   : "NIL"}
               </th>
             </tr>
@@ -2050,13 +1968,25 @@ export default function IncomeTax() {
                 className="text-end"
                 style={{ borderRight: "1px solid", padding: 2 }}
               >
-                d) Income exceeding Rs. 10,00,000/-: @30%
+                e) Income from 12,00,001/- to Rs. 15,00,000/-: @20%
               </th>
               <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
-                {TotalRoundOffIncome > 1000000
-                  ? `Rs. ${IndianFormat(
-                      Math.round(((TotalRoundOffIncome - 1000000) * 30) / 100)
-                    )}`
+                {TwentyITTax > 0
+                  ? `Rs. ${IndianFormat(TwentyIT * 0.2)}`
+                  : "NIL"}
+              </th>
+            </tr>
+            <tr style={{ border: "2px solid" }}>
+              <th
+                suppressHydrationWarning
+                className="text-end"
+                style={{ borderRight: "1px solid", padding: 2 }}
+              >
+                f) Income exceeding Rs. 15,00,000/-: @30%
+              </th>
+              <th suppressHydrationWarning style={{ padding: 2, width: "20%" }}>
+                {ThirtyITTax > 0
+                  ? `Rs. ${IndianFormat(ThirtyIT * 0.3)}`
                   : "NIL"}
               </th>
             </tr>

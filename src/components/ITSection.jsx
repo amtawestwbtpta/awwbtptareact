@@ -106,7 +106,7 @@ export default function ITSection() {
       center: +true,
     },
     {
-      name: "Net Tax",
+      name: "Net Tax OLD",
       selector: (teacher) =>
         teacher?.NetTax !== 0 ? `₹ ${IndianFormat(teacher?.NetTax)}` : "NIL",
       sortable: true,
@@ -131,7 +131,7 @@ export default function ITSection() {
       ),
     },
     {
-      name: "IT Statement",
+      name: "IT Statement Old",
       cell: (row) => {
         const fData = teachersState.filter(
           (teacher) => teacher?.id === row.id
@@ -151,7 +151,34 @@ export default function ITSection() {
             className="btn btn-sm btn-success"
             to={`/incometax?data=${JSON.stringify(data)}`}
           >
-            IT Statement
+            IT Statement Old
+          </Link>
+        );
+      },
+      omit: deductionState.length === 0,
+    },
+    {
+      name: "IT Statement New",
+      cell: (row) => {
+        const fData = teachersState.filter(
+          (teacher) => teacher?.id === row.id
+        )[0];
+        const { id, tname, school, pan, phone, disability, desig } = fData;
+        const data = {
+          id,
+          tname,
+          school,
+          pan,
+          phone,
+          disability,
+          desig,
+        };
+        return (
+          <Link
+            className="btn btn-sm btn-primary"
+            to={`/IncomeTaxNew?data=${JSON.stringify(data)}`}
+          >
+            IT Statement New
           </Link>
         );
       },
@@ -497,7 +524,16 @@ export default function ITSection() {
                           textAlign: "center",
                         }}
                       >
-                        IT Statement
+                        IT Statement Old
+                      </th>
+                      <th
+                        className="noprint"
+                        style={{
+                          border: "1px solid",
+                          textAlign: "center",
+                        }}
+                      >
+                        IT Statement New
                       </th>
                     </tr>
                   </thead>
@@ -655,7 +691,48 @@ export default function ITSection() {
                                   );
                                 }}
                               >
-                                IT Statement
+                                IT Statement Old
+                              </button>
+                            </td>
+                            <td
+                              className="noprint"
+                              style={{
+                                border: "1px solid",
+                                textAlign: "center",
+                              }}
+                              suppressHydrationWarning
+                            >
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-primary p-2 m-2"
+                                onClick={() => {
+                                  const fData = teachersState.filter(
+                                    (item) => item?.id === teacher?.id
+                                  )[0];
+                                  const {
+                                    id,
+                                    tname,
+                                    school,
+                                    pan,
+                                    phone,
+                                    disability,
+                                    desig,
+                                  } = fData;
+                                  const data = {
+                                    id,
+                                    tname,
+                                    school,
+                                    pan,
+                                    phone,
+                                    disability,
+                                    desig,
+                                  };
+                                  navigate(
+                                    `/IncomeTaxNew?data=${JSON.stringify(data)}`
+                                  );
+                                }}
+                              >
+                                IT Statement New
                               </button>
                             </td>
                           </tr>
