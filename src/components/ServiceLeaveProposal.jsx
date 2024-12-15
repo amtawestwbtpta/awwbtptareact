@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../context/Store";
 import { toast } from "react-toastify";
