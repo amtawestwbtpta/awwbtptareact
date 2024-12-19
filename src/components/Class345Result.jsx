@@ -131,7 +131,10 @@ const Class345Result = () => {
           </button>
         </div>
       </div>
-      <div className="mainContend text-black" style={{ height: "700px",marginBottom:20 }}>
+      <div
+        className="mainContend text-black"
+        style={{ height: "700px", marginBottom: 20 }}
+      >
         <table className="new">
           <tr>
             <td>
@@ -868,6 +871,230 @@ const Class345Result = () => {
                         </tr>
                         <tr style={{ border: "1px solid #ddd" }}>
                           <td style={{ border: "1px solid #ddd" }}>
+                            ART & WORK EDUCATION
+                          </td>
+
+                          <td style={{ padding: "0px" }}>
+                            <table width="100%">
+                              <tr>
+                                <td
+                                  style={{
+                                    borderTop: "none !important",
+                                    borderRight: "none !important",
+                                    borderLeft: "none !important",
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                  colSpan={3}
+                                >
+                                  /
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  style={{
+                                    borderLeft: "none !important",
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                >
+                                  Pr(5)
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  style={{
+                                    borderLeft: "none !important",
+                                    borderBottom: "none !important",
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                >
+                                  {studentdata.work_p1 !== 0
+                                    ? studentdata.work_p1
+                                    : ``}
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+
+                          <td
+                            style={{ padding: "0px", border: "1px solid #ddd" }}
+                          >
+                            <table width="100%">
+                              <tr>
+                                <td
+                                  style={{
+                                    borderTop: "none !important",
+                                    borderRight: "none !important",
+                                    borderLeft: "none !important",
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                  colSpan={3}
+                                >
+                                  /
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  style={{
+                                    borderLeft: "none !important",
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                >
+                                  Pr(10)
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  style={{
+                                    borderLeft: "none !important",
+                                    borderBottom: "none !important",
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                >
+                                  {studentdata.work_p2 !== 0
+                                    ? studentdata.work_p2
+                                    : ``}
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+
+                          <td style={{ padding: "0px" }}>
+                            <table
+                              width="100%"
+                              style={{ border: "1px solid #ddd" }}
+                            >
+                              <tr>
+                                <td
+                                  style={{
+                                    borderTop: "none !important",
+                                    borderRight: "none !important",
+                                    borderLeft: "none !important",
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                  colSpan={3}
+                                >
+                                  /
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  style={{
+                                    borderLeft: "none !important",
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                >
+                                  Th(15)
+                                </td>
+                                <td
+                                  style={{
+                                    borderLeft: "none !important",
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                >
+                                  Pr(10)
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  style={{
+                                    borderLeft: "none !important",
+                                    borderBottom: "none !important",
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                >
+                                  {studentdata.work_p3_th !== 0
+                                    ? studentdata.work_p3_th
+                                    : ``}
+                                </td>
+                                <td
+                                  style={{
+                                    borderLeft: "none !important",
+                                    borderBottom: "none !important",
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                >
+                                  {studentdata.work_p3_pr !== 0
+                                    ? studentdata.work_p3_pr
+                                    : ``}
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td
+                            className="total"
+                            style={{
+                              padding: "0px",
+                              textAlign: "center",
+                              border: "1px solid #ddd",
+                            }}
+                          >
+                            <table
+                              width="100%"
+                              height="100%"
+                              border={0}
+                              className="zeroborder"
+                            >
+                              <tr>
+                                <td
+                                  style={{
+                                    borderBottom:
+                                      "solid 1px #117bc9 !important",
+                                    padding: "1px",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  (40)
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  style={{
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                  height="100%"
+                                >
+                                  {studentdata.work_p3_pr !== 0
+                                    ? work_summ_totalmarks
+                                    : ``}
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td
+                            style={{
+                              textAlign: "center",
+                              border: "1px solid #ddd",
+                            }}
+                          >
+                            {studentdata.work_p3_pr !== 0
+                              ? `${work_summ_totalmarks_per}%`
+                              : ``}
+                          </td>
+                          <td
+                            style={{
+                              textAlign: "center",
+                              border: "1px solid #ddd",
+                            }}
+                          >
+                            {studentdata.work_p3_pr !== 0
+                              ? work_summ_totalmarks_percent
+                              : ``}
+                          </td>
+                        </tr>
+                        <tr style={{ border: "1px solid #ddd" }}>
+                          <td style={{ border: "1px solid #ddd" }}>
                             HEALTH & PHYSICAL EDUCATION
                           </td>
 
@@ -1098,230 +1325,6 @@ const Class345Result = () => {
                               : ``}
                           </td>
                         </tr>
-                        <tr style={{ border: "1px solid #ddd" }}>
-                          <td style={{ border: "1px solid #ddd" }}>
-                            ART & WORK EDUCATION
-                          </td>
-
-                          <td style={{ padding: "0px" }}>
-                            <table width="100%">
-                              <tr>
-                                <td
-                                  style={{
-                                    borderTop: "none !important",
-                                    borderRight: "none !important",
-                                    borderLeft: "none !important",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                  colSpan={3}
-                                >
-                                  /
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                  style={{
-                                    borderLeft: "none !important",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                >
-                                  Pr(5)
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                  style={{
-                                    borderLeft: "none !important",
-                                    borderBottom: "none !important",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                >
-                                  {studentdata.work_p1 !== 0
-                                    ? studentdata.work_p1
-                                    : ``}
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-
-                          <td
-                            style={{ padding: "0px", border: "1px solid #ddd" }}
-                          >
-                            <table width="100%">
-                              <tr>
-                                <td
-                                  style={{
-                                    borderTop: "none !important",
-                                    borderRight: "none !important",
-                                    borderLeft: "none !important",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                  colSpan={3}
-                                >
-                                  /
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                  style={{
-                                    borderLeft: "none !important",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                >
-                                  Pr(10)
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                  style={{
-                                    borderLeft: "none !important",
-                                    borderBottom: "none !important",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                >
-                                  {studentdata.work_p2 !== 0
-                                    ? studentdata.work_p2
-                                    : ``}
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-
-                          <td style={{ padding: "0px" }}>
-                            <table
-                              width="100%"
-                              style={{ border: "1px solid #ddd" }}
-                            >
-                              <tr>
-                                <td
-                                  style={{
-                                    borderTop: "none !important",
-                                    borderRight: "none !important",
-                                    borderLeft: "none !important",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                  colSpan={3}
-                                >
-                                  /
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                  style={{
-                                    borderLeft: "none !important",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                >
-                                  Th(15)
-                                </td>
-                                <td
-                                  style={{
-                                    borderLeft: "none !important",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                >
-                                  Pr(10)
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                  style={{
-                                    borderLeft: "none !important",
-                                    borderBottom: "none !important",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                >
-                                  {studentdata.work_p3_th !== 0
-                                    ? studentdata.work_p3_th
-                                    : ``}
-                                </td>
-                                <td
-                                  style={{
-                                    borderLeft: "none !important",
-                                    borderBottom: "none !important",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                >
-                                  {studentdata.work_p3_pr !== 0
-                                    ? studentdata.work_p3_pr
-                                    : ``}
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                          <td
-                            className="total"
-                            style={{
-                              padding: "0px",
-                              textAlign: "center",
-                              border: "1px solid #ddd",
-                            }}
-                          >
-                            <table
-                              width="100%"
-                              height="100%"
-                              border={0}
-                              className="zeroborder"
-                            >
-                              <tr>
-                                <td
-                                  style={{
-                                    borderBottom:
-                                      "solid 1px #117bc9 !important",
-                                    padding: "1px",
-                                    textAlign: "center",
-                                  }}
-                                >
-                                  (40)
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                  style={{
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                  height="100%"
-                                >
-                                  {studentdata.work_p3_pr !== 0
-                                    ? work_summ_totalmarks
-                                    : ``}
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                          <td
-                            style={{
-                              textAlign: "center",
-                              border: "1px solid #ddd",
-                            }}
-                          >
-                            {studentdata.work_p3_pr !== 0
-                              ? `${work_summ_totalmarks_per}%`
-                              : ``}
-                          </td>
-                          <td
-                            style={{
-                              textAlign: "center",
-                              border: "1px solid #ddd",
-                            }}
-                          >
-                            {studentdata.work_p3_pr !== 0
-                              ? work_summ_totalmarks_percent
-                              : ``}
-                          </td>
-                        </tr>
                       </table>
                     </td>
                   </tr>
@@ -1363,7 +1366,7 @@ const Class345Result = () => {
             )}
             {studentdata.work_p3_pr !== 0 ? (
               <tr style={{ background: "#e0e0e0" }}>
-                <td style={{ border: "none" }}>RESULT - PASSED</td>
+                <td style={{ border: "none" }}>RESULT - PROMOTED</td>
                 <td style={{ border: "none" }}>
                   GRAND TOTAL - {grtotal !== 0 ? grtotal : ``}
                 </td>

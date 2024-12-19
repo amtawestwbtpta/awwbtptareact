@@ -482,7 +482,7 @@ export default function IncomeTaxNewReigme() {
         <button
           type="button"
           className="btn btn-info text-white font-weight-bold m-2 p-2 rounded"
-          onClick={() => navigate("/teacherdatabase")}
+          onClick={() => navigate(-1)}
         >
           Go Back
         </button>
