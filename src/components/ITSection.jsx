@@ -114,6 +114,16 @@ export default function ITSection() {
       center: +true,
     },
     {
+      name: "Net Tax NEW",
+      selector: (teacher) =>
+        teacher?.AddedEduCess !== 0
+          ? `₹ ${IndianFormat(teacher?.AddedEduCess)}`
+          : "NIL",
+      sortable: true,
+      wrap: true,
+      center: +true,
+    },
+    {
       name: "Update Deduction",
       cell: (row) => (
         <button
@@ -435,7 +445,7 @@ export default function ITSection() {
                     textAlign: "center",
                     width: "100%",
                   }}
-                  className="container"
+                  className="container-fluid"
                 >
                   <thead
                     style={{
@@ -503,10 +513,16 @@ export default function ITSection() {
                       <th
                         style={{
                           border: "1px solid",
-                          textAlign: "center",
                         }}
                       >
-                        Net Tax
+                        Net Tax OLD
+                      </th>
+                      <th
+                        style={{
+                          border: "1px solid",
+                        }}
+                      >
+                        Net Tax NEW
                       </th>
                       <th
                         className="noprint"
@@ -628,6 +644,15 @@ export default function ITSection() {
                             >
                               {teacher?.NetTax !== 0
                                 ? `₹ ${IndianFormat(teacher?.NetTax)}`
+                                : "NIL"}
+                            </td>
+                            <td
+                              style={{
+                                border: "1px solid",
+                              }}
+                            >
+                              {teacher?.AddedEduCess !== 0
+                                ? `₹ ${IndianFormat(teacher?.AddedEduCess)}`
                                 : "NIL"}
                             </td>
                             <td

@@ -10,7 +10,7 @@ import {
 import { firestore } from "../context/FirbaseContext";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
-import { Loader } from "rsuite";
+import Loader from "./Loader";
 import axios from "axios";
 const Navbar = () => {
   const {
