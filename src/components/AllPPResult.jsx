@@ -869,8 +869,8 @@ const AllPPResult = () => {
                     </td>
                   </tr>
                 </table>
-                {/* <table>
-                  <tr style={{ background: "#e0e0e0" }}>
+                 <table>
+                  {/* <tr style={{ background: "#e0e0e0" }}>
                     <td style={{ border: "none" }}>PART-1 RESULT{"==>"}</td>
                     <td style={{ border: "none" }}>
                       PART-1 GRAND TOTAL -{grtotal1 !== 0 ? grtotal1 : ""}
@@ -900,7 +900,7 @@ const AllPPResult = () => {
                     </tr>
                   ) : (
                     ""
-                  )}
+                  )} */}
                   {grtotal !== 0 ? (
                     <tr style={{ background: "#e0e0e0" }}>
                       <td style={{ border: "none" }}>RESULT - PASSED</td>
@@ -918,7 +918,7 @@ const AllPPResult = () => {
                   ) : (
                     ""
                   )}
-                </table> */}
+                </table> 
               </div>
               <div>
                 <table

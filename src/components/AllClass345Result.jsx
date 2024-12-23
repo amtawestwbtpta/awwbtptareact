@@ -669,7 +669,7 @@ const AllClass345Result = () => {
                                   border: "1px solid #ddd",
                                 }}
                               >
-                                <td>FIRST LANGUAGE</td>
+                                <td>BENGALI</td>
                                 <td
                                   style={{
                                     textAlign: "center",
@@ -728,7 +728,7 @@ const AllClass345Result = () => {
                               </tr>
                               <tr style={{ border: "1px solid #ddd" }}>
                                 <td style={{ border: "1px solid #ddd" }}>
-                                  SECOND LANGUAGE
+                                  ENGLISH
                                 </td>
                                 <td
                                   style={{
@@ -905,219 +905,6 @@ const AllClass345Result = () => {
                               </tr>
                               <tr style={{}}>
                                 <td style={{ border: "1px solid #ddd" }}>
-                                  HEALTH & PHYSICAL EDUCATION
-                                </td>
-
-                                <td style={{ padding: "0px" }}>
-                                  <table width="100%">
-                                    <tr
-                                      style={{ borderBottom: "1px solid #ddd" }}
-                                    >
-                                      <td
-                                        style={{
-                                          textAlign: "center",
-                                        }}
-                                        colSpan={3}
-                                      >
-                                        /
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td
-                                        style={{
-                                          borderLeft: 0,
-                                          textAlign: "center",
-                                          borderRight: "1px solid #ddd",
-                                          // borderBottom: "1px solid #ddd",
-                                        }}
-                                      >
-                                        Pr(10)
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td
-                                        style={{
-                                          textAlign: "center",
-                                          borderTop: "1px solid #ddd",
-                                          borderRight: "1px solid #ddd",
-                                        }}
-                                      >
-                                        {el.phys_p1 !== 0 ? el.phys_p1 : ``}
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-
-                                <td
-                                  style={{
-                                    padding: "0px",
-                                    // border: "1px solid #ddd",
-                                  }}
-                                >
-                                  <table width="100%">
-                                    <tr
-                                      style={{
-                                        borderLeft: "1px solid #ddd",
-                                        borderRight: "1px solid #ddd",
-                                      }}
-                                    >
-                                      <td
-                                        style={{
-                                          textAlign: "center",
-                                        }}
-                                        colSpan={3}
-                                      >
-                                        /
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td
-                                        style={{
-                                          borderLeft: 0,
-                                          textAlign: "center",
-                                          borderTop: "1px solid #ddd",
-                                          borderRight: "1px solid #ddd",
-                                        }}
-                                      >
-                                        Pr(20)
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td
-                                        style={{
-                                          border: "1px solid #ddd",
-                                          borderLeft: 0,
-                                          borderBottom: "1px solid #ddd",
-                                          textAlign: "center",
-                                        }}
-                                      >
-                                        {el.phys_p2 !== 0 ? el.phys_p2 : ``}
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-
-                                <td
-                                  style={{
-                                    padding: "0px",
-                                    // border: "1px solid #ddd",
-                                  }}
-                                >
-                                  <table width="100%">
-                                    <tr>
-                                      <td
-                                        style={{
-                                          textAlign: "center",
-                                        }}
-                                        colSpan={3}
-                                      >
-                                        /
-                                      </td>
-                                    </tr>
-                                    <tr style={{ borderTop: "1px solid #ddd" }}>
-                                      <td
-                                        style={{
-                                          textAlign: "center",
-                                          borderRight: "1px solid #ddd",
-                                        }}
-                                      >
-                                        Th(20)
-                                      </td>
-                                      <td
-                                        style={{
-                                          textAlign: "center",
-                                        }}
-                                      >
-                                        Pr(30)
-                                      </td>
-                                    </tr>
-                                    <tr style={{ borderTop: "1px solid #ddd" }}>
-                                      <td
-                                        style={{
-                                          textAlign: "center",
-                                          borderRight: "1px solid #ddd",
-                                        }}
-                                      >
-                                        {el.phys_p3_th !== 0
-                                          ? el.phys_p3_th
-                                          : ``}
-                                      </td>
-                                      <td
-                                        style={{
-                                          textAlign: "center",
-                                        }}
-                                      >
-                                        {el.phys_p3_pr !== 0
-                                          ? el.phys_p3_pr
-                                          : ``}
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-                                <td
-                                  className="total"
-                                  style={{
-                                    padding: "0px",
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                >
-                                  <table
-                                    width="100%"
-                                    height="100%"
-                                    border={0}
-                                    className="zeroborder"
-                                  >
-                                    <tr>
-                                      <td
-                                        style={{
-                                          borderBottom:
-                                            "solid 1px #117bc9 !important",
-                                          padding: "1px",
-                                          textAlign: "center",
-                                        }}
-                                      >
-                                        (80)
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td
-                                        style={{
-                                          textAlign: "center",
-                                          borderTop: "1px solid #ddd",
-                                        }}
-                                        height="100%"
-                                      >
-                                        {el.phys_p3_th !== 0
-                                          ? phys_summ_totalmarks
-                                          : ``}
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-                                <td
-                                  style={{
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                >
-                                  {el.phys_p3_th !== 0
-                                    ? `${phys_summ_totalmarks_per}%`
-                                    : ``}
-                                </td>
-                                <td
-                                  style={{
-                                    textAlign: "center",
-                                    border: "1px solid #ddd",
-                                  }}
-                                >
-                                  {el.phys_p3_th !== 0
-                                    ? phys_summ_totalmarks_percent
-                                    : ``}
-                                </td>
-                              </tr>
-                              <tr style={{}}>
-                                <td style={{ border: "1px solid #ddd" }}>
                                   ART & WORK EDUCATION
                                 </td>
 
@@ -1149,6 +936,7 @@ const AllClass345Result = () => {
                                       <td
                                         style={{
                                           borderLeft: 0,
+                                          borderRight: "1px solid #ddd",
                                           borderBottom: "1px solid #ddd",
                                           textAlign: "center",
                                           // border: "1px solid #ddd",
@@ -1196,7 +984,7 @@ const AllClass345Result = () => {
                                         style={{
                                           borderLeft: 0,
                                           borderRight: 0,
-                                          borderBottom: 0,
+                                          borderBottom: "1px solid #ddd",
                                           textAlign: "center",
                                           border: "1px solid #ddd",
                                         }}
@@ -1210,7 +998,10 @@ const AllClass345Result = () => {
                                 <td style={{ padding: "0px" }}>
                                   <table
                                     width="100%"
-                                    style={{border: "1px solid #ddd", borderRight: 0,}}
+                                    style={{
+                                      border: "1px solid #ddd",
+                                      borderRight: 0,
+                                    }}
                                   >
                                     <tr>
                                       <td
@@ -1333,6 +1124,226 @@ const AllClass345Result = () => {
                                     : ``}
                                 </td>
                               </tr>
+                              <tr style={{}}>
+                                <td style={{ border: "1px solid #ddd" }}>
+                                  HEALTH & PHYSICAL EDUCATION
+                                </td>
+
+                                <td style={{ padding: "0px" }}>
+                                  <table width="100%">
+                                    <tr
+                                      style={{ borderBottom: "1px solid #ddd" }}
+                                    >
+                                      <td
+                                        style={{
+                                          textAlign: "center",
+                                        }}
+                                        colSpan={3}
+                                      >
+                                        /
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        style={{
+                                          borderLeft: 0,
+                                          textAlign: "center",
+                                          borderRight: "1px solid #ddd",
+                                          // borderBottom: "1px solid #ddd",
+                                        }}
+                                      >
+                                        Pr(10)
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        style={{
+                                          textAlign: "center",
+                                          borderTop: "1px solid #ddd",
+                                          borderRight: "1px solid #ddd",
+                                          borderBottom: "1px solid #ddd",
+                                        }}
+                                      >
+                                        {el.phys_p1 !== 0 ? el.phys_p1 : ``}
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+
+                                <td
+                                  style={{
+                                    padding: "0px",
+                                    // border: "1px solid #ddd",
+                                  }}
+                                >
+                                  <table width="100%">
+                                    <tr
+                                      style={{
+                                        borderLeft: "1px solid #ddd",
+                                        borderRight: "1px solid #ddd",
+                                      }}
+                                    >
+                                      <td
+                                        style={{
+                                          textAlign: "center",
+                                        }}
+                                        colSpan={3}
+                                      >
+                                        /
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        style={{
+                                          borderLeft: 0,
+                                          textAlign: "center",
+                                          borderTop: "1px solid #ddd",
+                                          borderRight: "1px solid #ddd",
+                                        }}
+                                      >
+                                        Pr(20)
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        style={{
+                                          border: "1px solid #ddd",
+                                          borderLeft: 0,
+                                          borderRight: "1px solid #ddd",
+                                          borderBottom: "1px solid #ddd",
+                                          textAlign: "center",
+                                        }}
+                                      >
+                                        {el.phys_p2 !== 0 ? el.phys_p2 : ``}
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+
+                                <td
+                                  style={{
+                                    padding: "0px",
+                                    // border: "1px solid #ddd",
+                                  }}
+                                >
+                                  <table width="100%">
+                                    <tr>
+                                      <td
+                                        style={{
+                                          textAlign: "center",
+                                        }}
+                                        colSpan={3}
+                                      >
+                                        /
+                                      </td>
+                                    </tr>
+                                    <tr style={{ borderTop: "1px solid #ddd" }}>
+                                      <td
+                                        style={{
+                                          textAlign: "center",
+                                          borderRight: "1px solid #ddd",
+                                        }}
+                                      >
+                                        Th(20)
+                                      </td>
+                                      <td
+                                        style={{
+                                          textAlign: "center",
+                                        }}
+                                      >
+                                        Pr(30)
+                                      </td>
+                                    </tr>
+                                    <tr
+                                      style={{
+                                        borderTop: "1px solid #ddd",
+                                        borderBottom: "1px solid #ddd",
+                                      }}
+                                    >
+                                      <td
+                                        style={{
+                                          textAlign: "center",
+                                          borderRight: "1px solid #ddd",
+                                        }}
+                                      >
+                                        {el.phys_p3_th !== 0
+                                          ? el.phys_p3_th
+                                          : ``}
+                                      </td>
+                                      <td
+                                        style={{
+                                          textAlign: "center",
+                                        }}
+                                      >
+                                        {el.phys_p3_pr !== 0
+                                          ? el.phys_p3_pr
+                                          : ``}
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                                <td
+                                  className="total"
+                                  style={{
+                                    padding: "0px",
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                >
+                                  <table
+                                    width="100%"
+                                    height="100%"
+                                    border={0}
+                                    className="zeroborder"
+                                  >
+                                    <tr>
+                                      <td
+                                        style={{
+                                          borderBottom:
+                                            "solid 1px #117bc9 !important",
+                                          padding: "1px",
+                                          textAlign: "center",
+                                        }}
+                                      >
+                                        (80)
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        style={{
+                                          textAlign: "center",
+                                          borderTop: "1px solid #ddd",
+                                        }}
+                                        height="100%"
+                                      >
+                                        {el.phys_p3_th !== 0
+                                          ? phys_summ_totalmarks
+                                          : ``}
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                                <td
+                                  style={{
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                >
+                                  {el.phys_p3_th !== 0
+                                    ? `${phys_summ_totalmarks_per}%`
+                                    : ``}
+                                </td>
+                                <td
+                                  style={{
+                                    textAlign: "center",
+                                    border: "1px solid #ddd",
+                                  }}
+                                >
+                                  {el.phys_p3_th !== 0
+                                    ? phys_summ_totalmarks_percent
+                                    : ``}
+                                </td>
+                              </tr>
                             </table>
                           </td>
                         </tr>
@@ -1340,7 +1351,7 @@ const AllClass345Result = () => {
                     </td>
                   </tr>
                 </table>
-                <table style={{marginTop:5}}>
+                <table style={{ marginTop: 5 }}>
                   {/* <tr style={{ background: "#e0e0e0" }}>
                     <td style={{ border: "none" }}>PART-1 RESULT{"==>"}</td>
                     <td style={{ border: "none" }}>
