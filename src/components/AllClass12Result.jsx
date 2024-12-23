@@ -865,7 +865,7 @@ const AllClass12Result = () => {
                   </tr>
                 </table>
                 <table>
-                  <tr style={{ background: "#e0e0e0" }}>
+                  {/* <tr style={{ background: "#e0e0e0" }}>
                     <td style={{ border: "none" }}>PART-1 RESULT{"==>"}</td>
                     <td style={{ border: "none" }}>
                       PART-1 GRAND TOTAL -{grtotal1 !== 0 ? grtotal1 : ""}
@@ -896,10 +896,10 @@ const AllClass12Result = () => {
                     </tr>
                   ) : (
                     ""
-                  )}
+                  )} */}
                   {el.summative_3_math !== 0 ? (
                     <tr style={{ background: "#e0e0e0" }}>
-                      <td style={{ border: "none" }}>RESULT - PASSED</td>
+                      <td style={{ border: "none" }}>RESULT - PROMOTED</td>
                       <td style={{ border: "none" }}>
                         GRAND TOTAL -{grtotal !== 0 ? { grtotal } : ""}
                       </td>
