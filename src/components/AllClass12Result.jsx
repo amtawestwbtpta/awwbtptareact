@@ -899,7 +899,7 @@ const AllClass12Result = () => {
                   )} */}
                   {el.summative_3_math !== 0 ? (
                     <tr style={{ background: "#e0e0e0" }}>
-                      <td style={{ border: "none" }}>RESULT - PROMOTED</td>
+                      <td style={{ border: "none" }}>RESULT - Promoted</td>
                       <td style={{ border: "none" }}>
                         GRAND TOTAL -{grtotal !== 0 ? { grtotal } : ""}
                       </td>
