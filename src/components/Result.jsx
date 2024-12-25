@@ -1491,9 +1491,17 @@ const Result = () => {
           <div className="container text-black">
             <h3 className="text-primary text-center">{welcomeText}</h3>
             <div className="mt-3">
+              <a
+                href={"https://firebasestorage.googleapis.com/v0/b/awwbtpta.appspot.com/o/files%2Fstudent_data_entry_form.csv?alt=media&amp;token=7df3ac5c-fb22-45b1-a79c-c9618cfc4dce"}
+                className="btn btn-success btn-sm rounded text-decoration-none m-2"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download Entry File
+              </a>
               <button
                 type="button"
-                className="btn btn-sm btn-info"
+                className="btn btn-sm btn-info m-2"
                 data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop2"
               >
@@ -1532,7 +1540,13 @@ const Result = () => {
                 Minisry
               </button>
             </div> */}
-
+            <button
+              type="button"
+              className="btn btn-sm btn-primary"
+              onClick={() => navigate(`/GraduationCeremony`)}
+            >
+              Graduation Ceremony
+            </button>
             <div className="class-section my-3">
               <button
                 type="button"
@@ -1556,6 +1570,7 @@ const Result = () => {
                   ? "Hide All Class Ressult"
                   : "Show All Class Ressult"}
               </button>
+
               {showAllClassResult ? (
                 <div className="mb-3">
                   <div>

@@ -87,6 +87,7 @@ import IncomeTax from "./components/IncomeTax";
 import ITSection from "./components/ITSection";
 import IncomeTaxNewReigme from "./components/IncomeTaxNewReigme";
 import ServiceLeaveProposal from "./components/ServiceLeaveProposal";
+import GraduationCeremony from "./components/GraduationCeremony";
 
 const Routing = () => {
   return (
@@ -223,6 +224,11 @@ const Routing = () => {
         exact
         path="/ServiceLeaveProposal"
         element={<ServiceLeaveProposal />}
+      />
+      <Route
+        exact
+        path="/GraduationCeremony"
+        element={<GraduationCeremony />}
       />
 
       <Route exact path="/update_self" element={<UpdateSelf />} />
