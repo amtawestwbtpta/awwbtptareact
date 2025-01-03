@@ -274,6 +274,19 @@ export default function IncomeTax() {
     decemberMA +
     januaryMA +
     februaryMA;
+  const TotalGross =
+    marchGross +
+    aprilGross +
+    mayGross +
+    juneGross +
+    julyGross +
+    augustGross +
+    septemberGross +
+    octoberGross +
+    novemberGross +
+    decemberGross +
+    januaryGross +
+    februaryGross;
   const GrossPAY =
     marchGross +
     aprilGross +
@@ -364,6 +377,19 @@ export default function IncomeTax() {
     januaryArrear +
     februaryArrear +
     otherIncome;
+  const GrossArrear =
+    marchArrear +
+    aprilArrear +
+    mayArrear +
+    juneArrear +
+    julyArrear +
+    augustArrear +
+    septemberArrear +
+    octoberArrear +
+    novemberArrear +
+    decemberArrear +
+    januaryArrear +
+    februaryArrear;
   const GrossTotalIncome =
     AllGross - grossPTax - 50000 + BankInterest - hbLoanInterest;
   const deductionVIA =
@@ -1056,6 +1082,8 @@ export default function IncomeTax() {
             isUnderRebate,
             eduCess,
             AddedEduCess,
+            TotalGross,
+            GrossArrear,
           }}
         />
       </div>

@@ -158,6 +158,8 @@ export default function IncomeTaxOld2025({ data }) {
     grossGSLI,
     grossPTax,
     AllGross,
+    TotalGross,
+    GrossArrear,
     GrossTotalIncome,
     deductionVIA,
     limitVIA,
@@ -334,16 +336,17 @@ export default function IncomeTaxOld2025({ data }) {
                       flexDirection: "row",
                       justifyContent: "flex-start",
                       alignItems: "center",
-                      borderWidth: 1,
+                      borderLeftWidth: 1,
+                      borderRightWidth: 1,
                       borderTopWidth: 0,
+                      borderBottomWidth: 1,
                     },
                   ]}
                 >
                   <View
                     style={{
                       width: "5%",
-                      borderWidth: 1,
-                      height: 140,
+                      height: 80,
                       justifyContent: "center",
                       textAlign: "center",
                       alignItems: "center",
@@ -355,7 +358,9 @@ export default function IncomeTaxOld2025({ data }) {
                     style={{
                       width: "70%",
                       borderWidth: 1,
-                      height: 140,
+                      borderTopWidth: 0,
+                      borderBottomWidth: 0,
+                      height: 80,
                     }}
                   >
                     <View
@@ -371,13 +376,19 @@ export default function IncomeTaxOld2025({ data }) {
                         <Text style={styles.text}>a)</Text>
                       </View>
                       <View style={{ width: "70%", borderRightWidth: 1 }}>
-                        <Text style={styles.text}>
-                          Grass Pay & Allowances from March'24 to February, 2025
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Grass Pay & Allowances from March'{prevYear - 2000} to
+                          February, {thisYear}
                         </Text>
                       </View>
                       <View style={{ width: "20%" }}>
                         <Text style={styles.text}>
-                          Rs. {IndianFormat(AllGross - bonus)}
+                          Rs. {IndianFormat(TotalGross)}
                         </Text>
                       </View>
                     </View>
@@ -394,1303 +405,896 @@ export default function IncomeTaxOld2025({ data }) {
                         <Text style={styles.text}>b)</Text>
                       </View>
                       <View style={{ width: "70%", borderRightWidth: 1 }}>
-                        <Text style={styles.text}>
-                          Arrear Salary if any during the Financial year 2024 -
-                          2025
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Arrear Salary if any during the Financial year{" "}
+                          {`${prevYear} - ${thisYear}`}
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%" }}>
+                        {GrossArrear > 0 ? (
+                          <Text style={styles.text}>Rs. {GrossArrear}</Text>
+                        ) : (
+                          <Text style={styles.text}>NIL</Text>
+                        )}
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>c)</Text>
+                      </View>
+                      <View style={{ width: "70%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Bonus received, if any
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%" }}>
+                        {bonus > 0 ? (
+                          <Text style={styles.text}>Rs. {bonus}</Text>
+                        ) : (
+                          <Text style={styles.text}>NIL</Text>
+                        )}
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>d)</Text>
+                      </View>
+                      <View style={{ width: "70%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Honararium / Fees / Commission, if any
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%" }}>
+                        <Text style={styles.text}>NIL</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>e)</Text>
+                      </View>
+                      <View style={{ width: "70%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Total Income ( a + b + c + d )
                         </Text>
                       </View>
                       <View style={{ width: "20%" }}>
                         <Text style={styles.text}>
-                          Rs. {IndianFormat(0)}
+                          Rs. {IndianFormat(AllGross)}
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>f)</Text>
+                      </View>
+                      <View style={{ width: "70%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Less: any overdrawal
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%" }}>
+                        <Text style={styles.text}>NIL</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 0,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "10%",
+                          borderRightWidth: 1,
+                          height: 12,
+                        }}
+                      >
+                        <Text style={styles.text}>g)</Text>
+                      </View>
+                      <View
+                        style={{
+                          width: "70%",
+                          borderRightWidth: 1,
+                          height: 12,
+                        }}
+                      >
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          TOTAL INCOML FROM SALARY HEAD ( e - f )
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%", height: 12 }}>
+                        <Text style={styles.text}>
+                          Rs. {IndianFormat(AllGross)}
                         </Text>
                       </View>
                     </View>
                   </View>
 
-                  <View style={{ width: "25%", height: 140 }}>
-                    <Text style={styles.text}>{desig}</Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-        </Page>
-
-        <Page size="A4" orientation="landscape" style={styles.page}>
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              alignSelf: "center",
-              width: "95%",
-              marginTop: 50,
-            }}
-          >
-            <View style={styles.pageMainView}>
-              <View style={styles.mainBorderView}>
-                <View style={styles.tableStartBorderView}>
-                  <Text style={styles.title}>
-                    DISTRICT PRIMARY SCHOOL COUNCIL, HOWRAH
-                  </Text>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <Text style={styles.title}>NAME: {tname}</Text>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <Text style={styles.title}>PAN NO.: {pan}</Text>
-                </View>
-
-                <View style={styles.rowStartBorderView}>
-                  <View style={styles.view16}>
-                    <Text style={styles.text}>{finYear}</Text>
-                  </View>
-                  <View style={styles.view10}>
-                    <Text style={styles.text}>% D.A</Text>
-                  </View>
-                  <View style={styles.view16}>
-                    <Text style={styles.text}>Basic{"\n"}Pay</Text>
-                  </View>
-                  <View style={styles.view10}>
-                    <Text style={[styles.text, { fontSize: 8 }]}>
-                      HT{"\n"}Allowance
-                    </Text>
-                  </View>
-                  <View style={styles.view16}>
-                    <Text style={styles.text}>D.A.</Text>
-                  </View>
-                  <View style={styles.view16}>
-                    <Text style={styles.text}>H.R.A.</Text>
-                  </View>
-                  <View style={styles.view16}>
-                    <Text style={styles.text}>M.A.</Text>
-                  </View>
-                  <View style={styles.view10}>
-                    <Text style={[styles.text, { fontSize: 8 }]}>ARREAR</Text>
-                  </View>
-                  <View style={styles.view16}>
-                    <Text style={[styles.text, { fontSize: 8 }]}>
-                      Conveyance{"\n"}Allowance
-                    </Text>
-                  </View>
-                  <View style={styles.view16}>
-                    <Text style={styles.text}>BONUS</Text>
-                  </View>
-                  <View style={styles.view16}>
-                    <Text style={styles.text}>GROSS</Text>
-                  </View>
-                  <View style={styles.view16}>
-                    <Text style={styles.text}>GPF</Text>
-                  </View>
-                  <View style={styles.view16}>
-                    <Text style={styles.text}>GSLI</Text>
-                  </View>
-                  <View style={styles.view10}>
-                    <Text style={styles.text}>P.TAX</Text>
-                  </View>
-                  <View style={[styles.view10, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>TDS</Text>
-                  </View>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <View style={[styles.rowFlexView, { width: "16.2%" }]}>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>MAR</Text>
-                    </View>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>{prevYear}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {marchBasic !== 0
-                        ? `${Math.round(marchSalary?.daPercent * 100)}%`
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {marchBasic !== 0 ? marchBasic : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {marchBasic !== 0
-                        ? marchAddl !== 0
-                          ? marchAddl
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {marchBasic !== 0 ? marchDA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {marchBasic !== 0 ? marchHRA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {" "}
-                      {marchBasic !== 0
-                        ? marchMA !== 0
-                          ? marchMA
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {marchBasic !== 0 ? marchGross : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {marchBasic !== 0
-                        ? marchGPF !== 0
-                          ? marchGPF
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {marchBasic !== 0
-                        ? marchGSLI !== 0
-                          ? marchGSLI
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {marchBasic !== 0
-                        ? marchPTax !== 0
-                          ? marchPTax
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>
-                      {marchBasic !== 0 ? "NIL" : ""}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <View style={[styles.rowFlexView, { width: "16.2%" }]}>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>APR</Text>
-                    </View>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>{prevYear}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {aprilBasic !== 0
-                        ? `${Math.round(aprilSalary?.daPercent * 100)}%`
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {aprilBasic !== 0 ? aprilBasic : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {aprilBasic !== 0
-                        ? aprilAddl !== 0
-                          ? aprilAddl
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {aprilBasic !== 0 ? aprilDA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {aprilBasic !== 0 ? aprilHRA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {" "}
-                      {aprilBasic !== 0
-                        ? aprilMA !== 0
-                          ? aprilMA
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {aprilBasic !== 0 ? aprilGross : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {aprilBasic !== 0
-                        ? aprilGPF !== 0
-                          ? aprilGPF
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {aprilBasic !== 0
-                        ? aprilGSLI !== 0
-                          ? aprilGSLI
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {aprilBasic !== 0
-                        ? aprilPTax !== 0
-                          ? aprilPTax
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>
-                      {aprilBasic !== 0 ? "NIL" : ""}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <View style={[styles.rowFlexView, { width: "16.2%" }]}>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>MAY</Text>
-                    </View>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>{prevYear}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {mayBasic !== 0
-                        ? `${Math.round(maySalary?.daPercent * 100)}%`
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {mayBasic !== 0 ? mayBasic : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {mayBasic !== 0 ? (mayAddl !== 0 ? mayAddl : "NIL") : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {mayBasic !== 0 ? mayDA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {mayBasic !== 0 ? mayHRA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {" "}
-                      {mayBasic !== 0 ? (mayMA !== 0 ? mayMA : "NIL") : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {mayBasic !== 0 ? mayGross : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {mayBasic !== 0 ? (mayGPF !== 0 ? mayGPF : "NIL") : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {mayBasic !== 0 ? (mayGSLI !== 0 ? mayGSLI : "NIL") : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {mayBasic !== 0 ? (mayPTax !== 0 ? mayPTax : "NIL") : ""}
-                    </Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>
-                      {mayBasic !== 0 ? "NIL" : ""}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <View style={[styles.rowFlexView, { width: "16.2%" }]}>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>JUN</Text>
-                    </View>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>{prevYear}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {juneBasic !== 0
-                        ? `${Math.round(juneSalary?.daPercent * 100)}%`
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {juneBasic !== 0 ? juneBasic : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {juneBasic !== 0
-                        ? juneAddl !== 0
-                          ? juneAddl
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {juneBasic !== 0 ? juneDA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {juneBasic !== 0 ? juneHRA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {" "}
-                      {juneBasic !== 0 ? (juneMA !== 0 ? juneMA : "NIL") : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {juneBasic !== 0 ? juneGross : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {juneBasic !== 0 ? (juneGPF !== 0 ? juneGPF : "NIL") : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {juneBasic !== 0
-                        ? juneGSLI !== 0
-                          ? juneGSLI
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {juneBasic !== 0
-                        ? junePTax !== 0
-                          ? junePTax
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>
-                      {juneBasic !== 0 ? "NIL" : ""}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <View style={[styles.rowFlexView, { width: "16.2%" }]}>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>JUL</Text>
-                    </View>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>{prevYear}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {julyBasic !== 0
-                        ? `${Math.round(julySalary?.daPercent * 100)}%`
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {julyBasic !== 0 ? julyBasic : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {julyBasic !== 0
-                        ? julyAddl !== 0
-                          ? julyAddl
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {julyBasic !== 0 ? julyDA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {julyBasic !== 0 ? julyHRA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {" "}
-                      {julyBasic !== 0 ? (julyMA !== 0 ? julyMA : "NIL") : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {aprilBasic !== 0 ? aprilIR : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {julyBasic !== 0 ? julyGross : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {julyBasic !== 0 ? (julyGPF !== 0 ? julyGPF : "NIL") : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {julyBasic !== 0
-                        ? julyGSLI !== 0
-                          ? julyGSLI
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {julyBasic !== 0
-                        ? julyPTax !== 0
-                          ? julyPTax
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>
-                      {julyBasic !== 0 ? "NIL" : ""}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <View style={[styles.rowFlexView, { width: "16.2%" }]}>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>AUG</Text>
-                    </View>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>{prevYear}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {augustBasic !== 0
-                        ? `${Math.round(augustSalary?.daPercent * 100)}%`
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {augustBasic !== 0 ? augustBasic : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {augustBasic !== 0
-                        ? augustAddl !== 0
-                          ? augustAddl
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {augustBasic !== 0 ? augustDA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {augustBasic !== 0 ? augustHRA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {" "}
-                      {augustBasic !== 0
-                        ? augustMA !== 0
-                          ? augustMA
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {augustBasic !== 0 ? augustGross : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {augustBasic !== 0
-                        ? augustGPF !== 0
-                          ? augustGPF
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {augustBasic !== 0
-                        ? augustGSLI !== 0
-                          ? augustGSLI
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {augustBasic !== 0
-                        ? augustPTax !== 0
-                          ? augustPTax
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>
-                      {augustBasic !== 0 ? "NIL" : ""}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <View style={[styles.rowFlexView, { width: "16.2%" }]}>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>SEP</Text>
-                    </View>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>{prevYear}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {septemberBasic !== 0
-                        ? `${Math.round(septemberSalary?.daPercent * 100)}%`
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {septemberBasic !== 0 ? septemberBasic : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {septemberBasic !== 0
-                        ? septemberAddl !== 0
-                          ? septemberAddl
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {septemberBasic !== 0 ? septemberDA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {septemberBasic !== 0 ? septemberHRA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {" "}
-                      {septemberBasic !== 0
-                        ? septemberMA !== 0
-                          ? septemberMA
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {septemberBasic !== 0 ? septemberGross : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {septemberBasic !== 0
-                        ? septemberGPF !== 0
-                          ? septemberGPF
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {septemberBasic !== 0
-                        ? septemberGSLI !== 0
-                          ? septemberGSLI
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {septemberBasic !== 0
-                        ? septemberPTax !== 0
-                          ? septemberPTax
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>
-                      {septemberBasic !== 0 ? "NIL" : ""}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <View style={[styles.rowFlexView, { width: "16.2%" }]}>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>OCT</Text>
-                    </View>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>{prevYear}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {octoberBasic !== 0
-                        ? `${Math.round(octoberSalary?.daPercent * 100)}%`
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {octoberBasic !== 0 ? octoberBasic : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {octoberBasic !== 0
-                        ? octoberAddl !== 0
-                          ? octoberAddl
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {octoberBasic !== 0 ? octoberDA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {octoberBasic !== 0 ? octoberHRA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {" "}
-                      {octoberBasic !== 0
-                        ? octoberMA !== 0
-                          ? octoberMA
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {octoberBasic !== 0 ? octoberGross : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {octoberBasic !== 0
-                        ? octoberGPF !== 0
-                          ? octoberGPF
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {octoberBasic !== 0
-                        ? octoberGSLI !== 0
-                          ? octoberGSLI
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {octoberBasic !== 0
-                        ? octoberPTax !== 0
-                          ? octoberPTax
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>
-                      {octoberBasic !== 0 ? "NIL" : ""}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <View style={[styles.rowFlexView, { width: "16.2%" }]}>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>NOV</Text>
-                    </View>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>{prevYear}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {novemberBasic !== 0
-                        ? `${Math.round(novemberSalary?.daPercent * 100)}%`
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {novemberBasic !== 0 ? novemberBasic : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {novemberBasic !== 0
-                        ? novemberAddl !== 0
-                          ? novemberAddl
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {novemberBasic !== 0 ? novemberDA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {novemberBasic !== 0 ? novemberHRA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {" "}
-                      {novemberBasic !== 0
-                        ? novemberMA !== 0
-                          ? novemberMA
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {novemberBasic !== 0 ? novemberGross : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {novemberBasic !== 0
-                        ? novemberGPF !== 0
-                          ? novemberGPF
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {novemberBasic !== 0
-                        ? novemberGSLI !== 0
-                          ? novemberGSLI
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {novemberBasic !== 0
-                        ? novemberPTax !== 0
-                          ? novemberPTax
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>
-                      {novemberBasic !== 0 ? "NIL" : ""}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <View style={[styles.rowFlexView, { width: "16.2%" }]}>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>DEC</Text>
-                    </View>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>{prevYear}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {decemberBasic !== 0
-                        ? `${Math.round(decemberSalary?.daPercent * 100)}%`
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {decemberBasic !== 0 ? decemberBasic : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {decemberBasic !== 0
-                        ? decemberAddl !== 0
-                          ? decemberAddl
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {decemberBasic !== 0 ? decemberDA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {decemberBasic !== 0 ? decemberHRA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {" "}
-                      {decemberBasic !== 0
-                        ? decemberMA !== 0
-                          ? decemberMA
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {decemberBasic !== 0 ? decemberGross : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {decemberBasic !== 0
-                        ? decemberGPF !== 0
-                          ? decemberGPF
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {decemberBasic !== 0
-                        ? decemberGSLI !== 0
-                          ? decemberGSLI
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {decemberBasic !== 0
-                        ? decemberPTax !== 0
-                          ? decemberPTax
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>
-                      {decemberBasic !== 0 ? "NIL" : ""}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <View style={[styles.rowFlexView, { width: "16.2%" }]}>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>JAN</Text>
-                    </View>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>{thisYear}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {januaryBasic !== 0
-                        ? `${Math.round(januarySalary?.daPercent * 100)}%`
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {januaryBasic !== 0 ? januaryBasic : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {januaryBasic !== 0
-                        ? januaryAddl !== 0
-                          ? januaryAddl
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {januaryBasic !== 0 ? januaryDA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {januaryBasic !== 0 ? januaryHRA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {" "}
-                      {januaryBasic !== 0
-                        ? januaryMA !== 0
-                          ? januaryMA
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {januaryBasic !== 0 ? januaryGross : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {januaryBasic !== 0
-                        ? januaryGPF !== 0
-                          ? januaryGPF
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {januaryBasic !== 0
-                        ? januaryGSLI !== 0
-                          ? januaryGSLI
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {januaryBasic !== 0
-                        ? januaryPTax !== 0
-                          ? januaryPTax
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>
-                      {januaryBasic !== 0 ? "NIL" : ""}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.rowStartBorderView}>
-                  <View style={[styles.rowFlexView, { width: "16.2%" }]}>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>FEB</Text>
-                    </View>
-                    <View style={styles.view50Center}>
-                      <Text style={styles.textBold}>{thisYear}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {februaryBasic !== 0
-                        ? `${Math.round(februarySalary?.daPercent * 100)}%`
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {februaryBasic !== 0 ? februaryBasic : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {februaryBasic !== 0
-                        ? februaryAddl !== 0
-                          ? februaryAddl
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {februaryBasic !== 0 ? februaryDA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {februaryBasic !== 0 ? februaryHRA : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {" "}
-                      {februaryBasic !== 0
-                        ? februaryMA !== 0
-                          ? februaryMA
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{""}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {februaryBasic !== 0 ? februaryGross : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {februaryBasic !== 0
-                        ? februaryGPF !== 0
-                          ? februaryGPF
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {februaryBasic !== 0
-                        ? februaryGSLI !== 0
-                          ? februaryGSLI
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {februaryBasic !== 0
-                        ? februaryPTax !== 0
-                          ? februaryPTax
-                          : "NIL"
-                        : ""}
-                    </Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>
-                      {februaryBasic !== 0 ? "NIL" : ""}
+                  <View style={{ width: "25%", height: 80 }}>
+                    <View
+                      style={{
+                        width: "100%",
+                        height: 68,
+                        borderBottomWidth: 1,
+                      }}
+                    ></View>
+                    <Text style={styles.text}>
+                      Rs. {IndianFormat(AllGross)}
                     </Text>
                   </View>
                 </View>
                 <View
-                  style={[styles.rowStartBorderView, { borderBottomWidth: 0 }]}
+                  style={[
+                    styles.tableStartBorderView2,
+                    {
+                      marginTop: 2,
+                      borderWidth: 1,
+                      borderBottomWidth: 0,
+                    },
+                  ]}
                 >
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>TOTAL</Text>
+                  <Text style={[styles.text3]}>INCOME FROM OTHER SOURCES</Text>
+                </View>
+                <View
+                  style={[
+                    styles.tableStartBorderView2,
+                    {
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      borderLeftWidth: 1,
+                      borderRightWidth: 1,
+                      borderTopWidth: 0,
+                      borderBottomWidth: 1,
+                    },
+                  ]}
+                >
+                  <View
+                    style={{
+                      width: "5%",
+                      height: 105,
+                      justifyContent: "center",
+                      textAlign: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={styles.text}>2</Text>
                   </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}> </Text>
+                  <View
+                    style={{
+                      width: "70%",
+                      borderWidth: 1,
+                      borderTopWidth: 0,
+                      borderBottomWidth: 0,
+                      height: 105,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>a)</Text>
+                      </View>
+                      <View style={{ width: "70%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Pension received , if any
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%" }}>
+                        <Text style={styles.text}>NIL</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>b)</Text>
+                      </View>
+                      <View style={{ width: "70%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Interest on NSC
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%" }}>
+                        {nscInterest > 0 ? (
+                          <Text style={styles.text}>Rs. {nscInterest}</Text>
+                        ) : (
+                          <Text style={styles.text}>NIL</Text>
+                        )}
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>c)</Text>
+                      </View>
+                      <View style={{ width: "70%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Interest of KVP / MIS etc
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%" }}>
+                        <Text style={styles.text}>NIL</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>d)</Text>
+                      </View>
+                      <View style={{ width: "70%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Bank's Interest , if any ( Savings )
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%" }}>
+                        <Text style={styles.text}>
+                          Rs. {IndianFormat(BankInterest)}
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>e)</Text>
+                      </View>
+                      <View style={{ width: "70%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Bank's Interest , if any ( Not from Savings )
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%" }}>
+                        <Text style={styles.text}>NIL</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>f)</Text>
+                      </View>
+                      <View style={{ width: "70%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Medical Reimbursement
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%" }}>
+                        <Text style={styles.text}>NIL</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "10%",
+                          borderRightWidth: 1,
+                          height: 12,
+                        }}
+                      >
+                        <Text style={styles.text}>g)</Text>
+                      </View>
+                      <View
+                        style={{
+                          width: "70%",
+                          borderRightWidth: 1,
+                          height: 12,
+                        }}
+                      >
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Transport Allowances
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%", height: 12 }}>
+                        <Text style={styles.text}>NIL</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: "10%",
+                          borderRightWidth: 1,
+                          height: 12,
+                        }}
+                      >
+                        <Text style={styles.text}>h)</Text>
+                      </View>
+                      <View
+                        style={{
+                          width: "70%",
+                          borderRightWidth: 1,
+                          height: 12,
+                        }}
+                      >
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Others, if any( Please Specify )
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%", height: 12 }}>
+                        <Text style={styles.text}>NIL</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 0,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={[
+                          styles.text,
+                          { textAlign: "left", paddingLeft: 2 },
+                        ]}
+                      >
+                        TOTAL INCOME FROM OTHER SOURCES
+                      </Text>
+                    </View>
                   </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{grossBasic}</Text>
-                  </View>
-                  <View style={styles.view10H0}>
+
+                  <View style={{ width: "25%", height: 105 }}>
+                    <View
+                      style={{
+                        width: "100%",
+                        height: 94,
+                        borderBottomWidth: 1,
+                      }}
+                    ></View>
                     <Text style={styles.text}>
-                      {grossAddl !== 0 ? grossAddl : "NIL"}
+                      Rs. {IndianFormat(BankInterest)}
                     </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{grossDA}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{grossHRA}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {grossMA !== 0 ? grossMA : "NIL"}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>
-                      {aprilBasic !== 0 ? aprilIR : ""}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>NIL</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {bonus !== 0 ? bonus : "NIL"}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>{GrossPAY}</Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {grossGPF !== 0 ? grossGPF : "NIL"}
-                    </Text>
-                  </View>
-                  <View style={styles.view16H0}>
-                    <Text style={styles.text}>
-                      {grossGSLI !== 0 ? grossGSLI : "NIL"}
-                    </Text>
-                  </View>
-                  <View style={styles.view10H0}>
-                    <Text style={styles.text}>{grossPTax}</Text>
-                  </View>
-                  <View style={[styles.view10H0, { borderRightWidth: 0 }]}>
-                    <Text style={styles.text}>NIL</Text>
                   </View>
                 </View>
-              </View>
-              <View
-                style={{
-                  marginTop: 60,
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
-                }}
-              >
-                <Text style={styles.text}>SIGNATURE OF THE INCUMBENT</Text>
+                <View
+                  style={[
+                    styles.tableStartBorderView2,
+                    {
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      borderLeftWidth: 1,
+                      borderRightWidth: 1,
+                      borderTopWidth: 0,
+                      borderBottomWidth: 1,
+                    },
+                  ]}
+                >
+                  <View
+                    style={{
+                      width: "5%",
+
+                      justifyContent: "center",
+                      textAlign: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={styles.text}>3</Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "70%",
+                      borderWidth: 1,
+                      borderTopWidth: 0,
+                      borderBottomWidth: 0,
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.text,
+                        { textAlign: "left", paddingLeft: 2 },
+                      ]}
+                    >
+                      GROSS INCOME
+                    </Text>
+                  </View>
+
+                  <View style={{ width: "25%" }}>
+                    <Text style={styles.text}>
+                      Rs. {IndianFormat(AllGross + BankInterest)}
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={[
+                    styles.tableStartBorderView2,
+                    {
+                      marginTop: 2,
+                      borderWidth: 1,
+                      borderBottomWidth: 0,
+                      justifyContent: "flex-start",
+                      paddingLeft: 5,
+                    },
+                  ]}
+                >
+                  <Text style={[styles.text3, { textAlign: "left" }]}>
+                    LESS:- HOUSE RENT EXEMPTION U/S 10 ( 13 A ) OF I.T. ACT,
+                    1961
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    styles.tableStartBorderView2,
+                    {
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      borderLeftWidth: 1,
+                      borderRightWidth: 1,
+                      borderTopWidth: 0,
+                      borderBottomWidth: 1,
+                    },
+                  ]}
+                >
+                  <View
+                    style={{
+                      width: "5%",
+                      height: 65,
+                      justifyContent: "center",
+                      textAlign: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={styles.text}>4</Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "70%",
+                      borderWidth: 1,
+                      borderTopWidth: 0,
+                      borderBottomWidth: 0,
+                      height: 65,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "80%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          H. R. A Received from Employer
+                        </Text>
+                      </View>
+                      <View style={{ width: "10%" }}>
+                        <Text style={styles.text}> </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>a)</Text>
+                      </View>
+                      <View style={{ width: "50%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Actual House Rent Allowance
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}> </Text>
+                      </View>
+                      <View style={{ width: "15%" }}>
+                        <Text style={styles.text}> </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>b)</Text>
+                      </View>
+                      <View style={{ width: "50%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          40% of Salary ( For Non Metro City )
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}> </Text>
+                      </View>
+                      <View style={{ width: "20%" }}>
+                        <Text style={styles.text}> </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "10%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}>c)</Text>
+                      </View>
+                      <View style={{ width: "50%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Rent Paid over 10% of sotary
+                        </Text>
+                      </View>
+                      <View style={{ width: "20%", borderRightWidth: 1 }}>
+                        <Text style={styles.text}> </Text>
+                      </View>
+                      <View style={{ width: "20%" }}>
+                        <Text style={styles.text}> </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        borderBottomWidth: 1,
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "80%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Less :- Lower of the above ( a / b / c ) exempted
+                          U/S.10 ( 13 A )
+                        </Text>
+                      </View>
+                      <View style={{ width: "10%" }}>
+                        <Text style={styles.text}> </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={[
+                          styles.text,
+                          { textAlign: "left", paddingLeft: 2 },
+                        ]}
+                      >
+                        House Rent Allowance Exempted / Taxable House Rent
+                        Allowance
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={{ width: "25%", height: 65 }}>
+                    <View
+                      style={{
+                        width: "100%",
+                        height: 54,
+                        borderBottomWidth: 1,
+                      }}
+                    ></View>
+                    <Text style={styles.text}>NOT APPLICABLE</Text>
+                  </View>
+                  <View
+                    style={{
+                      width: 85,
+                      height: 1,
+                      backgroundColor: "black",
+                      transform: "rotate(-30deg)",
+                      left: 315,
+                      top: 32,
+                      position: "absolute",
+                    }}
+                  ></View>
+                </View>
+                <View
+                  style={[
+                    styles.tableStartBorderView2,
+                    {
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      borderLeftWidth: 1,
+                      borderRightWidth: 1,
+                      borderTopWidth: 0,
+                      borderBottomWidth: 1,
+                    },
+                  ]}
+                >
+                  <View
+                    style={{
+                      width: "5%",
+                      justifyContent: "center",
+                      textAlign: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={styles.text}>5</Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "95%",
+                      borderLeftWidth: 1,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "73.7%", borderRightWidth: 1 }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          BALANCE ( 3 - 4 )
+                        </Text>
+                      </View>
+
+                      <View style={{ width: "25%" }}>
+                        <Text style={styles.text}>
+                          Rs. {IndianFormat(AllGross + BankInterest)}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+                <View
+                  style={[
+                    styles.tableStartBorderView2,
+                    {
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      borderLeftWidth: 1,
+                      borderRightWidth: 1,
+                      borderTopWidth: 0,
+                      borderBottomWidth: 1,
+                    },
+                  ]}
+                >
+                  <View
+                    style={{
+                      width: "5%",
+                      justifyContent: "center",
+                      textAlign: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={styles.text}>6</Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "70%",
+                      borderWidth: 1,
+                      borderTopWidth: 0,
+                      borderBottomWidth: 0,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View style={{ width: "80%" }}>
+                        <Text
+                          style={[
+                            styles.text,
+                            { textAlign: "left", paddingLeft: 2 },
+                          ]}
+                        >
+                          Less : - Conveyance / Washing / N.G. Allowance / any
+                          Other Allowance
+                        </Text>
+                      </View>
+                      <View style={{ width: "10%" }}>
+                        <Text style={styles.text}>NIL</Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
