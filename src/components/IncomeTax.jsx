@@ -14,6 +14,7 @@ import { firestore } from "../context/FirbaseContext";
 import { useGlobalContext } from "../context/Store";
 import Loader from "./Loader";
 import { collection, getDocs, query } from "firebase/firestore";
+import IncomeTaxOld2025 from "./Helpers/IncomeTaxOld2025";
 export default function IncomeTax() {
   const [searchParams] = useSearchParams();
   const data = JSON.parse(searchParams.get("data"));
@@ -502,7 +503,7 @@ export default function IncomeTax() {
         </button>
       </div>
       <div className="mx-auto noprint mb-5">
-        <PDFDownloadLink
+        {/* <PDFDownloadLink
           document={
             <IncomeTaxDownload
               data={{
@@ -698,7 +699,7 @@ export default function IncomeTax() {
           {({ blob, url, loading, error }) =>
             loading ? "Please Wait..." : "Download IT Statement"
           }
-        </PDFDownloadLink>
+        </PDFDownloadLink> */}
         {/* <IncomeTaxDownload
           data={{
             id,
@@ -878,8 +879,187 @@ export default function IncomeTax() {
             AddedEduCess,
           }}
         /> */}
+        <IncomeTaxOld2025
+          data={{
+            id,
+            tname,
+            school,
+            pan,
+            phone,
+            disability,
+            desig,
+            thisYear,
+            nextYear,
+            prevYear,
+            finYear,
+            BankInterest,
+            teacherDeduction,
+            hbLoanPrincipal,
+            hbLoanInterest,
+            lic,
+            ulip,
+            ppf,
+            nsc,
+            nscInterest,
+            tutionFee,
+            sukanya,
+            stampDuty,
+            mediclaim,
+            terminalDisease,
+            handicapTreatment,
+            educationLoan,
+            charity,
+            disabilityDeduction,
+            rgSaving,
+            otherIncome,
+            fd,
+            tds,
+            marchSalary,
+            marchBasic,
+            marchAddl,
+            marchDA,
+            marchHRA,
+            marchMA,
+            marchGross,
+            marchGPF,
+            marchGSLI,
+            bonus,
+            marchPTax,
+            aprilSalary,
+            aprilBasic,
+            aprilAddl,
+            aprilDA,
+            aprilHRA,
+            aprilMA,
+            aprilGross,
+            aprilGPF,
+            aprilGSLI,
+            aprilPTax,
+            maySalary,
+            mayBasic,
+            mayAddl,
+            mayDA,
+            mayHRA,
+            mayMA,
+            mayGross,
+            mayGPF,
+            mayGSLI,
+            mayPTax,
+            juneSalary,
+            juneBasic,
+            juneAddl,
+            juneDA,
+            juneHRA,
+            juneMA,
+            juneGross,
+            juneGPF,
+            juneGSLI,
+            junePTax,
+            julySalary,
+            julyBasic,
+            julyAddl,
+            julyDA,
+            aprilIR,
+            julyHRA,
+            julyMA,
+            julyGross,
+            julyGPF,
+            julyGSLI,
+            julyPTax,
+            augustSalary,
+            augustBasic,
+            augustAddl,
+            augustDA,
+            augustHRA,
+            augustMA,
+            augustGross,
+            augustGPF,
+            augustGSLI,
+            augustPTax,
+            septemberSalary,
+            septemberBasic,
+            septemberAddl,
+            septemberDA,
+            septemberHRA,
+            septemberMA,
+            septemberGross,
+            septemberGPF,
+            septemberGSLI,
+            septemberPTax,
+            octoberSalary,
+            octoberBasic,
+            octoberAddl,
+            octoberDA,
+            octoberHRA,
+            octoberMA,
+            octoberGross,
+            octoberGPF,
+            octoberGSLI,
+            octoberPTax,
+            novemberSalary,
+            novemberBasic,
+            novemberAddl,
+            novemberDA,
+            novemberHRA,
+            novemberMA,
+            novemberGross,
+            novemberGPF,
+            novemberGSLI,
+            novemberPTax,
+            decemberSalary,
+            decemberBasic,
+            decemberAddl,
+            decemberDA,
+            decemberHRA,
+            decemberMA,
+            decemberGross,
+            decemberGPF,
+            decemberGSLI,
+            decemberPTax,
+            januarySalary,
+            januaryBasic,
+            januaryAddl,
+            januaryDA,
+            januaryHRA,
+            januaryMA,
+            januaryGross,
+            januaryGPF,
+            januaryGSLI,
+            januaryPTax,
+            februarySalary,
+            februaryBasic,
+            februaryAddl,
+            februaryDA,
+            februaryHRA,
+            februaryMA,
+            februaryGross,
+            februaryGPF,
+            februaryGSLI,
+            februaryPTax,
+            grossBasic,
+            grossAddl,
+            grossDA,
+            grossHRA,
+            grossMA,
+            GrossPAY,
+            grossGPF,
+            grossGSLI,
+            grossPTax,
+            AllGross,
+            GrossTotalIncome,
+            deductionVIA,
+            limitVIA,
+            OtherVIA,
+            TotalIncome,
+            TotalRoundOffIncome,
+            CalculatedIT,
+            isUnderRebate,
+            eduCess,
+            AddedEduCess,
+          }}
+        />
       </div>
-      <table
+      {/* <table
         className="nobreak"
         style={{ border: "2px solid", width: "100%", padding: 5 }}
       >
@@ -3963,7 +4143,6 @@ export default function IncomeTax() {
           Print Statement
         </button>
       </div>
-
       <div className="mx-auto noprint mb-5">
         <button
           type="button"
@@ -3972,7 +4151,7 @@ export default function IncomeTax() {
         >
           Go Back
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
