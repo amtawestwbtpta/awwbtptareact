@@ -60,6 +60,7 @@ export default function IncomeTax() {
   const marchGSLI = marchSalary?.gsli;
   const bonus = marchSalary?.bonus;
   const marchPTax = disability === "YES" ? 0 : ptaxCalc(marchGross);
+  const marchNetpay = marchGross - marchGPF - marchGSLI - marchPTax;
   const aprilSalary = april.filter((el) => el.id === id)[0];
   const aprilArrear = aprilSalary?.arrear;
   const aprilBasic = aprilSalary?.basic;
@@ -71,6 +72,7 @@ export default function IncomeTax() {
   const aprilGPF = aprilSalary?.gpf;
   const aprilGSLI = aprilSalary?.gsli;
   const aprilPTax = disability === "YES" ? 0 : ptaxCalc(aprilGross);
+  const aprilNetpay = aprilGross - aprilGPF - aprilGSLI - aprilPTax;
   const maySalary = may.filter((el) => el.id === id)[0];
   const mayArrear = maySalary?.arrear;
   const mayBasic = maySalary?.basic;
@@ -82,6 +84,7 @@ export default function IncomeTax() {
   const mayGPF = maySalary?.gpf;
   const mayGSLI = maySalary?.gsli;
   const mayPTax = disability === "YES" ? 0 : ptaxCalc(mayGross);
+  const mayNetpay = mayGross - mayGPF - mayGSLI - mayPTax;
   const juneSalary = june.filter((el) => el.id === id)[0];
   const juneArrear = juneSalary?.arrear;
   const juneBasic = juneSalary?.basic;
@@ -93,6 +96,7 @@ export default function IncomeTax() {
   const juneGPF = juneSalary?.gpf;
   const juneGSLI = juneSalary?.gsli;
   const junePTax = disability === "YES" ? 0 : ptaxCalc(juneGross);
+  const juneNetpay = juneGross - juneGPF - juneGSLI - junePTax;
   const julySalary = july.filter((el) => el.id === id)[0];
   const julyArrear = julySalary?.arrear;
   const julyBasic = julySalary?.basic;
@@ -105,6 +109,7 @@ export default function IncomeTax() {
   const julyGPF = julySalary?.gpf;
   const julyGSLI = julySalary?.gsli;
   const julyPTax = disability === "YES" ? 0 : ptaxCalc(julyGross);
+  const julyNetpay = julyGross - julyGPF - julyGSLI - julyPTax;
   const augustSalary = august.filter((el) => el.id === id)[0];
   const augustArrear = augustSalary?.arrear;
   const augustBasic = augustSalary?.basic;
@@ -117,6 +122,7 @@ export default function IncomeTax() {
   const augustGPF = augustSalary?.gpf;
   const augustGSLI = augustSalary?.gsli;
   const augustPTax = disability === "YES" ? 0 : ptaxCalc(augustGross);
+  const augustNetpay = augustGross - augustGPF - augustGSLI - augustPTax;
   const septemberSalary = september.filter((el) => el.id === id)[0];
   const septemberArrear = septemberSalary?.arrear;
   const septemberBasic = septemberSalary?.basic;
@@ -133,6 +139,8 @@ export default function IncomeTax() {
   const septemberGPF = septemberSalary?.gpf;
   const septemberGSLI = septemberSalary?.gsli;
   const septemberPTax = disability === "YES" ? 0 : ptaxCalc(septemberGross);
+  const septemberNetpay =
+    septemberGross - septemberGPF - septemberGSLI - septemberPTax;
   const octoberSalary = october.filter((el) => el.id === id)[0];
   const octoberArrear = octoberSalary?.arrear;
   const octoberBasic = octoberSalary?.basic;
@@ -147,6 +155,7 @@ export default function IncomeTax() {
   const octoberGPF = octoberSalary?.gpf;
   const octoberGSLI = octoberSalary?.gsli;
   const octoberPTax = disability === "YES" ? 0 : ptaxCalc(octoberGross);
+  const octoberNetpay = octoberGross - octoberGPF - octoberGSLI - octoberPTax;
   const novemberSalary = november.filter((el) => el.id === id)[0];
   const novemberArrear = novemberSalary?.arrear;
   const novemberBasic = novemberSalary?.basic;
@@ -163,6 +172,8 @@ export default function IncomeTax() {
   const novemberGPF = novemberSalary?.gpf;
   const novemberGSLI = novemberSalary?.gsli;
   const novemberPTax = disability === "YES" ? 0 : ptaxCalc(novemberGross);
+  const novemberNetpay =
+    novemberGross - novemberGPF - novemberGSLI - novemberPTax;
   const decemberSalary = december.filter((el) => el.id === id)[0];
   const decemberArrear = decemberSalary?.arrear;
   const decemberBasic = decemberSalary?.basic;
@@ -179,6 +190,8 @@ export default function IncomeTax() {
   const decemberGPF = decemberSalary?.gpf;
   const decemberGSLI = decemberSalary?.gsli;
   const decemberPTax = disability === "YES" ? 0 : ptaxCalc(decemberGross);
+  const decemberNetpay =
+    decemberGross - decemberGPF - decemberGSLI - decemberPTax;
   const januarySalary = january.filter((el) => el.id === id)[0];
   const januaryArrear = januarySalary?.arrear;
   const januaryBasic = januarySalary?.basic;
@@ -193,6 +206,7 @@ export default function IncomeTax() {
   const januaryGPF = januarySalary?.gpf;
   const januaryGSLI = januarySalary?.gsli;
   const januaryPTax = disability === "YES" ? 0 : ptaxCalc(januaryGross);
+  const januaryNetpay = januaryGross - januaryGPF - januaryGSLI - januaryPTax;
   const februarySalary = february.filter((el) => el.id === id)[0];
   const februaryArrear = februarySalary?.arrear;
   const februaryBasic = februarySalary?.basic;
@@ -209,6 +223,8 @@ export default function IncomeTax() {
   const februaryGPF = februarySalary?.gpf;
   const februaryGSLI = februarySalary?.gsli;
   const februaryPTax = disability === "YES" ? 0 : ptaxCalc(februaryGross);
+  const februaryNetpay =
+    februaryGross - februaryGPF - februaryGSLI - februaryPTax;
   const grossBasic =
     marchBasic +
     aprilBasic +
@@ -340,6 +356,19 @@ export default function IncomeTax() {
     decemberPTax +
     januaryPTax +
     februaryPTax;
+  const grossNetpay =
+    marchNetpay +
+    aprilNetpay +
+    mayNetpay +
+    juneNetpay +
+    julyNetpay +
+    augustNetpay +
+    septemberNetpay +
+    octoberNetpay +
+    novemberNetpay +
+    decemberNetpay +
+    januaryNetpay +
+    februaryNetpay;
   const BankInterest = randBetween(500, 2000);
   const teacherDeduction = deductionState?.filter((el) => el.id === id)[0];
   const hbLoanPrincipal = teacherDeduction?.hbLoanPrincipal;
@@ -1084,6 +1113,19 @@ export default function IncomeTax() {
             AddedEduCess,
             TotalGross,
             GrossArrear,
+            marchNetpay,
+            aprilNetpay,
+            mayNetpay,
+            juneNetpay,
+            julyNetpay,
+            augustNetpay,
+            septemberNetpay,
+            octoberNetpay,
+            novemberNetpay,
+            decemberNetpay,
+            januaryNetpay,
+            februaryNetpay,
+            grossNetpay,
           }}
         />
       </div>
