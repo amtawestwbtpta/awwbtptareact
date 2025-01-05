@@ -33,7 +33,12 @@ export default function IncomeTax() {
   const [january, setJanuary] = useState([]);
   const [february, setFebruary] = useState([]);
 
-  const { deductionState, setDeductionState } = useGlobalContext();
+  const {
+    deductionState,
+    setDeductionState,
+    indSalaryState,
+    setIndSalaryState,
+  } = useGlobalContext();
   const { id, tname, school, pan, phone, disability, desig } = data;
   const date = new Date();
   const month = date.getMonth() + 1;
@@ -500,6 +505,20 @@ export default function IncomeTax() {
     setDecember(q10.data);
     setJanuary(q11.data);
     setFebruary(q12.data);
+    setIndSalaryState({
+      march: q1.data,
+      april: q2.data,
+      may: q3.data,
+      june: q4.data,
+      july: q5.data,
+      august: q6.data,
+      september: q7.data,
+      october: q8.data,
+      november: q9.data,
+      december: q10.data,
+      january: q11.data,
+      february: q12.data,
+    });
     setLoader(false);
   };
 
@@ -521,9 +540,40 @@ export default function IncomeTax() {
   };
   useEffect(() => {
     getDeduction();
-    getSalary();
+    if (indSalaryState.march.length === 0) {
+      getSalary();
+    } else {
+      setMarch(indSalaryState.march);
+      setApril(indSalaryState.april);
+      setMay(indSalaryState.may);
+      setJune(indSalaryState.june);
+      setJuly(indSalaryState.july);
+      setAugust(indSalaryState.august);
+      setSeptember(indSalaryState.september);
+      setOctober(indSalaryState.october);
+      setNovember(indSalaryState.november);
+      setDecember(indSalaryState.december);
+      setJanuary(indSalaryState.january);
+      setFebruary(indSalaryState.february);
+    }
     // eslint-disable-next-line
   }, []);
+  useEffect(() => {
+    // eslint-disable-next-line
+  }, [
+    march,
+    april,
+    may,
+    june,
+    july,
+    august,
+    september,
+    october,
+    november,
+    december,
+    january,
+    february,
+  ]);
   return (
     <div className="container timesFont">
       {loader && <Loader />}

@@ -12,7 +12,8 @@ import { Link } from "react-router-dom";
 
 export default function ITSection() {
   const navigate = useNavigate();
-  const { deductionState, setDeductionState, teachersState } =
+  const { deductionState, setDeductionState, teachersState,salaryState,
+    setSalaryState, } =
     useGlobalContext();
   const [salary, setSalary] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -242,11 +243,17 @@ export default function ITSection() {
     );
     setSalary(q1.data);
     setFilteredData(q1.data);
+    setSalaryState(q1.data);
     setLoader(false);
   };
   useEffect(() => {
     getDeduction();
-    getSalary();
+    if (salaryState.length === 0) {
+      getSalary();
+    } else {
+      setSalary(salaryState);
+      setFilteredData(salaryState);
+    }
     // eslint-disable-next-line
   }, []);
   return (

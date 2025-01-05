@@ -20,7 +20,12 @@ export default function IncomeTaxNewReigme() {
   const data = JSON.parse(searchParams.get("data"));
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
-  const { deductionState, setDeductionState } = useGlobalContext();
+  const {
+    deductionState,
+    setDeductionState,
+    indSalaryState,
+    setIndSalaryState,
+  } = useGlobalContext();
   const { id, tname, school, pan, phone, disability, desig } = data;
   const date = new Date();
   const month = date.getMonth() + 1;
@@ -435,7 +440,22 @@ export default function IncomeTaxNewReigme() {
   const IncomeTaxAfterRelief = Math.floor(CalculatedIT - GrossRelief);
   const eduCess = Math.floor(IncomeTaxAfterRelief * 0.04);
   const AddedEduCess = IncomeTaxAfterRelief + eduCess;
-
+  const getDeduction = async () => {
+    if (deductionState.length === 0) {
+      setLoader(true);
+      const q = query(collection(firestore, "deduction"));
+      const querySnapshot = await getDocs(q);
+      const data = querySnapshot.docs.map((doc) => ({
+        // doc.data() is never undefined for query doc snapshots
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setDeductionState(data);
+      setLoader(false);
+    } else {
+      setLoader(false);
+    }
+  };
   const getSalary = async () => {
     setLoader(true);
     const q1 = await axios.get(
@@ -486,30 +506,59 @@ export default function IncomeTaxNewReigme() {
     setDecember(q10.data);
     setJanuary(q11.data);
     setFebruary(q12.data);
+    setIndSalaryState({
+      march: q1.data,
+      april: q2.data,
+      may: q3.data,
+      june: q4.data,
+      july: q5.data,
+      august: q6.data,
+      september: q7.data,
+      october: q8.data,
+      november: q9.data,
+      december: q10.data,
+      january: q11.data,
+      february: q12.data,
+    });
     setLoader(false);
   };
 
-  const getDeduction = async () => {
-    if (deductionState.length === 0) {
-      setLoader(true);
-      const q = query(collection(firestore, "deduction"));
-      const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map((doc) => ({
-        // doc.data() is never undefined for query doc snapshots
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setDeductionState(data);
-      setLoader(false);
-    } else {
-      setLoader(false);
-    }
-  };
   useEffect(() => {
     getDeduction();
-    getSalary();
+    if (indSalaryState.march.length === 0) {
+      getSalary();
+    } else {
+      setMarch(indSalaryState.march);
+      setApril(indSalaryState.april);
+      setMay(indSalaryState.may);
+      setJune(indSalaryState.june);
+      setJuly(indSalaryState.july);
+      setAugust(indSalaryState.august);
+      setSeptember(indSalaryState.september);
+      setOctober(indSalaryState.october);
+      setNovember(indSalaryState.november);
+      setDecember(indSalaryState.december);
+      setJanuary(indSalaryState.january);
+      setFebruary(indSalaryState.february);
+    }
     // eslint-disable-next-line
   }, []);
+  useEffect(() => {
+    // eslint-disable-next-line
+  }, [
+    march,
+    april,
+    may,
+    june,
+    july,
+    august,
+    september,
+    october,
+    november,
+    december,
+    january,
+    february,
+  ]);
   return (
     <div className="container timesFont">
       {loader && <Loader />}
@@ -925,7 +974,6 @@ export default function IncomeTaxNewReigme() {
         </PDFDownloadLink>
       </div>
 
-           
       <table
         className="nobreak"
         style={{ border: "2px solid", width: "100%", padding: 5 }}
