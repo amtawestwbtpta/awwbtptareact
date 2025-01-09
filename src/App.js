@@ -88,6 +88,7 @@ import ITSection from "./components/ITSection";
 import IncomeTaxNewReigme from "./components/IncomeTaxNewReigme";
 import ServiceLeaveProposal from "./components/ServiceLeaveProposal";
 import GraduationCeremony from "./components/GraduationCeremony";
+import HRADelclaration from "./components/HRADelclaration";
 
 const Routing = () => {
   return (
@@ -229,6 +230,11 @@ const Routing = () => {
         exact
         path="/GraduationCeremony"
         element={<GraduationCeremony />}
+      />
+      <Route
+        exact
+        path="/HRADelclaration"
+        element={<HRADelclaration />}
       />
 
       <Route exact path="/update_self" element={<UpdateSelf />} />

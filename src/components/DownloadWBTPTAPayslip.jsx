@@ -17,19 +17,19 @@ export default function DownloadWBTPTAPayslip() {
     PAYSLIPMONTHS = [
       `January-${thisYear}`,
       `February-${thisYear}`,
+      `March-${prevYear}`,
+      `April-${prevYear}`,
+      `May-${prevYear}`,
+      `June-${prevYear}`,
+      `July-${prevYear}`,
+      `August-${prevYear}`,
+      `September-${prevYear}`,
+      `October-${prevYear}`,
+      `November-${prevYear}`,
+      `December-${prevYear}`,
+      `January-${prevYear}`,
+      `February-${thisYear}`,
       `March-${thisYear}`,
-      `April-${thisYear}`,
-      `May-${thisYear}`,
-      `June-${thisYear}`,
-      `July-${thisYear}`,
-      `August-${thisYear}`,
-      `September-${thisYear}`,
-      `October-${thisYear}`,
-      `November-${thisYear}`,
-      `December-${thisYear}`,
-      `January-${nextYear}`,
-      `February-${nextYear}`,
-      `March-${nextYear}`,
     ];
   } else {
     PAYSLIPMONTHS = [`January-${prevYear}`, `February-${prevYear}`];
@@ -91,7 +91,9 @@ export default function DownloadWBTPTAPayslip() {
   let today = new Date();
   // let date = new Date();
   const [loader, setLoader] = useState(false);
-  const [index, setIndex] = useState(today.getMonth() - 1);
+  const [index, setIndex] = useState(
+    today.getMonth() === 0 ? 11 : today.getMonth()-1
+  );
   const [month, setMonth] = useState(GetMonthName(today.getMonth() - 1));
   const [year, setYear] = useState(today.getFullYear());
   const [prevJanuary, setPrevJanuary] = useState({
@@ -175,15 +177,15 @@ export default function DownloadWBTPTAPayslip() {
   });
 
   if (index === 0) {
-    basicpay = prevJanuary?.basic;
-    da = Math.round(basicpay * prevJanuary?.daPercent);
-    pfund = prevJanuary?.gpf;
-    ma = prevJanuary?.ma;
+    basicpay = january?.basic;
+    da = Math.round(basicpay * january?.daPercent);
+    pfund = january?.gpf;
+    ma = january?.ma;
   } else if (index === 1) {
-    basicpay = prevFebruary?.basic;
-    da = Math.round(basicpay * prevFebruary?.daPercent);
-    pfund = prevFebruary?.gpf;
-    ma = prevFebruary?.ma;
+    basicpay = february?.basic;
+    da = Math.round(basicpay * february?.daPercent);
+    pfund = february?.gpf;
+    ma = february?.ma;
   } else if (index === 2) {
     basicpay = march?.basic;
     da = Math.round(basicpay * march?.daPercent);
