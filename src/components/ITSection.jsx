@@ -32,6 +32,7 @@ export default function ITSection() {
   const [search, setSearch] = useState("");
   const [schSearch, setSchSearch] = useState("");
   const [showDeductionForm, setShowDeductionForm] = useState(false);
+  const [showForm16, setShowForm16] = useState(false);
   const [filterClicked, setFilterClicked] = useState(false);
   const [teacherDeduction, setTeacherDeduction] = useState({
     id: "",
