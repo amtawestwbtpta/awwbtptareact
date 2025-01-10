@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../context/Store";
-import { CalculateIncomeTax, IndianFormat, ptaxCalc, randBetween, roundSo } from "../modules/calculatefunctions";
+import {
+  CalculateIncomeTax,
+  IndianFormat,
+  ptaxCalc,
+  randBetween,
+  roundSo,
+} from "../modules/calculatefunctions";
 import DataTable from "react-data-table-component";
 import { firestore } from "../context/FirbaseContext";
 import Loader from "./Loader";
@@ -63,6 +69,7 @@ export default function ITSection() {
     desig: "",
     thisYear: "",
     prevYear: "",
+    nextYear: "",
     finYear: "",
     marchSalary: "",
     marchBasic: "",
@@ -1471,6 +1478,7 @@ export default function ITSection() {
       desig,
       thisYear,
       prevYear,
+      nextYear,
       finYear,
       marchSalary,
       marchBasic,
@@ -1887,7 +1895,7 @@ export default function ITSection() {
                   type="button"
                   className="btn btn-sm btn-primary text-white font-weight-bold p-2 m-2 noprint rounded"
                   onClick={() => {
-                      window.print();
+                    window.print();
                   }}
                 >
                   Print
