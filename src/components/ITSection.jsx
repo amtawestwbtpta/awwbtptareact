@@ -7,20 +7,16 @@ import {
   randBetween,
   roundSo,
 } from "../modules/calculatefunctions";
-import DataTable from "react-data-table-component";
 import { firestore } from "../context/FirbaseContext";
 import Loader from "./Loader";
 import axios from "axios";
 import { collection, doc, getDocs, query, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
 import IncomeTaxNew2025 from "./Helpers/IncomeTaxNew2025";
 import IncomeTaxOld2025 from "./Helpers/IncomeTaxOld2025";
 import Form16New from "./Helpers/Form16New";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 export default function ITSection() {
-  const navigate = useNavigate();
   const {
     deductionState,
     setDeductionState,
@@ -1669,18 +1665,13 @@ export default function ITSection() {
     await updateDoc(docRef, teacherDeduction)
       .then(() => {
         setLoader(false);
-        let y = deductionState.filter((el) => el.id !== teacherDeduction.id);
-        y = [...y, teacherDeduction];
-        const newData = y.sort((a, b) => {
-          if (a.tname < b.tname) {
-            return -1;
-          }
-          if (a.tname > b.tname) {
-            return 1;
-          }
-        });
+        const newData = deductionState.map((item) =>
+          item.id === teacherDeduction.id ? teacherDeduction : item
+        );
         setDeductionState(newData);
         toast.success("Deduction Updated Successfully!");
+        setShowDeductionForm(false);
+        setLoader(false);
       })
       .catch((e) => {
         setLoader(false);
@@ -1884,6 +1875,8 @@ export default function ITSection() {
                     onClick={() => {
                       setFilteredData(salary);
                       setFilterClicked(false);
+                      setSearch("");
+                      setSchSearch("");
                     }}
                   >
                     Clear Filter
@@ -2472,7 +2465,6 @@ export default function ITSection() {
                           type="button"
                           className="btn btn-sm btn-success"
                           onClick={() => {
-                            setShowDeductionForm(false);
                             updateTeacherDeduction();
                           }}
                         >
