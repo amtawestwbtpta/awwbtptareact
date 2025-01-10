@@ -52,7 +52,7 @@ export default function IncomeTax() {
     nextYear = date.getFullYear();
     prevYear = date.getFullYear() - 2;
   }
-  const finYear = `${thisYear}-${nextYear}`;
+  const finYear = `${nextYear}-${nextYear + 1}`;
   const marchSalary = march.filter((el) => el.id === id)[0];
   const marchArrear = marchSalary?.arrear;
   const marchBasic = marchSalary?.basic;
