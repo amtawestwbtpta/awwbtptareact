@@ -13,7 +13,7 @@ export default function GPWiseTeacher() {
   const [filteredData, setFilteredData] = useState([]);
   const [clickedTeaches, setClickedTeaches] = useState([]);
   const [isclicked, setIsclicked] = useState(false);
-
+  const [showAssoc, setShowAssoc] = useState(true);
   useEffect(() => {
     if (!state) {
       localStorage.clear();
@@ -112,8 +112,8 @@ export default function GPWiseTeacher() {
                       style={{ textAlign: "center", verticalAlign: "middle" }}
                     >
                       {el.tname},
-                      {el.hoi === "Yes" ? ` (${el.desig}), (HOI),` : ` (AT),`} (
-                      {el.association})
+                      {el.hoi === "Yes" ? ` (${el.desig}), (HOI),` : ` (AT),`}
+                      {showAssoc && `(${el.association})`}
                     </th>
                     <th
                       style={{ textAlign: "center", verticalAlign: "middle" }}
@@ -165,6 +165,15 @@ export default function GPWiseTeacher() {
               All Teachers
             </button>
           )}
+          <button
+            type="button"
+            className="btn btn-dark text-white font-weight-bold p-2 m-2 noprint rounded"
+            onClick={() => {
+              setShowAssoc(!showAssoc);
+            }}
+          >
+            {showAssoc ? "Hide Association" : "Show Association"}
+          </button>
         </div>
       ) : null}
     </div>
