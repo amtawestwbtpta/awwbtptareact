@@ -14,69 +14,96 @@ const PaySlipOsmsNew = () => {
   const navigate = useNavigate();
   const thisYear = new Date().getFullYear();
   const nextYear = thisYear + 1;
-  const prevYear = thisYear - 1;
-  const dataExist = true;
-  let PAYSLIPMONTHS;
-  if (dataExist) {
-    PAYSLIPMONTHS = [
-      `January-${thisYear}`,
-      `February-${thisYear}`,
-      `March-${prevYear}`,
-      `April-${prevYear}`,
-      `May-${prevYear}`,
-      `June-${prevYear}`,
-      `July-${prevYear}`,
-      `August-${prevYear}`,
-      `September-${prevYear}`,
-      `October-${prevYear}`,
-      `November-${prevYear}`,
-      `December-${prevYear}`,
-      `January-${prevYear}`,
-      `February-${thisYear}`,
-      `March-${thisYear}`,
-    ];
-  } else {
-    PAYSLIPMONTHS = [`January-${prevYear}`, `February-${prevYear}`];
-  }
-  useEffect(() => {
-    if (state !== "admin") {
-      navigate("/logout");
-    }
-  });
+  const preYear = thisYear - 1;
+  const thisYearMonths = [
+    `January-${thisYear}`,
+    `February-${thisYear}`,
+    `March-${thisYear}`,
+    `April-${thisYear}`,
+    `May-${thisYear}`,
+    `June-${thisYear}`,
+    `July-${thisYear}`,
+    `August-${thisYear}`,
+    `September-${thisYear}`,
+    `October-${thisYear}`,
+    `November-${thisYear}`,
+    `December-${thisYear}`,
+  ];
+  const preYearMonths = [
+    `January-${preYear}`,
+    `February-${preYear}`,
+    `March-${preYear}`,
+    `April-${preYear}`,
+    `May-${preYear}`,
+    `June-${preYear}`,
+    `July-${preYear}`,
+    `August-${preYear}`,
+    `September-${preYear}`,
+    `October-${preYear}`,
+    `November-${preYear}`,
+    `December-${preYear}`,
+  ];
 
+  const today = new Date();
+  const [loader, setLoader] = useState(false);
+  const [index, setIndex] = useState(
+    today.getMonth() === 0 ? 11 : today.getMonth() - 1
+  );
+  const [month, setMonth] = useState(
+    GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1)
+  );
+  const [year, setYear] = useState(today.getFullYear());
+  const lastmonth = GetMonthName(today.getMonth() - 1);
+  const lastMonthIndex = today.getMonth();
+  const paySlipArray = thisYearMonths
+    .slice(0, lastMonthIndex)
+    .reverse()
+    .concat(preYearMonths.reverse());
   let details = stateObject;
   let tname,
+    id,
     desig,
     school,
     disability,
     empid,
     pan,
     dataYear,
+    basic,
     mbasic,
     addl,
     da,
     hra,
     ma,
     gross,
+    prevmbasic,
     gpf,
+    gpfprev,
+    julyGpf,
+    pfund,
     ptax,
     gsli,
     udise,
     bank,
     account,
-    ifsc;
+    ifsc,
+    level,
+    cell,
+    ir;
 
   tname = details.tname;
+  id = details.id;
   desig = details.desig;
   school = details.school;
   disability = details.disability;
   empid = details.empid;
   pan = details.pan;
+  basic = parseInt(details.basic);
   mbasic = parseInt(details.mbasic);
-  let ir = Math.round(mbasic * 0.04);
   addl = parseInt(details.addl);
   ma = parseInt(details.ma);
   gpf = parseInt(details.gpf);
+  gpfprev = parseInt(details.gpfprev);
+  julyGpf = parseInt(details.julyGpf);
   gsli = parseInt(details.gsli);
   udise = details.udise;
   bank = details.bank;
@@ -87,284 +114,131 @@ const PaySlipOsmsNew = () => {
   let netpay;
 
   let basicpay;
-  let pfund;
-  let today = new Date();
-  // let date = new Date();
-  const [loader, setLoader] = useState(false);
-  const [index, setIndex] = useState(
-    today.getMonth() === 0 ? 11 : today.getMonth()-1
-  );
-  const [month, setMonth] = useState(GetMonthName(today.getMonth() - 1));
-  const [year, setYear] = useState(today.getFullYear());
-  const [prevJanuary, setPrevJanuary] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
-  const [prevFebruary, setPrevFebruary] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
-  const [march, setMarch] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
-  const [april, setApril] = useState([]);
-  const [may, setMay] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
-  const [june, setJune] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
-  const [july, setJuly] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
-  const [august, setAugust] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
-  const [september, setSeptember] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
-  const [october, setOctober] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
-  const [november, setNovember] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
-  const [december, setDecember] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
-  const [january, setJanuary] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
-  const [february, setFebruary] = useState({
-    basic: 29800,
-    daPercent: 0.14,
-    gpf: 2000,
-    ma: 500,
-  });
 
-  if (index === 0) {
-    basicpay = january?.basic;
-    da = Math.round(basicpay * january?.daPercent);
-    pfund = january?.gpf;
-    ma = january?.ma;
-  } else if (index === 1) {
-    basicpay = february?.basic;
-    da = Math.round(basicpay * february?.daPercent);
-    pfund = february?.gpf;
-    ma = february?.ma;
-  } else if (index === 2) {
-    basicpay = march?.basic;
-    da = Math.round(basicpay * march?.daPercent);
-    pfund = march?.gpf;
-    ma = march?.ma;
-  } else if (index === 3) {
-    basicpay = april?.basic;
-    da = Math.round(basicpay * april?.daPercent);
-    pfund = april?.gpf;
-    ma = april?.ma;
-  } else if (index === 4) {
-    basicpay = may?.basic;
-    da = Math.round(basicpay * may?.daPercent);
-    pfund = may?.gpf;
-    ma = may?.ma;
-  } else if (index === 5) {
-    basicpay = june?.basic;
-    da = Math.round(basicpay * june?.daPercent);
-    pfund = june?.gpf;
-    ma = june?.ma;
-  } else if (index === 6) {
-    basicpay = july?.basic;
-    da = Math.round(basicpay * july?.daPercent);
-    pfund = july?.gpf;
-    ma = july?.ma;
-  } else if (index === 7) {
-    basicpay = august?.basic;
-    da = Math.round(basicpay * august?.daPercent);
-    pfund = august?.gpf;
-    ma = august?.ma;
-  } else if (index === 8) {
-    basicpay = september?.basic;
-    da = Math.round(basicpay * september?.daPercent);
-    pfund = september?.gpf;
-    ma = september?.ma;
-  } else if (index === 9) {
-    basicpay = october?.basic;
-    da = Math.round(basicpay * october?.daPercent);
-    pfund = october?.gpf;
-    ma = october?.ma;
-  } else if (index === 10) {
-    basicpay = november?.basic;
-    da = Math.round(basicpay * november?.daPercent);
-    pfund = november?.gpf;
-    ma = november?.ma;
-  } else if (index === 11) {
-    basicpay = december?.basic;
-    da = Math.round(basicpay * december?.daPercent);
-    pfund = december?.gpf;
-    ma = december?.ma;
-  } else if (index === 12) {
-    basicpay = january?.basic;
-    da = Math.round(basicpay * january?.daPercent);
-    pfund = january?.gpf;
-    ma = january?.ma;
-  } else if (index === 13) {
-    basicpay = february?.basic;
-    da = Math.round(basicpay * february?.daPercent);
-    pfund = february?.gpf;
-    ma = february?.ma;
-  }
-
-  let level = ropa(basicpay).lv;
-  let cell = ropa(basicpay).ce;
-
-  hra = Math.round(basicpay * HRA);
-
-  if (dataYear === 2024 && index === 6) {
-    gross = basicpay + da + ir + hra + addl + ma;
-  } else {
-    gross = basicpay + da + hra + addl + ma;
-  }
-
-  if (gross > 40000) {
-    ptax = 200;
-  } else if (gross > 25000) {
-    ptax = 150;
-  } else if (gross > 15000) {
-    ptax = 130;
-  } else if (gross > 10000) {
-    ptax = 110;
-  } else {
-    ptax = 0;
-  }
-
-  if (disability === "YES") {
-    ptax = 0;
-  }
-
-  let deduction = gsli + pfund + ptax;
-
-  netpay = gross - deduction;
-
-  let lastmonth = GetMonthName(today.getMonth() - 1);
-  const getSalary = async () => {
+  const [salary, setSalary] = useState({
+    basic: 0,
+    da: 0.14,
+    pfund: 0,
+    ma: 0,
+    addl: 0,
+    ir: 0,
+    hra: 0,
+    gross: 0,
+    netpay: 0,
+    ptax: 0,
+    gsli: 0,
+    level: 0,
+    cell: 0,
+    deduction: 0,
+    id,
+    tname,
+    desig,
+    school,
+    disability,
+    empid,
+    pan,
+    udise,
+    bank,
+    account,
+    ifsc,
+    index: index,
+    month: month,
+    year: year,
+    lastmonth: lastmonth,
+    basicpay,
+    today: today,
+  });
+  const handleChange = (e) => {
+    if (e.target.value !== "") {
+      const cmonth = e.target.value.split("-")[0];
+      const cyear = parseInt(e.target.value.split("-")[1]);
+      const cindex = parseInt(e.target.value.split("-")[2]);
+      setMonth(cmonth);
+      setYear(cyear);
+      setIndex(cindex);
+      getModifiedSalary(cmonth, cyear);
+    } else {
+      toast.error("Please select a valid month");
+    }
+  };
+  const getModifiedSalary = async (month, year) => {
     setLoader(true);
-    const qA = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/prevJanuary.json"
-    );
-    const qB = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/prevFebruary.json"
-    );
     const q1 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/march.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${month.toLowerCase()}-${year}.json`
     );
     const q2 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/april.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-2024.json`
     );
-    const q3 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/may.json"
-    );
-    const q4 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/june.json"
-    );
-    const q5 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/july.json"
-    );
-    const q6 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/august.json"
-    );
-    const q7 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/september.json"
-    );
-    const q8 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/october.json"
-    );
-    const q9 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/november.json"
-    );
-    const q10 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/december.json"
-    );
-    const q11 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/january.json"
-    );
-    const q12 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/february.json"
-    );
-    setPrevJanuary(qA.data?.filter((el) => el.id === stateObject.id)[0]);
-    setPrevFebruary(qB.data?.filter((el) => el.id === stateObject.id)[0]);
-    setMarch(q1.data?.filter((el) => el.id === stateObject.id)[0]);
-    setApril(q2.data?.filter((el) => el.id === stateObject.id)[0]);
-    setMay(q3.data?.filter((el) => el.id === stateObject.id)[0]);
-    setJune(q4.data?.filter((el) => el.id === stateObject.id)[0]);
-    setJuly(q5.data?.filter((el) => el.id === stateObject.id)[0]);
-    setAugust(q6.data?.filter((el) => el.id === stateObject.id)[0]);
-    setSeptember(q7.data?.filter((el) => el.id === stateObject.id)[0]);
-    setOctober(q8.data?.filter((el) => el.id === stateObject.id)[0]);
-    setNovember(q9.data?.filter((el) => el.id === stateObject.id)[0]);
-    setDecember(q10.data?.filter((el) => el.id === stateObject.id)[0]);
-    setJanuary(q11.data?.filter((el) => el.id === stateObject.id)[0]);
-    setFebruary(q12.data?.filter((el) => el.id === stateObject.id)[0]);
+    const monthSalary = q1.data?.filter((el) => el.id === stateObject.id)[0];
+    const aprilSalary = q2.data?.filter((el) => el.id === stateObject.id)[0];
+    if (month === "July" && year === 2024 && aprilSalary?.basic > 0) {
+      ir = Math.round(aprilSalary?.basic * 0.04);
+    } else {
+      ir = 0;
+    }
+    basicpay = monthSalary?.basic;
+    da = Math.round(basicpay * monthSalary?.daPercent);
+    hra = Math.round(basicpay * monthSalary?.hraPercent);
+    addl = monthSalary?.addl;
+    ma = monthSalary?.ma;
+    pfund = monthSalary?.gpf;
+    gsli = monthSalary?.gsli;
+    level = ropa(basicpay).lv;
+    cell = ropa(basicpay).ce;
+    gross = basicpay + da + ir + hra + addl + ma;
+    if (gross > 40000) {
+      ptax = 200;
+    } else if (gross > 25000) {
+      ptax = 150;
+    } else if (gross > 15000) {
+      ptax = 130;
+    } else if (gross > 10000) {
+      ptax = 110;
+    } else {
+      ptax = 0;
+    }
+
+    if (disability === "YES") {
+      ptax = 0;
+    }
+
+    let deduction = gsli + pfund + ptax;
+
+    netpay = gross - deduction;
+    setSalary({
+      ...salary,
+      level,
+      cell,
+      basicpay,
+      basic: basicpay,
+      da,
+      ir,
+      hra,
+      addl,
+      ma,
+      pfund,
+      gross,
+      ptax,
+      netpay,
+      deduction,
+      gsli,
+      month,
+      year: parseInt(year),
+      index: parseInt(index),
+    });
     setLoader(false);
   };
-
-  useEffect(() => {}, [
-    month,
-    index,
-    prevJanuary,
-    prevFebruary,
-    march,
-    april,
-    may,
-    june,
-    july,
-    august,
-    september,
-    october,
-    november,
-    december,
-    january,
-    february,
-  ]);
   useEffect(() => {
-    getSalary();
-    document.title = `PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}`;
-    // eslint-disable-next-line
+    //eslint-disable-next-line
+  }, [month, index, year, salary]);
+  useEffect(() => {
+    document.title = `PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth?.toUpperCase()}`;
+    if (state !== "admin") {
+      navigate("/logout");
+    }
+    getModifiedSalary(month, year);
   }, []);
-  useEffect(() => {}, [month, index]);
+
   return (
     <div className="container-fluid mx-auto">
       {loader ? (
@@ -379,66 +253,26 @@ const PaySlipOsmsNew = () => {
             >
               Go Back
             </button>
-            {/* <button
-          type="button"
-          className="btn btn-success text-white font-weight-bold p-2 m-2 rounded"
-          onClick={() => {
-            
-            navigate(
-              `/DownloadOsmsPayslip?data=${JSON.stringify(stateObject)}&key=${ANYKEY}`
-            );
-          }}
-        >
-          Go To Download
-        </button> */}
-            <PDFDownloadLink
-              document={
-                <OSMSPaySLip
-                  data={{
-                    tname,
-                    desig,
-                    school,
-                    empid,
-                    pan,
-                    addl,
-                    da,
-                    hra,
-                    ma,
-                    gross,
-                    ptax,
-                    gsli,
-                    udise,
-                    bank,
-                    account,
-                    ifsc,
-                    lastmonth,
-                    month,
-                    netpay,
-                    basicpay,
-                    pfund,
-                    today,
-                    level,
-                    cell,
-                    deduction,
-                  }}
-                />
-              }
-              fileName={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${lastmonth.toUpperCase()}.pdf`}
-              style={{
-                textDecoration: "none",
-                padding: 11,
-                color: "#fff",
-                backgroundColor: "darkgreen",
-                border: "1px solid #4a4a4a",
-                width: "40%",
-                borderRadius: 10,
-                margin: 20,
-              }}
-            >
-              {({ blob, url, loading, error }) =>
-                loading ? "Please Wait..." : "Download Payslip"
-              }
-            </PDFDownloadLink>
+            <div className="mx-auto my-5">
+              <PDFDownloadLink
+                document={<OSMSPaySLip data={salary} />}
+                fileName={`PAYSLIP OF ${tname?.toUpperCase()} OF ${school?.toUpperCase()} FOR THE MONTH OF ${month.toUpperCase()} ${year}.pdf`}
+                style={{
+                  textDecoration: "none",
+                  padding: 11,
+                  color: "#fff",
+                  backgroundColor: "purple",
+                  border: "1px solid #4a4a4a",
+                  width: "40%",
+                  borderRadius: 10,
+                  margin: 20,
+                }}
+              >
+                {({ blob, url, loading, error }) =>
+                  loading ? "Please Wait..." : "Download Payslip"
+                }
+              </PDFDownloadLink>
+            </div>
           </div>
           <div className="mx-auto my-3 col-md-2 noprint">
             <h6 className="text-primary">Select Salary Month:</h6>
@@ -448,18 +282,10 @@ const PaySlipOsmsNew = () => {
               name="Month"
               required
               defaultValue={month + "-" + year + "-" + index}
-              onChange={(e) => {
-                if (e.target.value !== "") {
-                  setMonth(e.target.value.split("-")[0]);
-                  setYear(e.target.value.split("-")[1]);
-                  setIndex(parseInt(e.target.value.split("-")[2]));
-                } else {
-                  toast.error("Please select a valid month");
-                }
-              }}
+              onChange={handleChange}
             >
               <option value="">Select Month </option>
-              {PAYSLIPMONTHS.map((el, ind) => {
+              {paySlipArray.map((el, ind) => {
                 return (
                   <option value={el + "-" + ind} key={ind}>
                     {el}
@@ -468,6 +294,7 @@ const PaySlipOsmsNew = () => {
               })}
             </select>
           </div>
+
           <div
             className="containermain"
             style={{
@@ -515,10 +342,9 @@ const PaySlipOsmsNew = () => {
                   >
                     AMTA WEST CIRCLE, HAORA
                   </h6>
-                  <h7 style={{ textAlign: "center", marginLeft: -54 }}>
-                    PAY SLIP FOR THE MONTH OF {month.toUpperCase()},
-                    {today.getFullYear()}
-                  </h7>
+                  <h6 style={{ textAlign: "center", marginLeft: -54 }}>
+                    PAY SLIP FOR THE MONTH OF {month.toUpperCase()},{year}
+                  </h6>
                 </div>
               </div>
 
@@ -526,7 +352,9 @@ const PaySlipOsmsNew = () => {
                 type="button"
                 className="btn btn-primary text-white font-weight-bold p-2 rounded noprint"
                 onClick={() => {
-                  window.print();
+                  if (typeof window !== undefined) {
+                    window.print();
+                  }
                 }}
               >
                 Print Payslip
@@ -537,7 +365,7 @@ const PaySlipOsmsNew = () => {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "flex-start",
+                  justifyContent: "space-between",
                   fontSize: "0.6rem",
                   marginTop: 15,
                   marginBottom: 10,
@@ -571,7 +399,6 @@ const PaySlipOsmsNew = () => {
                     display: "flex",
                     flexDirection: "column",
                     textAlign: "left",
-                    marginLeft: 120,
                   }}
                 >
                   <p>
@@ -655,7 +482,7 @@ const PaySlipOsmsNew = () => {
                   {desig === "AT" ? (
                     <>
                       <th style={{ textAlign: "left" }}>
-                        <table className="dejavu">
+                        <table className="dejaVuCondensed">
                           <tr>
                             <th>BASIC</th>
                           </tr>
@@ -680,6 +507,7 @@ const PaySlipOsmsNew = () => {
                         </table>
                       </th>
                       <td
+                        className="dejaVuCondensed"
                         style={{
                           textAlign: "left",
                           paddingRight: "16pt",
@@ -690,20 +518,22 @@ const PaySlipOsmsNew = () => {
                       >
                         <table
                           style={{
-                            marginRight: -30,
+                            marginRight: -20,
                           }}
                         >
                           <tr>
-                            <td style={{ textAlign: "right" }}>{basicpay}</td>
+                            <td style={{ textAlign: "right" }}>
+                              {salary.basicpay}
+                            </td>
                           </tr>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{da}</td>
+                            <td style={{ textAlign: "right" }}>{salary.da}</td>
                           </tr>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{hra}</td>
+                            <td style={{ textAlign: "right" }}>{salary.hra}</td>
                           </tr>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{ma}</td>
+                            <td style={{ textAlign: "right" }}>{salary.ma}</td>
                           </tr>
                           <tr>
                             <td style={{ textAlign: "right" }}>0</td>
@@ -713,7 +543,7 @@ const PaySlipOsmsNew = () => {
                           </tr>
                           <tr>
                             <td style={{ textAlign: "right" }}>
-                              {dataYear === 2024 && index === 7 ? ir : 0}
+                              {year === 2024 && index === 6 ? salary.ir : 0}
                             </td>
                           </tr>
                         </table>
@@ -744,6 +574,7 @@ const PaySlipOsmsNew = () => {
                         </table>
                       </th>
                       <td
+                        className="dejaVuCondensed"
                         style={{
                           textAlign: "center",
                           borderRight: "1px solid gray",
@@ -753,7 +584,9 @@ const PaySlipOsmsNew = () => {
                       >
                         <table style={{ marginRight: "5px" }}>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{pfund}</td>
+                            <td style={{ textAlign: "right" }}>
+                              {salary.pfund}
+                            </td>
                           </tr>
                           <tr>
                             <td style={{ textAlign: "right" }}>0</td>
@@ -762,13 +595,17 @@ const PaySlipOsmsNew = () => {
                             <td style={{ textAlign: "right" }}>0</td>
                           </tr>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{ptax}</td>
+                            <td style={{ textAlign: "right" }}>
+                              {salary.ptax}
+                            </td>
                           </tr>
                           <tr>
                             <td style={{ textAlign: "right" }}>0</td>
                           </tr>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{gsli}</td>
+                            <td style={{ textAlign: "right" }}>
+                              {salary.gsli}
+                            </td>
                           </tr>
                           <tr>
                             <td style={{ textAlign: "right" }}>0</td>
@@ -786,10 +623,7 @@ const PaySlipOsmsNew = () => {
                     </>
                   ) : (
                     <>
-                      <th
-                        className="dejavu"
-                        style={{ textAlign: "left", padding: "6pt" }}
-                      >
+                      <th className="dejavu" style={{ textAlign: "left" }}>
                         <table>
                           <tr>
                             <th>BASIC</th>
@@ -827,21 +661,25 @@ const PaySlipOsmsNew = () => {
                           borderSpacing: 1,
                         }}
                       >
-                        <table style={{ marginRight: -30 }}>
+                        <table style={{ marginRight: -20 }}>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{basicpay}</td>
+                            <td style={{ textAlign: "right" }}>
+                              {salary.basicpay}
+                            </td>
                           </tr>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{addl}</td>
+                            <td style={{ textAlign: "right" }}>
+                              {salary.addl}
+                            </td>
                           </tr>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{da}</td>
+                            <td style={{ textAlign: "right" }}>{salary.da}</td>
                           </tr>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{hra}</td>
+                            <td style={{ textAlign: "right" }}>{salary.hra}</td>
                           </tr>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{ma}</td>
+                            <td style={{ textAlign: "right" }}>{salary.ma}</td>
                           </tr>
                           <tr>
                             <td style={{ textAlign: "right" }}>0</td>
@@ -851,7 +689,7 @@ const PaySlipOsmsNew = () => {
                           </tr>
                           <tr>
                             <td style={{ textAlign: "right" }}>
-                              {dataYear === 2024 && index === 7 ? ir : 0}
+                              {year === 2024 && index === 6 ? salary.ir : 0}
                             </td>
                           </tr>
                         </table>
@@ -888,16 +726,19 @@ const PaySlipOsmsNew = () => {
                         </table>
                       </th>
                       <td
+                        className="dejaVuCondensed"
                         style={{
                           textAlign: "right",
-                          // paddingInline: "6pt",
+                          paddingRight: "6pt",
                           paddingTop: "20pt",
                           borderRight: "1px solid gray",
                         }}
                       >
                         <table>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{gpf}</td>
+                            <td style={{ textAlign: "right" }}>
+                              {salary.pfund}
+                            </td>
                           </tr>
                           <tr>
                             <td style={{ textAlign: "right" }}>0</td>
@@ -906,13 +747,17 @@ const PaySlipOsmsNew = () => {
                             <td style={{ textAlign: "right" }}>0</td>
                           </tr>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{ptax}</td>
+                            <td style={{ textAlign: "right" }}>
+                              {salary.ptax}
+                            </td>
                           </tr>
                           <tr>
                             <td style={{ textAlign: "right" }}>0</td>
                           </tr>
                           <tr>
-                            <td style={{ textAlign: "right" }}>{gsli}</td>
+                            <td style={{ textAlign: "right" }}>
+                              {salary.gsli}
+                            </td>
                           </tr>
                           <tr>
                             <td style={{ textAlign: "right" }}>0</td>
@@ -942,7 +787,7 @@ const PaySlipOsmsNew = () => {
                     <table className="dejavu">
                       <tr>
                         <th style={{ textAlign: "left" }}>Total:</th>
-                        <th style={{ textAlign: "right" }}>{gross}</th>
+                        <th style={{ textAlign: "right" }}>{salary.gross}</th>
                       </tr>
                     </table>
                   </th>
@@ -957,7 +802,7 @@ const PaySlipOsmsNew = () => {
                       borderSpacing: 1,
                     }}
                   >
-                    {deduction}
+                    {salary.deduction}
                   </th>
 
                   <th
@@ -991,7 +836,7 @@ const PaySlipOsmsNew = () => {
                         <th style={{ textAlign: "left", width: 85 }}>
                           GROSS PAY:
                         </th>
-                        <th style={{ textAlign: "left" }}>{gross}</th>
+                        <th style={{ textAlign: "left" }}>{salary.gross}</th>
                       </tr>
                     </table>
                   </td>
@@ -1011,7 +856,7 @@ const PaySlipOsmsNew = () => {
                           NET PAY:
                         </th>
                         <th style={{ textAlign: "left" }}>
-                          {netpay} ({INR(netpay)})
+                          {salary.netpay} ({INR(salary.netpay)})
                         </th>
                       </tr>
                     </table>

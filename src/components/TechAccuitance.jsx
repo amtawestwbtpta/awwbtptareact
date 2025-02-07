@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../context/Store";
 import { useNavigate } from "react-router";
-import { Loader } from "rsuite";
+import  Loader  from "./Loader";
 import { months, titleCase } from "../modules/calculatefunctions";
 import { HRA, PREV6DA } from "../modules/constants";
 import axios from "axios";
@@ -22,8 +22,6 @@ const TechAccuitance = () => {
 
     // eslint-disable-next-line
   }, []);
-  const [prevJanuary, setPrevJanuary] = useState([]);
-  const [prevFebruary, setPrevFebruary] = useState([]);
   const [march, setMarch] = useState([]);
   const [april, setApril] = useState([]);
   const [may, setMay] = useState([]);
@@ -36,64 +34,57 @@ const TechAccuitance = () => {
   const [december, setDecember] = useState([]);
   const [january, setJanuary] = useState([]);
   const [february, setFebruary] = useState([]);
-  const getSalary = async () => {
+  const getModifiedSalary = async (year) => {
     setShowTable(false);
-    const qA = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/prevJanuary.json"
-    );
-    const qB = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/prevFebruary.json"
-    );
     const q1 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/march.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/january-${year}.json`
     );
     const q2 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/april.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/february-${year}.json`
     );
     const q3 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/may.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/march-${year}.json`
     );
     const q4 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/june.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-${year}.json`
     );
     const q5 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/july.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/may-${year}.json`
     );
     const q6 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/august.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/june-${year}.json`
     );
     const q7 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/september.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/july-${year}.json`
     );
     const q8 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/october.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/august-${year}.json`
     );
     const q9 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/november.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/september-${year}.json`
     );
     const q10 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/december.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/october-${year}.json`
     );
     const q11 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/january.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/november-${year}.json`
     );
     const q12 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/february.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/december-${year}.json`
     );
-    setPrevJanuary(qA.data);
-    setPrevFebruary(qB.data);
-    setMarch(q1.data);
-    setApril(q2.data);
-    setMay(q3.data);
-    setJune(q4.data);
-    setJuly(q5.data);
-    setAugust(q6.data);
-    setSeptember(q7.data);
-    setOctober(q8.data);
-    setNovember(q9.data);
-    setDecember(q10.data);
-    setJanuary(q11.data);
-    setFebruary(q12.data);
+
+    setJanuary(q1.data);
+    setFebruary(q2.data);
+    setMarch(q3.data);
+    setApril(q4.data);
+    setMay(q5.data);
+    setJune(q6.data);
+    setJuly(q7.data);
+    setAugust(q8.data);
+    setSeptember(q9.data);
+    setOctober(q10.data);
+    setNovember(q11.data);
+    setDecember(q12.data);
     setShowTable(true);
   };
   useEffect(() => {
@@ -134,7 +125,7 @@ const TechAccuitance = () => {
     // eslint-disable-next-line
   }, [year, filteredData, mainData]);
   useEffect(() => {
-    getSalary();
+    getModifiedSalary(year);
     // eslint-disable-next-line
   }, []);
   return (
@@ -155,7 +146,26 @@ const TechAccuitance = () => {
                   type="button"
                   className="btn btn-primary m-2"
                   onClick={() => {
+                    setYear(new Date().getFullYear() - 2);
+                    getModifiedSalary(new Date().getFullYear() - 2);
+                    let trList = document.querySelectorAll("tr");
+                    let divList = document.querySelectorAll("div");
+                    for (let i = 0; i < trList.length; i++) {
+                      trList[i].classList.remove("d-none");
+                    }
+                    for (let i = 0; i < divList.length; i++) {
+                      divList[i].classList.remove("d-none");
+                    }
+                  }}
+                >
+                  {new Date().getFullYear() - 2}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-success m-2"
+                  onClick={() => {
                     setYear(new Date().getFullYear() - 1);
+                    getModifiedSalary(new Date().getFullYear() - 1);
                     let trList = document.querySelectorAll("tr");
                     let divList = document.querySelectorAll("div");
                     for (let i = 0; i < trList.length; i++) {
@@ -170,9 +180,10 @@ const TechAccuitance = () => {
                 </button>
                 <button
                   type="button"
-                  className="btn btn-success m-2"
+                  className="btn btn-warning m-2"
                   onClick={() => {
                     setYear(new Date().getFullYear());
+                    getModifiedSalary(new Date().getFullYear());
                     let trList = document.querySelectorAll("tr");
                     let divList = document.querySelectorAll("div");
                     for (let i = 0; i < trList.length; i++) {
@@ -461,7 +472,9 @@ const TechAccuitance = () => {
               <button
                 type="button"
                 className="btn btn-primary text-white font-weight-bold p-2 rounded"
-                onClick={window.print}
+                onClick={() => {
+                  window.print();
+                }}
               >
                 Print Page
               </button>
@@ -476,504 +489,508 @@ const TechAccuitance = () => {
               </button>
             </div>
             <div className="table-resposive-md" style={{ overflowX: "scroll" }}>
-              {months.map((month, index) => (
-                <div
-                  className={`container-fluid nobreak timesFont my-2 ${month}-table`}
-                  key={index}
-                >
-                  <h3 className="text-black font-weight-bold m-2">
-                    HOWRAH DISTRICT PRIMARY SCHOOL COUNCIL
-                  </h3>
-                  <h5 className="text-black m-2">
-                    ACQUITTANCE ROLL OF{" "}
-                    <span
-                      style={{
-                        textDecoration: "underline",
-                        textDecorationStyle: "dotted",
-                        paddingBottom: 10,
-                      }}
-                    >
-                      {school}
-                    </span>
-                    , AMTA WEST CIRCLE
-                  </h5>
-                  <h5 className="text-black m-2">
-                    FOR THE MONTH OF{" "}
-                    <span
-                      style={{
-                        textDecoration: "underline",
-                        textDecorationStyle: "dotted",
-                        paddingBottom: 10,
-                      }}
-                    >
-                      {month.toUpperCase()}, {year}
-                    </span>
-                  </h5>
-                  <div className="d-flex flex-row text-center mx-auto justify-content-center align-items-center my-1">
-                    <div className="noprint m-2">
-                      <button
-                        type="button"
-                        className="btn btn-danger font-weight-bold p-2 rounded"
-                        onClick={() => {
-                          document
-                            .querySelector(`.${month}-table`)
-                            .classList.add("d-none");
-                        }}
-                      >
-                        Remove Month
-                      </button>
-                    </div>
-                  </div>
-                  <table
-                    className="table table-hover table-sm table-bordered border-black border-1 align-middle table-responsive text-center text-black"
-                    id="team-list"
+              {months
+                .slice(
+                  0,
+                  year === new Date().getFullYear()
+                    ? new Date().getMonth()
+                    : months.length
+                )
+                .map((month, index) => (
+                  <div
+                    className={`container-fluid nobreak my-2 ${month}-table`}
+                    key={index}
                   >
-                    <thead>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        SL. NO.
-                      </th>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        TEACHER'S NAME
-                      </th>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        DESIG-
-                        <br />
-                        NATION
-                      </th>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        BASIC PAY
-                      </th>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        <p style={{ fontSize: 8 }}>
-                          ADDL.
-                          <br />
-                          ALLOWANCE
-                        </p>
-                      </th>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        DA
-                      </th>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        HRA
-                      </th>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        MA
-                      </th>
-                      {year === 2024 && index === 6 ? (
+                    <h3 className="text-black font-weight-bold m-2">
+                      HOWRAH DISTRICT PRIMARY SCHOOL COUNCIL
+                    </h3>
+                    <h5 className="text-black m-2">
+                      ACQUITTANCE ROLL OF {school}, AMTA WEST CIRCLE
+                    </h5>
+                    <h5 className="text-black m-2">
+                      FOR THE MONTH OF {month.toUpperCase()}, {year}
+                    </h5>
+                    <div className="d-flex flex-row text-center mx-auto justify-content-center align-items-center my-1">
+                      <div className="noprint m-2">
+                        <button
+                          type="button"
+                          className="btn btn-danger font-weight-bold p-2 rounded"
+                          onClick={() => {
+                            document
+                              .querySelector(`.${month}-table`)
+                              .classList.add("d-none");
+                          }}
+                        >
+                          Remove Month
+                        </button>
+                      </div>
+                    </div>
+                    <table
+                      className="table table-hover table-sm table-bordered border-black border-1 align-middle table-responsive text-center text-black"
+                      id="team-list"
+                    >
+                      <thead>
                         <th
                           className="text-center"
                           style={{ border: "1px solid" }}
                         >
-                          IR
+                          SL. NO.
                         </th>
-                      ) : null}
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        GROSS
-                        <br /> SALARY
-                      </th>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        GPF
-                      </th>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        GSLI
-                      </th>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        PTAX
-                      </th>
-                      <th
-                        className="text-center text-wrap"
-                        style={{ border: "1px solid" }}
-                      >
-                        TOTAL
-                        <br /> DEDUCTION
-                      </th>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        NET
-                        <br /> SALARY
-                      </th>
-                      <th
-                        className="text-center"
-                        style={{ border: "1px solid" }}
-                      >
-                        SIGNATURE OF THE TEACHER
-                      </th>
-                      <th
-                        className="text-center noprint"
-                        style={{ border: "1px solid" }}
-                      >
-                        ACTION
-                      </th>
-                    </thead>
-                    <tbody>
-                      {filteredData.map((el, ind) => {
-                        const id = el?.id;
-                        let prevmbasic = el.prevmbasic;
-                        let mbasic = el.mbasic;
-                        let ir = Math.round(mbasic * 0.04);
-                        let addl = el.addl;
-                        let ma = el.ma;
-                        let gpfprev = el.gpfprev;
-                        let dataYear = el.dataYear;
-                        let gsli = el.gsli;
-                        let disability = el.disability;
-                        let date = new Date();
-                        let da;
-                        // console.log(junelast)
-                        let basicpay;
-                        let ptax;
-                        let pfund;
-                        let gross;
-                        const prevJanuarySalary = prevJanuary.filter(
-                          (e) => e.id === id
-                        )[0];
-                        const prevFebruarySalary = prevFebruary.filter(
-                          (e) => e.id === id
-                        )[0];
-                        const marchSalary = march.filter((e) => e.id === id)[0];
-                        const aprilSalary = april.filter((e) => e.id === id)[0];
-                        const maySalary = may.filter((e) => e.id === id)[0];
-                        const juneSalary = june.filter((e) => e.id === id)[0];
-                        const julySalary = july.filter((e) => e.id === id)[0];
-                        const augustSalary = august.filter(
-                          (e) => e.id === id
-                        )[0];
-                        const septemberSalary = september.filter(
-                          (e) => e.id === id
-                        )[0];
-                        const octoberSalary = october.filter(
-                          (e) => e.id === id
-                        )[0];
-                        const novemberSalary = november.filter(
-                          (e) => e.id === id
-                        )[0];
-                        const decemberSalary = december.filter(
-                          (e) => e.id === id
-                        )[0];
-                        const januarySalary = january.filter(
-                          (e) => e.id === id
-                        )[0];
-                        const februarySalary = february.filter(
-                          (e) => e.id === id
-                        )[0];
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          TEACHER'S NAME
+                        </th>
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          DESIG-
+                          <br />
+                          NATION
+                        </th>
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          BASIC PAY
+                        </th>
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          <p style={{ fontSize: 8 }}>
+                            ADDL.
+                            <br />
+                            ALLOWANCE
+                          </p>
+                        </th>
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          DA
+                        </th>
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          HRA
+                        </th>
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          MA
+                        </th>
+                        {year === 2024 && index === 6 ? (
+                          <th
+                            className="text-center"
+                            style={{ border: "1px solid" }}
+                          >
+                            IR
+                          </th>
+                        ) : null}
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          GROSS
+                          <br /> SALARY
+                        </th>
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          GPF
+                        </th>
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          GSLI
+                        </th>
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          PTAX
+                        </th>
+                        <th
+                          className="text-center text-wrap"
+                          style={{ border: "1px solid" }}
+                        >
+                          TOTAL
+                          <br /> DEDUCTION
+                        </th>
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          NET
+                          <br /> SALARY
+                        </th>
+                        <th
+                          className="text-center"
+                          style={{ border: "1px solid" }}
+                        >
+                          SIGNATURE OF THE TEACHER
+                        </th>
+                        <th
+                          className="text-center noprint"
+                          style={{ border: "1px solid" }}
+                        >
+                          ACTION
+                        </th>
+                      </thead>
+                      <tbody>
+                        {filteredData.map((el, ind) => {
+                          const id = el?.id;
+                          let disability = el?.disability;
+                          let da,
+                            basicpay,
+                            addl,
+                            hra,
+                            ma,
+                            ptax,
+                            pfund,
+                            gsli,
+                            gross;
 
-                        if (year === date.getFullYear() - 1) {
-                          if (index <= 5) {
-                            basicpay = prevmbasic;
-                            pfund = gpfprev;
-                            da = Math.round(basicpay * PREV6DA);
-                            if (el.newHt) {
-                              addl = 0;
-                            }
-                          } else {
-                            pfund = gpfprev;
-                            if (el.newHt && index <= 9) {
-                              addl = 0;
-                            }
-                            basicpay = mbasic;
-                            da = Math.round(basicpay * PREV6DA);
-                          }
-                        } else {
+                          const marchSalary = march.filter(
+                            (e) => e.id === id
+                          )[0];
+                          const aprilSalary = april.filter(
+                            (e) => e.id === id
+                          )[0];
+                          const ir = Math.round(aprilSalary?.basic * 0.04);
+                          const maySalary = may.filter((e) => e.id === id)[0];
+                          const juneSalary = june.filter((e) => e.id === id)[0];
+                          const julySalary = july.filter((e) => e.id === id)[0];
+                          const augustSalary = august.filter(
+                            (e) => e.id === id
+                          )[0];
+                          const septemberSalary = september.filter(
+                            (e) => e.id === id
+                          )[0];
+                          const octoberSalary = october.filter(
+                            (e) => e.id === id
+                          )[0];
+                          const novemberSalary = november.filter(
+                            (e) => e.id === id
+                          )[0];
+                          const decemberSalary = december.filter(
+                            (e) => e.id === id
+                          )[0];
+                          const januarySalary = january.filter(
+                            (e) => e.id === id
+                          )[0];
+                          const februarySalary = february.filter(
+                            (e) => e.id === id
+                          )[0];
+
                           if (index === 0) {
                             basicpay = januarySalary?.basic;
                             da = Math.round(
                               basicpay * januarySalary?.daPercent
                             );
+                            hra = Math.round(
+                              basicpay * januarySalary?.hraPercent
+                            );
+                            addl = januarySalary?.addl;
                             pfund = januarySalary?.gpf;
+                            gsli = januarySalary?.gsli;
                             ma = januarySalary?.ma;
                           } else if (index === 1) {
                             basicpay = februarySalary?.basic;
                             da = Math.round(
                               basicpay * februarySalary?.daPercent
                             );
+                            hra = Math.round(
+                              basicpay * februarySalary?.hraPercent
+                            );
+                            addl = februarySalary?.addl;
                             pfund = februarySalary?.gpf;
+                            gsli = februarySalary?.gsli;
                             ma = februarySalary?.ma;
                           } else if (index === 2) {
                             basicpay = marchSalary?.basic;
                             da = Math.round(basicpay * marchSalary?.daPercent);
+                            hra = Math.round(
+                              basicpay * marchSalary?.hraPercent
+                            );
+                            addl = marchSalary?.addl;
                             pfund = marchSalary?.gpf;
+                            gsli = marchSalary?.gsli;
                             ma = marchSalary?.ma;
                           } else if (index === 3) {
                             basicpay = aprilSalary?.basic;
                             da = Math.round(basicpay * aprilSalary?.daPercent);
+                            hra = Math.round(
+                              basicpay * aprilSalary?.hraPercent
+                            );
+                            addl = aprilSalary?.addl;
                             pfund = aprilSalary?.gpf;
+                            gsli = aprilSalary?.gsli;
                             ma = aprilSalary?.ma;
                           } else if (index === 4) {
                             basicpay = maySalary?.basic;
                             da = Math.round(basicpay * maySalary?.daPercent);
+                            hra = Math.round(basicpay * maySalary?.hraPercent);
+                            addl = maySalary?.addl;
                             pfund = maySalary?.gpf;
+                            gsli = maySalary?.gsli;
                             ma = maySalary?.ma;
                           } else if (index === 5) {
                             basicpay = juneSalary?.basic;
                             da = Math.round(basicpay * juneSalary?.daPercent);
+                            hra = Math.round(basicpay * juneSalary?.hraPercent);
+                            addl = juneSalary?.addl;
                             pfund = juneSalary?.gpf;
+                            gsli = juneSalary?.gsli;
                             ma = juneSalary?.ma;
                           } else if (index === 6) {
                             basicpay = julySalary?.basic;
                             da = Math.round(basicpay * julySalary?.daPercent);
+                            hra = Math.round(basicpay * julySalary?.hraPercent);
+                            addl = julySalary?.addl;
                             pfund = julySalary?.gpf;
+                            gsli = julySalary?.gsli;
                             ma = julySalary?.ma;
                           } else if (index === 7) {
                             basicpay = augustSalary?.basic;
                             da = Math.round(basicpay * augustSalary?.daPercent);
+                            hra = Math.round(
+                              basicpay * augustSalary?.hraPercent
+                            );
+                            addl = augustSalary?.addl;
                             pfund = augustSalary?.gpf;
+                            gsli = augustSalary?.gsli;
                             ma = augustSalary?.ma;
                           } else if (index === 8) {
                             basicpay = septemberSalary?.basic;
                             da = Math.round(
                               basicpay * septemberSalary?.daPercent
                             );
+                            hra = Math.round(
+                              basicpay * septemberSalary?.hraPercent
+                            );
+                            addl = septemberSalary?.addl;
                             pfund = septemberSalary?.gpf;
+                            gsli = septemberSalary?.gsli;
                             ma = septemberSalary?.ma;
                           } else if (index === 9) {
                             basicpay = octoberSalary?.basic;
                             da = Math.round(
                               basicpay * octoberSalary?.daPercent
                             );
+                            hra = Math.round(
+                              basicpay * octoberSalary?.hraPercent
+                            );
+                            addl = octoberSalary?.addl;
                             pfund = octoberSalary?.gpf;
+                            gsli = octoberSalary?.gsli;
                             ma = octoberSalary?.ma;
                           } else if (index === 10) {
                             basicpay = novemberSalary?.basic;
                             da = Math.round(
                               basicpay * novemberSalary?.daPercent
                             );
+                            hra = Math.round(
+                              basicpay * novemberSalary?.hraPercent
+                            );
+                            addl = novemberSalary?.addl;
                             pfund = novemberSalary?.gpf;
+                            gsli = novemberSalary?.gsli;
                             ma = novemberSalary?.ma;
                           } else if (index === 11) {
                             basicpay = decemberSalary?.basic;
                             da = Math.round(
                               basicpay * decemberSalary?.daPercent
                             );
+                            hra = Math.round(
+                              basicpay * decemberSalary?.hraPercent
+                            );
+                            addl = decemberSalary?.addl;
                             pfund = decemberSalary?.gpf;
+                            gsli = decemberSalary?.gsli;
                             ma = decemberSalary?.ma;
-                          } else if (index === 12) {
-                            basicpay = januarySalary?.basic;
-                            da = Math.round(
-                              basicpay * januarySalary?.daPercent
-                            );
-                            pfund = januarySalary?.gpf;
-                            ma = januarySalary?.ma;
-                          } else if (index === 13) {
-                            basicpay = februarySalary?.basic;
-                            da = Math.round(
-                              basicpay * februarySalary?.daPercent
-                            );
-                            pfund = februarySalary?.gpf;
-                            ma = februarySalary?.ma;
                           }
-                        }
 
-                        let hra = Math.round(basicpay * HRA);
+                          if (year === 2024 && index === 6) {
+                            gross = basicpay + da + ir + hra + addl + ma;
+                          } else {
+                            gross = basicpay + da + hra + addl + ma;
+                          }
 
-                        if (dataYear === 2024 && index === 6) {
-                          gross = basicpay + da + ir + hra + addl + ma;
-                        } else {
-                          gross = basicpay + da + hra + addl + ma;
-                        }
+                          if (gross > 40000) {
+                            ptax = 200;
+                          } else if (gross > 25000) {
+                            ptax = 150;
+                          } else if (gross > 15000) {
+                            ptax = 130;
+                          } else if (gross > 10000) {
+                            ptax = 110;
+                          } else {
+                            ptax = 0;
+                          }
 
-                        if (gross > 40000) {
-                          ptax = 200;
-                        } else if (gross > 25000) {
-                          ptax = 150;
-                        } else if (gross > 15000) {
-                          ptax = 130;
-                        } else if (gross > 10000) {
-                          ptax = 110;
-                        } else {
-                          ptax = 0;
-                        }
+                          if (disability === "YES") {
+                            ptax = 0;
+                          }
 
-                        if (disability === "YES") {
-                          ptax = 0;
-                        }
+                          let deduction = gsli + pfund + ptax;
 
-                        let deduction = gsli + pfund + ptax;
+                          let netpay = gross - deduction;
 
-                        let netpay = gross - deduction;
-
-                        if (el.monthData[index].value && basicpay !== 0) {
-                          return (
-                            <tr
-                              key={ind}
-                              id={`tr${
-                                el.id + "-" + ind + "-" + month + "-" + index
-                              }`}
-                            >
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
+                          if (el.monthData[index].value && basicpay !== 0) {
+                            return (
+                              <tr
+                                key={ind}
+                                id={`tr${
+                                  el.id + "-" + ind + "-" + month + "-" + index
+                                }`}
                               >
-                                {/* {ind + 1} */}
-                              </td>
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {el.tname}
-                              </td>
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {el.desig}
-                              </td>
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {basicpay}
-                              </td>
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {addl}
-                              </td>
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {da}
-                              </td>
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {hra}
-                              </td>
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {ma}
-                              </td>
-                              {year === 2024 && index === 6 ? (
                                 <td
                                   className="text-center"
                                   style={{ border: "1px solid" }}
                                 >
-                                  {ir}
+                                  {/* {ind + 1} */}
                                 </td>
-                              ) : null}
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {gross}
-                              </td>
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {pfund}
-                              </td>
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {gsli}
-                              </td>
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {ptax}
-                              </td>
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {deduction}
-                              </td>
-                              <td
-                                className="text-center"
-                                style={{ border: "1px solid" }}
-                              >
-                                {netpay}
-                              </td>
-                              <th
-                                className="text-center"
-                                style={{ border: "1px solid", height: 100 }}
-                              ></th>
-                              <td
-                                className="text-center noprint"
-                                style={{ border: "1px solid" }}
-                              >
-                                <button
-                                  type="button"
-                                  className="btn btn-danger text-white font-weight-bold p-2 rounded"
-                                  onClick={() => {
-                                    document
-                                      .getElementById(
-                                        `tr${
-                                          el.id +
-                                          "-" +
-                                          ind +
-                                          "-" +
-                                          month +
-                                          "-" +
-                                          index
-                                        }`
-                                      )
-                                      .classList.add("d-none");
-                                  }}
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
                                 >
-                                  Remove Teacher
-                                </button>
-                              </td>
-                            </tr>
-                          );
-                        }
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              ))}
+                                  {el.tname}
+                                </td>
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {el.desig}
+                                </td>
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {basicpay}
+                                </td>
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {addl}
+                                </td>
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {da}
+                                </td>
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {hra}
+                                </td>
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {ma}
+                                </td>
+                                {year === 2024 && index === 6 && (
+                                  <td
+                                    className="text-center"
+                                    style={{ border: "1px solid" }}
+                                  >
+                                    {ir}
+                                  </td>
+                                )}
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {gross}
+                                </td>
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {pfund}
+                                </td>
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {gsli}
+                                </td>
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {ptax}
+                                </td>
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {deduction}
+                                </td>
+                                <td
+                                  className="text-center"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  {netpay}
+                                </td>
+                                <th
+                                  className="text-center"
+                                  style={{ border: "1px solid", height: 100 }}
+                                ></th>
+                                <td
+                                  className="text-center noprint"
+                                  style={{ border: "1px solid" }}
+                                >
+                                  <button
+                                    type="button"
+                                    className="btn btn-danger text-white font-weight-bold p-2 rounded"
+                                    onClick={() => {
+                                      document
+                                        .getElementById(
+                                          `tr${
+                                            el.id +
+                                            "-" +
+                                            ind +
+                                            "-" +
+                                            month +
+                                            "-" +
+                                            index
+                                          }`
+                                        )
+                                        .classList.add("d-none");
+                                    }}
+                                  >
+                                    Remove Teacher
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          }
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                ))}
             </div>
           </div>
           <div className="mx-auto my-3 noprint">
             <button
               type="button"
               className="btn btn-primary text-white font-weight-bold p-2 rounded"
-              onClick={window.print}
+              onClick={() => {
+                window.print();
+              }}
             >
               Print Page
             </button>
@@ -981,7 +998,7 @@ const TechAccuitance = () => {
           <div className="mx-auto my-3 noprint">
             <button
               type="button"
-              className="btn btn-warning  font-weight-bold p-2 rounded"
+              className="btn btn-info text-white font-weight-bold m-2 p-2 rounded"
               onClick={() => navigate(-1)}
             >
               Go Back
