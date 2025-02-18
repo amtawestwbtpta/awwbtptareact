@@ -2,17 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../context/Store";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import  Loader  from "./Loader";
-import { GetMonthName, RoundTo, months } from "../modules/calculatefunctions";
-import { DA, HRA, NEXTDA, PREV6DA } from "../modules/constants";
+import Loader from "./Loader";
+import { GetMonthName } from "../modules/calculatefunctions";
 import axios from "axios";
-import ropa from "../modules/ropa";
 import { toast } from "react-toastify";
 const TechSalary = () => {
   const { state, stateArray, setStateObject } = useGlobalContext();
   const navigate = useNavigate();
   const [filteredData, setFilteredData] = useState([]);
-  const [showTable, setShowTable] = useState(false);
   const [school, setSchool] = useState("");
   const thisYear = new Date().getFullYear();
   const preYear = thisYear - 1;
@@ -212,53 +209,23 @@ const TechSalary = () => {
                     let tname,
                       id,
                       desig,
-                      school,
                       disability,
-                      empid,
-                      pan,
-                      dataYear,
-                      basic,
-                      mbasic,
                       addl,
                       da,
                       hra,
                       ma,
                       gross,
-                      prevmbasic,
-                      gpf,
-                      gpfprev,
-                      julyGpf,
                       pfund,
                       ptax,
                       gsli,
-                      udise,
-                      bank,
-                      account,
-                      ifsc,
-                      level,
-                      cell,
                       ir;
 
                     tname = el.tname;
                     id = el.id;
                     desig = el.desig;
-                    school = el.school;
                     disability = el.disability;
-                    empid = el.empid;
-                    pan = el.pan;
-                    basic = parseInt(el.basic);
-                    mbasic = parseInt(el.mbasic);
                     addl = parseInt(el.addl);
                     ma = parseInt(el.ma);
-                    gpf = parseInt(el.gpf);
-                    gpfprev = parseInt(el.gpfprev);
-                    julyGpf = parseInt(el.julyGpf);
-                    gsli = parseInt(el.gsli);
-                    udise = el.udise;
-                    bank = el.bank;
-                    account = el.account;
-                    ifsc = el.ifsc;
-                    dataYear = el.dataYear;
 
                     let netpay;
 
@@ -286,8 +253,7 @@ const TechSalary = () => {
                     ma = techersSalary?.ma;
                     pfund = techersSalary?.gpf;
                     gsli = techersSalary?.gsli;
-                    level = ropa(basicpay).lv;
-                    cell = ropa(basicpay).ce;
+
                     gross = basicpay + da + ir + hra + addl + ma;
                     if (gross > 40000) {
                       ptax = 200;
@@ -321,13 +287,13 @@ const TechSalary = () => {
                             className="text-center"
                             style={{ border: "1px solid" }}
                           >
-                            {el.tname}
+                            {tname}
                           </td>
                           <td
                             className="text-center"
                             style={{ border: "1px solid" }}
                           >
-                            {el.desig}
+                            {desig}
                           </td>
                           <td
                             className="text-center"

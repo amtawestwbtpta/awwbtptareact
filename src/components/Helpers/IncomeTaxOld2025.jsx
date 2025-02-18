@@ -7,7 +7,6 @@ import {
   Document,
   StyleSheet,
   Font,
-  PDFViewer,
 } from "@react-pdf/renderer";
 import { IndianFormat, roundSo } from "../../modules/calculatefunctions";
 const width = 2480;
@@ -15,15 +14,11 @@ const height = 3508;
 
 export default function IncomeTaxOld2025({ data }) {
   const {
-    id,
     tname,
     school,
     pan,
-    phone,
-    disability,
     desig,
     thisYear,
-    nextYear,
     prevYear,
     finYear,
     marchSalary,
@@ -160,8 +155,6 @@ export default function IncomeTaxOld2025({ data }) {
     AllGross,
     TotalGross,
     GrossArrear,
-    GrossTotalIncome,
-    deductionVIA,
     limitVIA,
     OtherVIA,
     TotalIncome,
@@ -171,8 +164,6 @@ export default function IncomeTaxOld2025({ data }) {
     eduCess,
     AddedEduCess,
     BankInterest,
-    teacherDeduction,
-    hbLoanPrincipal,
     hbLoanInterest,
     lic,
     ulip,
@@ -189,9 +180,6 @@ export default function IncomeTaxOld2025({ data }) {
     charity,
     disabilityDeduction,
     rgSaving,
-    otherIncome,
-    fd,
-    tds,
     marchNetpay,
     aprilNetpay,
     mayNetpay,
@@ -2240,7 +2228,7 @@ export default function IncomeTaxOld2025({ data }) {
                       )}
                     </View>
                   </View>
-                  {sukanya !== 0 && (
+                  {sukanya > 0 && (
                     <View
                       style={{
                         width: "100%",
@@ -4707,7 +4695,15 @@ export default function IncomeTaxOld2025({ data }) {
                     </View>
                   </View>
                 </View>
-                <View style={{ width: "10%", borderRightWidth: 1, height: 50 }}>
+                <View
+                  style={{
+                    width: "10%",
+                    borderRightWidth: 1,
+                    height: 50,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Text style={styles.text}>GROSS</Text>
                 </View>
                 <View

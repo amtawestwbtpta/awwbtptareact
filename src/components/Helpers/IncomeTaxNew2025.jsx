@@ -6,7 +6,7 @@ import {
   Document,
   StyleSheet,
   Font,
-  PDFViewer,
+
 } from "@react-pdf/renderer";
 import { IndianFormat, roundSo } from "../../modules/calculatefunctions";
 const width = 2480;
@@ -17,11 +17,9 @@ export default function IncomeTaxNew2025({ data }) {
     tname,
     school,
     pan,
-    phone,
     desig,
     thisYear,
     prevYear,
-    nextYear,
     finYear,
     marchSalary,
     marchBasic,
@@ -161,11 +159,8 @@ export default function IncomeTaxNew2025({ data }) {
     eduCess,
     AddedEduCess,
     BankInterest,
-    tds,
     GrossRelief,
     IncomeTaxAfterRelief,
-    ThirtyIT,
-    ThirtyITTax,
     TwentyIT,
     TwentyITTax,
     FifteenIT,
@@ -2222,6 +2217,23 @@ export default function IncomeTaxNew2025({ data }) {
                   </View>
                 </View>
               </View>
+              <View
+                style={{
+                  justifyContent: "flex-end",
+                  width: "100%",
+                  marginTop: 10,
+                  marginBottom: 10,
+                }}
+              >
+                <Text
+                  style={[
+                    styles.text,
+                    { textAlign: "right", paddingRight: 20 },
+                  ]}
+                >
+                  Contd...2
+                </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -2670,7 +2682,9 @@ export default function IncomeTaxNew2025({ data }) {
                       <Text style={styles.text}>Rs.</Text>
                     </View>
                     <View style={{ width: "25%" }}>
-                      <Text style={styles.text}>{IncomeTaxAfterRelief > 0 ? " " : "NIL"}</Text>
+                      <Text style={styles.text}>
+                        {IncomeTaxAfterRelief > 0 ? " " : "NIL"}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -3218,7 +3232,15 @@ export default function IncomeTaxNew2025({ data }) {
                     </View>
                   </View>
                 </View>
-                <View style={{ width: "10%", borderRightWidth: 1, height: 50 }}>
+                <View
+                  style={{
+                    width: "10%",
+                    borderRightWidth: 1,
+                    height: 50,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Text style={styles.text}>GROSS</Text>
                 </View>
                 <View

@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import IncomeTaxNew2025 from "./Helpers/IncomeTaxNew2025";
 import IncomeTaxOld2025 from "./Helpers/IncomeTaxOld2025";
 import Form16New from "./Helpers/Form16New";
+import Form16NewRegime from "./Helpers/Form16NewRegime";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 export default function ITSection() {
   const {
@@ -25,6 +26,7 @@ export default function ITSection() {
     setSalaryState,
     indSalaryState,
     setIndSalaryState,
+    state,
   } = useGlobalContext();
   const [salary, setSalary] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -33,6 +35,7 @@ export default function ITSection() {
   const [schSearch, setSchSearch] = useState("");
   const [showDeductionForm, setShowDeductionForm] = useState(false);
   const [showForm16, setShowForm16] = useState(false);
+  const [showForm16New, setShowForm16New] = useState(false);
   const [filterClicked, setFilterClicked] = useState(false);
   const [teacherDeduction, setTeacherDeduction] = useState({
     id: "",
@@ -64,6 +67,7 @@ export default function ITSection() {
     pan: "",
     phone: "",
     desig: "",
+    gender: "",
     thisYear: "",
     prevYear: "",
     nextYear: "",
@@ -244,6 +248,7 @@ export default function ITSection() {
     phone: "",
     disability: "",
     desig: "",
+    gender: "",
     thisYear: "",
     nextYear: "",
     prevYear: "",
@@ -465,7 +470,8 @@ export default function ITSection() {
   const [january, setJanuary] = useState([]);
   const [february, setFebruary] = useState([]);
   const calCulateOldIT = async (data) => {
-    const { id, tname, fname, school, pan, phone, disability, desig } = data;
+    const { id, tname, fname, school, pan, phone, disability, desig, gender } =
+      data;
     const marchSalary = march.filter((el) => el.id === id)[0];
     const marchArrear = marchSalary?.arrear;
     const marchBasic = marchSalary?.basic;
@@ -883,6 +889,7 @@ export default function ITSection() {
       phone,
       disability,
       desig,
+      gender,
       thisYear,
       nextYear,
       prevYear,
@@ -1069,7 +1076,7 @@ export default function ITSection() {
     });
   };
   const calCulateNewIT = async (data) => {
-    const { id, tname, school, pan, phone, disability, desig } = data;
+    const { id, tname, school, pan, phone, disability, desig, gender } = data;
     const marchSalary = march.filter((el) => el.id === id)[0];
     const marchArrear = marchSalary?.arrear;
     const marchBasic = marchSalary?.basic;
@@ -1472,6 +1479,7 @@ export default function ITSection() {
       pan,
       phone,
       desig,
+      gender,
       thisYear,
       prevYear,
       nextYear,
@@ -1659,8 +1667,7 @@ export default function ITSection() {
       setLoader(false);
     }
   };
-  const updateTeacherDeduction = async (e) => {
-    e.preventDefault();
+  const updateTeacherDeduction = async () => {
     const docRef = doc(firestore, "deduction", teacherDeduction.id);
     setLoader(true);
     await updateDoc(docRef, teacherDeduction)
@@ -1683,63 +1690,69 @@ export default function ITSection() {
   const getSalary = async () => {
     setLoader(true);
     const q1 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/Salary.json"
+      "https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/Salary.json"
     );
-    setSalary(q1.data);
-    setFilteredData(q1.data);
-    setSalaryState(q1.data);
+    const data = q1.data;
+    const onlyWbtptaTeachers = data?.filter(
+      (teacher) => teacher?.association === "WBTPTA"
+    );
+    setSalary(state === "admin" ? data : onlyWbtptaTeachers);
+    setFilteredData(state === "admin" ? data : onlyWbtptaTeachers);
+    setSalaryState(data);
     setLoader(false);
   };
   const getMonthlySalary = async () => {
-    setLoader(true);
+    setLoader(false);
     const q1 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/march.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/january-${thisYear}.json`
     );
     const q2 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/april.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/february-${thisYear}.json`
     );
     const q3 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/may.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/march-${prevYear}.json`
     );
     const q4 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/june.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-${prevYear}.json`
     );
     const q5 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/july.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/may-${prevYear}.json`
     );
     const q6 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/august.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/june-${prevYear}.json`
     );
     const q7 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/september.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/july-${prevYear}.json`
     );
     const q8 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/october.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/august-${prevYear}.json`
     );
     const q9 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/november.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/september-${prevYear}.json`
     );
     const q10 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/december.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/october-${prevYear}.json`
     );
     const q11 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/january.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/november-${prevYear}.json`
     );
     const q12 = await axios.get(
-      "https://raw.githubusercontent.com/amtawestwbtpta/salary/main/february.json"
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/december-${prevYear}.json`
     );
-    setMarch(q1.data);
-    setApril(q2.data);
-    setMay(q3.data);
-    setJune(q4.data);
-    setJuly(q5.data);
-    setAugust(q6.data);
-    setSeptember(q7.data);
-    setOctober(q8.data);
-    setNovember(q9.data);
-    setDecember(q10.data);
-    setJanuary(q11.data);
-    setFebruary(q12.data);
+
+    setJanuary(q1.data);
+    setFebruary(q2.data);
+    setMarch(q3.data);
+    setApril(q4.data);
+    setMay(q5.data);
+    setJune(q6.data);
+    setJuly(q7.data);
+    setAugust(q8.data);
+    setSeptember(q9.data);
+    setOctober(q10.data);
+    setNovember(q11.data);
+    setDecember(q12.data);
+    setLoader(true);
     setIndSalaryState({
       march: q1.data,
       april: q2.data,
@@ -1761,8 +1774,11 @@ export default function ITSection() {
     if (salaryState.length === 0) {
       getSalary();
     } else {
-      setSalary(salaryState);
-      setFilteredData(salaryState);
+      const onlyWbtptaTeachers = salaryState?.filter(
+        (teacher) => teacher?.association === "WBTPTA"
+      );
+      setSalary(state === "admin" ? salaryState : onlyWbtptaTeachers);
+      setFilteredData(state === "admin" ? salaryState : onlyWbtptaTeachers);
     }
     if (indSalaryState.march.length === 0) {
       getMonthlySalary();
@@ -1848,27 +1864,29 @@ export default function ITSection() {
                 >
                   Taxable Teachers
                 </button>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-warning m-2"
-                  onClick={() => {
-                    const fData = filteredData.filter(
-                      (salary) => salary?.association === "WBTPTA"
-                    );
-                    if (fData.length !== 0) {
-                      setFilteredData(fData);
-                    } else {
-                      setFilteredData(
-                        salary.filter(
-                          (salary) => salary?.association === "WBTPTA"
-                        )
+                {state === "admin" && (
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-warning m-2"
+                    onClick={() => {
+                      const fData = filteredData.filter(
+                        (salary) => salary?.association === "WBTPTA"
                       );
-                    }
-                    setFilterClicked(true);
-                  }}
-                >
-                  Only WBTPTA Teachers
-                </button>
+                      if (fData.length !== 0) {
+                        setFilteredData(fData);
+                      } else {
+                        setFilteredData(
+                          salary.filter(
+                            (salary) => salary?.association === "WBTPTA"
+                          )
+                        );
+                      }
+                      setFilterClicked(true);
+                    }}
+                  >
+                    Only WBTPTA Teachers
+                  </button>
+                )}
                 {salary.length !== filteredData.length && (
                   <button
                     type="button"
@@ -1940,7 +1958,11 @@ export default function ITSection() {
                 </div>
                 <div className="mx-auto  d-flex flex-row justify-content-evenly flex-wrap">
                   {filteredData.map((row, index) => {
-                    if (row?.AllGross !== 0) {
+                    if (
+                      row?.AllGross !== 0 &&
+                      teachersState.filter((teacher) => teacher.id === row.id)
+                        .length > 0
+                    ) {
                       return (
                         <div
                           className="rounded shadow-sm text-center col-md-2 m-2 p-2 nobreak"
@@ -1989,20 +2011,22 @@ export default function ITSection() {
                               : "NIL"}
                           </p>
                           <div>
-                            <button
-                              type="button"
-                              className="btn btn-sm btn-warning m-1 noprint"
-                              onClick={() => {
-                                const fData = deductionState.filter(
-                                  (d) => d.id === row?.id
-                                )[0];
-                                setTeacherDeduction(fData);
-                                setShowDeductionForm(true);
-                                setLoader(false);
-                              }}
-                            >
-                              Update Deduction
-                            </button>
+                            {state === "admin" && (
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-warning m-1 noprint"
+                                onClick={() => {
+                                  const fData = deductionState.filter(
+                                    (d) => d.id === row?.id
+                                  )[0];
+                                  setTeacherDeduction(fData);
+                                  setShowDeductionForm(true);
+                                  setLoader(false);
+                                }}
+                              >
+                                Update Deduction
+                              </button>
+                            )}
                             <button
                               type="button"
                               className="btn btn-sm btn-success m-1 noprint"
@@ -2510,6 +2534,7 @@ export default function ITSection() {
                           aria-label="Close"
                           onClick={() => {
                             setShowOldModal(false);
+                            setShowForm16(false);
                           }}
                         ></button>
                       </div>
@@ -2580,6 +2605,7 @@ export default function ITSection() {
                           className="btn btn-sm btn-danger"
                           onClick={() => {
                             setShowOldModal(false);
+                            setShowForm16(false);
                           }}
                         >
                           Close
@@ -2614,6 +2640,7 @@ export default function ITSection() {
                           aria-label="Close"
                           onClick={() => {
                             setShowNewModal(false);
+                            setShowForm16New(false);
                           }}
                         ></button>
                       </div>
@@ -2649,6 +2676,34 @@ export default function ITSection() {
                             </p>
                           </div>
                         </div>
+                        <button
+                          type="button"
+                          className="btn btn-success m-2"
+                          onClick={() => setShowForm16New(!showForm16New)}
+                        >
+                          {showForm16New ? "Hide Form 16" : "Show Form 16"}
+                        </button>
+                        {showForm16New && (
+                          <div className="mx-auto noprint my-5">
+                            <PDFDownloadLink
+                              document={<Form16NewRegime data={newITData} />}
+                              fileName={`Form 16 of ${TeacherData.tname} of ${TeacherData.school}.pdf`}
+                              style={{
+                                textDecoration: "none",
+                                padding: "10px",
+                                color: "#fff",
+                                backgroundColor: "navy",
+                                border: "1px solid #4a4a4a",
+                                width: "40%",
+                                borderRadius: 10,
+                              }}
+                            >
+                              {({ blob, url, loading, error }) =>
+                                loading ? "Please Wait..." : "Download Form 16"
+                              }
+                            </PDFDownloadLink>
+                          </div>
+                        )}
                       </div>
                       <div className="modal-footer">
                         <button
@@ -2656,6 +2711,7 @@ export default function ITSection() {
                           className="btn btn-sm btn-danger"
                           onClick={() => {
                             setShowNewModal(false);
+                            setShowForm16New(false);
                           }}
                         >
                           Close

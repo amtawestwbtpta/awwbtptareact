@@ -26,7 +26,7 @@ export default function ServiceLeaveProposal() {
     const start = new Date(getCurrentDateInput(startingDate));
     const end = new Date(getCurrentDateInput(endingDate));
     const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
     setLeaveDays(diffDays);
     return diffDays;
   };
@@ -128,10 +128,15 @@ export default function ServiceLeaveProposal() {
                       defaultValue={getCurrentDateInput(endingDate)}
                       onChange={(e) => {
                         setEndingDate(getSubmitDateInput(e.target.value));
-                        calculateDays();
                       }}
                     />
                   </div>
+                  <button
+                    className="btn btn-success m-3"
+                    onClick={calculateDays}
+                  >
+                    Calculate Days
+                  </button>
                   <div className="mb-3">
                     <label htmlFor="date" className="form-label">
                       Total Leave Days
