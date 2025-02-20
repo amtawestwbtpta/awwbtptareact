@@ -1,0 +1,139 @@
+import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router";
+import { useGlobalContext } from "../context/Store";
+
+import { toast } from "react-toastify";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { decryptData } from "../modules/encryption";
+import { GEMEINI_API_KEY } from "../modules/constants";
+const genAl = new GoogleGenerativeAI(decryptData(GEMEINI_API_KEY));
+export default function AiChatBot() {
+  const navigate = useNavigate();
+  const { state } = useGlobalContext();
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [typing, setTyping] = useState(false);
+  const messageRef = useRef(null);
+
+  const handleSend = async (e) => {
+    e.preventDefault();
+    if (input.trim() !== "") {
+      let msg = [...messages];
+      const userMessage = { text: input, sender: "user" };
+      msg = [...msg, userMessage];
+      setMessages(msg);
+      setInput("");
+      setTyping(true);
+
+      // Call Gemini AI chat API (replace with actual API endpoint)
+      //   const response = await axios.post('YOUR_Gemini_API_ENDPOINT', { message: input });
+      try {
+        const response = await generateGeminiReply(input);
+        if (response !== "") {
+          const aiMessage = {
+            text: response,
+            sender: "Gemini",
+          };
+          msg = [...msg, aiMessage];
+          setMessages(msg);
+        } else {
+          toast.error("Error sending message to Gemini AI. Please try again.");
+          setTyping(false);
+        }
+      } catch (error) {
+        console.error("Error sending message to Gemini AI: ", error);
+        setTyping(true);
+
+        // If Gemini AI fails to respond, display a default message
+        const defaultMessage = {
+          text: "I'm sorry, I couldn't understand that. Please try again.",
+          sender: "Gemini",
+        };
+        setMessages([...messages, defaultMessage]);
+      }
+    }
+  };
+  const generateGeminiReply = async (prompt) => {
+    try {
+      const model = genAl.getGenerativeModel({ model: "gemini-pro" });
+      const result = await model.generateContent(prompt);
+      const response = result.response.text();
+      return response;
+    } catch (error) {
+      console.error("Error generating text:", error);
+      return "";
+    }
+  };
+  useEffect(() => {
+    if (typing && messageRef.current) {
+      const messageText = messageRef.current.textContent;
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < messageText.length) {
+          messageRef.current.textContent = messageText.substring(0, i + 1);
+          i++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 50); // Adjust typing speed (milliseconds)
+      return () => clearInterval(interval);
+    }
+  }, [typing]);
+  useEffect(() => {
+    if (!state) {
+      navigate("/login");
+    }
+    // eslint-disable-next-line
+  }, []);
+  return (
+    <div className="container mt-5">
+      <form action="" method="post" onSubmit={handleSend}>
+        <div className="row">
+          <div className="col-md-10 mx-auto">
+            <div className="card shadow-sm">
+              <div className="card-body">
+                <div className="chat-container">
+                  {messages.map((msg, index) => (
+                    <div
+                      key={index}
+                      className={`message mb-3 p-2 rounded text-black`}
+                      style={{
+                        backgroundColor:
+                          msg.sender === "user" ? "cornsilk" : "honeydew",
+                      }}
+                    >
+                      {msg.sender === "DeepSeek" && typing ? (
+                        <span
+                          ref={messageRef}
+                          className="typing-indicator"
+                        ></span>
+                      ) : (
+                        <span>{msg.text}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <div className="input-group mt-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Type your message..."
+                  />
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    onClick={handleSend}
+                  >
+                    Send
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}

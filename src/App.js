@@ -5,6 +5,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
+import AiChatBot from "./components/AiChatBot";
 import TaxCalculator from "./components/TaxCalculator";
 import PayslipWbtpta from "./components/PayslipWbtpta";
 import Downloads from "./components/Downloads";
@@ -96,6 +97,7 @@ const Routing = () => {
       <Route exact path="/" element={<Home />} />
       <Route exact path="/home" element={<Home />} />
       <Route exact path="/dashboard" element={<Dashboard />} />
+      <Route exact path="/AiChatBot" element={<AiChatBot />} />
       <Route exact path="/JulySalary" element={<JulySalary />} />
       <Route exact path="/taxcalculator" element={<TaxCalculator />} />
       <Route exact path="/payslipwbtpta" element={<PayslipWbtpta />} />
