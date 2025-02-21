@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import { useGlobalContext } from "../context/Store";
-
+import "../css/ChatBot.css"
 import { toast } from "react-toastify";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { decryptData } from "../modules/encryption";
@@ -96,19 +96,19 @@ export default function AiChatBot() {
                   {messages.map((msg, index) => (
                     <div
                       key={index}
-                      className={`message mb-3 p-2 rounded text-black`}
+                      className={`message mb-3 p-2 rounded text-black ben`}
                       style={{
                         backgroundColor:
                           msg.sender === "user" ? "cornsilk" : "honeydew",
                       }}
                     >
                       {msg.sender === "DeepSeek" && typing ? (
-                        <span
+                        <p
                           ref={messageRef}
-                          className="typing-indicator"
-                        ></span>
+                          className="typing-indicator fs-6"
+                        ></p>
                       ) : (
-                        <span>{msg.text}</span>
+                        <p className="fs-6">{msg.text}</p>
                       )}
                     </div>
                   ))}
@@ -128,6 +128,16 @@ export default function AiChatBot() {
                   >
                     Send
                   </button>
+                </div>
+                <div className="mt-3 d-flex flex-row justify-content-center align-items-center">
+                  <a href="#" className="text-decoration-none m-0 p-0">
+                    <small>Powered by </small>
+                  </a>
+                  <img
+                    src="https://raw.githubusercontent.com/amtawestwbtpta/awwbtptadata/main/Gemini.jpg"
+                    alt="LOGO"
+                    width={"50vw"}
+                  />
                 </div>
               </div>
             </div>
