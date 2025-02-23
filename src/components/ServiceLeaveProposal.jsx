@@ -13,7 +13,7 @@ export default function ServiceLeaveProposal() {
   const { state, stateObject } = useGlobalContext();
   const navigate = useNavigate();
   const { tname, desig, school, doj, phone, hoi, gender } = stateObject;
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const [showDownloadBtn, setShowDownloadBtn] = useState(false);
   const [leaveNature, setLeaveNature] = useState("");
   const [startingDate, setStartingDate] = useState(todayInString());
@@ -22,13 +22,21 @@ export default function ServiceLeaveProposal() {
   const [childBirthDate, setChildBirthDate] = useState(todayInString());
   const [village, setVillage] = useState("");
   const [po, setPo] = useState("");
+  const [serviceAge, setServiceAge] = useState("");
   const calculateDays = () => {
     const start = new Date(getCurrentDateInput(startingDate));
     const end = new Date(getCurrentDateInput(endingDate));
     const diffTime = Math.abs(end - start);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
     setLeaveDays(diffDays);
+    calculateServiceAge();
     return diffDays;
+  };
+  const calculateServiceAge = () => {
+    const endingYear = new Date(getCurrentDateInput(endingDate)).getFullYear();
+    const joiningYear = new Date(getCurrentDateInput(doj)).getFullYear();
+    const sAge = endingYear - joiningYear;
+    setServiceAge(sAge);
   };
   useEffect(() => {
     if (state !== "admin") {
@@ -41,23 +49,28 @@ export default function ServiceLeaveProposal() {
   }, [startingDate, endingDate, leaveDays]);
   return (
     <div className="container">
-      <button
-        type="button"
-        className="btn btn-dark m-2"
-        onClick={() => navigate("/teacherdatabase")}
+      <div
+        className="d-flex flex-column justify-content-center align-items-center mx-auto"
+        style={{ width: "50%" }}
       >
-        Go Back
-      </button>
-      <button
-        type="button"
-        className="btn btn-primary m-2"
-        onClick={() => {
-          setShowModal(true);
-          setShowDownloadBtn(false);
-        }}
-      >
-        Enter Details
-      </button>
+        <button
+          type="button"
+          className="btn btn-dark m-5"
+          onClick={() => router.push("/teacherdatabase")}
+        >
+          Go Back
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary m-5"
+          onClick={() => {
+            setShowModal(true);
+            setShowDownloadBtn(false);
+          }}
+        >
+          Enter Details
+        </button>
+      </div>
       {showModal && (
         <div
           className="modal fade show"
@@ -72,6 +85,15 @@ export default function ServiceLeaveProposal() {
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">
                   Enter Required Details
                 </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={() => {
+                    setShowModal(false);
+                    setShowDownloadBtn(false);
+                  }}
+                ></button>
               </div>
               <div className="modal-body">
                 <div className="mx-auto col-md-6">
@@ -204,10 +226,17 @@ export default function ServiceLeaveProposal() {
                 <button
                   className="btn btn-success m-2"
                   type="button"
+                  disabled={
+                    leaveNature === "" ||
+                    village === "" ||
+                    po === "" ||
+                    leaveDays === ""
+                  }
                   onClick={() => {
                     if (leaveNature !== "") {
                       setShowModal(false);
                       setShowDownloadBtn(true);
+                      console.log(leaveNature);
                     } else {
                       toast.error("Select Nature of Leave");
                     }
@@ -216,13 +245,14 @@ export default function ServiceLeaveProposal() {
                   Save
                 </button>
                 <button
-                  className="btn btn-dark m-2"
+                  className="btn btn-danger m-2"
                   type="button"
                   onClick={() => {
                     setShowModal(false);
+                    setShowDownloadBtn(false);
                   }}
                 >
-                  close
+                  Cancel
                 </button>
               </div>
             </div>
@@ -250,6 +280,7 @@ export default function ServiceLeaveProposal() {
                   po,
                   hoi,
                   gender,
+                  serviceAge,
                 }}
               />
             }
@@ -272,27 +303,28 @@ export default function ServiceLeaveProposal() {
       )}
 
       {/* {showDownloadBtn && (
-    <div className="mt-3">
-      <LeaveProposal
-        data={{
-          tname,
-          school,
-          desig,
-          doj,
-          leaveNature,
-          leaveDays,
-          startingDate,
-          endingDate,
-          childBirthDate,
-          phone,
-          village,
-          po,
-          hoi,
-          gender,
-        }}
-      />
-    </div>
-  )} */}
+        <div className="mt-3">
+          <LeaveProposal
+            data={{
+              tname,
+              school,
+              desig,
+              doj,
+              leaveNature,
+              leaveDays,
+              startingDate,
+              endingDate,
+              childBirthDate,
+              phone,
+              village,
+              po,
+              hoi,
+              gender,
+              serviceAge,
+            }}
+          />
+        </div>
+      )} */}
     </div>
   );
 }
