@@ -56,7 +56,7 @@ export default function ServiceLeaveProposal() {
         <button
           type="button"
           className="btn btn-dark m-5"
-          onClick={() => router.push("/teacherdatabase")}
+          onClick={() => navigate("/teacherdatabase")}
         >
           Go Back
         </button>
