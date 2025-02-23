@@ -719,12 +719,7 @@ export default function LeaveProposal({ data }) {
                             height: 15,
                             width: 15,
                             position: "absolute",
-                            marginLeft:
-                              leaveNature === "LWP"
-                                ? 0
-                                : leaveNature === "PATERNITY"
-                                ? 0
-                                : 58,
+                            marginLeft: 0,
                             marginTop:
                               leaveNature === "COMMUTED"
                                 ? 0
@@ -1085,9 +1080,13 @@ export default function LeaveProposal({ data }) {
                     height: 40,
                   }}
                 >
-                  <Text style={styles.text2}>
-                    {`${doj}\nTo\n${endingDate}`}
-                  </Text>
+                  {leaveNature !== "MATERNITY" ? (
+                    <Text style={styles.text2}>
+                      {`${doj}\nTo\n${endingDate}`}
+                    </Text>
+                  ) : (
+                    <Text style={styles.text}>{endingDate.split("-")[2]}</Text>
+                  )}
                 </View>
                 <View
                   style={{
@@ -1144,7 +1143,7 @@ export default function LeaveProposal({ data }) {
                     height: 40,
                   }}
                 >
-                  <Text style={styles.text2}>{leaveDays}</Text>
+                  <Text style={styles.text}>{leaveDays}</Text>
                 </View>
                 <View
                   style={{
@@ -1155,7 +1154,7 @@ export default function LeaveProposal({ data }) {
                     height: 40,
                   }}
                 >
-                  <Text style={styles.text2}>
+                  <Text style={styles.text}>
                     {leaveNature === "MATERNITY" ? "N/A" : leaveDays * 2}
                   </Text>
                 </View>
@@ -1168,7 +1167,7 @@ export default function LeaveProposal({ data }) {
                     height: 40,
                   }}
                 >
-                  <Text style={styles.text2}>{leaveDays}</Text>
+                  <Text style={styles.text}>{leaveDays}</Text>
                 </View>
                 <View
                   style={{
