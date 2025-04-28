@@ -411,6 +411,15 @@ const Navbar = () => {
           <li className="nav-item">
             <NavLink
               className="nav-link"
+              to="/MonthlyAWSalary"
+              onClick={handleNavCollapse}
+            >
+              AW All Teachers Salary
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              className="nav-link"
               to="/YearWiseTeachers"
               onClick={handleNavCollapse}
             >

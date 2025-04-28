@@ -90,6 +90,7 @@ import IncomeTaxNewReigme from "./components/IncomeTaxNewReigme";
 import ServiceLeaveProposal from "./components/ServiceLeaveProposal";
 import GraduationCeremony from "./components/GraduationCeremony";
 import HRADelclaration from "./components/HRADelclaration";
+import MonthlyAWSalary from "./components/MonthlyAWSalary";
 
 const Routing = () => {
   return (
@@ -261,6 +262,7 @@ const Routing = () => {
       />
       <Route exact path="/TechAccuitance" element={<TechAccuitance />} />
       <Route exact path="/Retirement" element={<Retirement />} />
+      <Route exact path="/MonthlyAWSalary" element={<MonthlyAWSalary />} />
     </Routes>
   );
 };
