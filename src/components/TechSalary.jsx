@@ -60,7 +60,7 @@ const TechSalary = () => {
   const today = new Date();
   const [loader, setLoader] = useState(false);
   const [month, setMonth] = useState(
-    GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1)
+    GetMonthName(today.getMonth() === 0 ? 11 : today.getMonth() - 1),
   );
   const [year, setYear] = useState(today.getFullYear());
 
@@ -89,10 +89,10 @@ const TechSalary = () => {
   const getModifiedSalary = async (month, year) => {
     setLoader(true);
     const q1 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${month.toLowerCase()}-${year}.json`
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/${month.toLowerCase()}-${year}.json`,
     );
     const q2 = await axios.get(
-      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-2024.json`
+      `https://raw.githubusercontent.com/amtawestwbtpta/salaryRemodified/main/april-2024.json`,
     );
     setLoader(false);
     setMonthSalary(q1.data);
@@ -232,10 +232,10 @@ const TechSalary = () => {
                     let basicpay;
 
                     const techersSalary = monthSalary?.filter(
-                      (el) => el.id === id
+                      (el) => el.id === id,
                     )[0];
                     const teachersAprilSalary = aprilSalary?.filter(
-                      (el) => el.id === id
+                      (el) => el.id === id,
                     )[0];
                     if (
                       month === "July" &&
@@ -379,15 +379,6 @@ const TechSalary = () => {
                                 onClick={() => setStateObject(el)}
                               >
                                 PRINT PAYSLIP
-                              </Link>
-                            ) : null}
-                            {state === "admin" ? (
-                              <Link
-                                className="btn btn-success m-1 text-decoration-none"
-                                to={`/techpaysliposmsNew`}
-                                onClick={() => setStateObject(el)}
-                              >
-                                OSMS PAYSLIP
                               </Link>
                             ) : null}
                           </th>

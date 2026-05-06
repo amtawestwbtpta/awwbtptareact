@@ -35,8 +35,6 @@ import PrintQuestionAllCompact from "./components/PrintQuestionAllCompact";
 
 import AdminUploadFile from "./components/AdminUploadFile";
 import AdminUploadImage from "./components/AdminUploadImage";
-import PaySlipOSMS from "./components/PaySlipOSMS";
-import PaySlipOSMSNew from "./components/PaySlipOsmsNew";
 import Footer from "./components/Footer";
 import FindTeacher from "./components/FindTeacher";
 import ViewDetails from "./components/ViewDetails";
@@ -80,7 +78,6 @@ import Ropa2019 from "./components/Ropa2019";
 import EditTeacher from "./components/EditTeacher";
 import QuestionRequisition from "./components/QuestionRequisition";
 import FloodRelief from "./components/FloodRelief";
-import DownloadOsmsPayslip from "./components/DownloadOsmsPayslip";
 import { ToastContainer } from "react-toastify";
 import DownloadWBTPTAPayslip from "./components/DownloadWBTPTAPayslip";
 import Retirement from "./components/Retirement";
@@ -102,8 +99,6 @@ const Routing = () => {
       <Route exact path="/JulySalary" element={<JulySalary />} />
       <Route exact path="/taxcalculator" element={<TaxCalculator />} />
       <Route exact path="/payslipwbtpta" element={<PayslipWbtpta />} />
-      <Route exact path="/techpaysliposms" element={<PaySlipOSMS />} />
-      <Route exact path="/techpaysliposmsNew" element={<PaySlipOSMSNew />} />
       <Route exact path="/Form16" element={<Form16 />} />
       <Route exact path="/Form16Prev" element={<Form16Prev />} />
       <Route exact path="/downloads" element={<Downloads />} />
@@ -201,29 +196,12 @@ const Routing = () => {
       <Route exact path="/FloodRelief" element={<FloodRelief />} />
       <Route
         exact
-        path="/DownloadOsmsPayslip"
-        element={<DownloadOsmsPayslip />}
-      />
-      <Route
-        exact
         path="/DownloadWBTPTAPayslip"
         element={<DownloadWBTPTAPayslip />}
       />
-      <Route
-        exact
-        path="/IncomeTax"
-        element={<IncomeTax />}
-      />
-      <Route
-        exact
-        path="/IncomeTaxNew"
-        element={<IncomeTaxNewReigme />}
-      />
-      <Route
-        exact
-        path="/ITSection"
-        element={<ITSection />}
-      />
+      <Route exact path="/IncomeTax" element={<IncomeTax />} />
+      <Route exact path="/IncomeTaxNew" element={<IncomeTaxNewReigme />} />
+      <Route exact path="/ITSection" element={<ITSection />} />
       <Route
         exact
         path="/ServiceLeaveProposal"
@@ -234,11 +212,7 @@ const Routing = () => {
         path="/GraduationCeremony"
         element={<GraduationCeremony />}
       />
-      <Route
-        exact
-        path="/HRADelclaration"
-        element={<HRADelclaration />}
-      />
+      <Route exact path="/HRADelclaration" element={<HRADelclaration />} />
 
       <Route exact path="/update_self" element={<UpdateSelf />} />
       <Route exact path="/updateunp" element={<UpdateUP />} />
